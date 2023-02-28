@@ -1,0 +1,44 @@
+$color-count: #8991A9;
+$color-payment: #999999;
+
+.page__students {
+  display: flex;
+  height: 100%;
+
+  &_master {
+    padding: 0 3px;
+
+    &__item {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &_count {
+      color: $color-count;
+    }
+  }
+
+  &_detail {
+    background: white;
+    width: 100%;
+    box-shadow: 0 0 6px 0 #33333340;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &__item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 8px;
+      height: 40px;
+      position: relative;
+
+
+      &:hover {
+        .pages-students__View_detail__item_options {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

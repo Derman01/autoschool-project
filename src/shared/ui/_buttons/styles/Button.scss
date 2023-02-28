@@ -1,0 +1,23 @@
+.button {
+  padding: 0 var(--offset-m);
+  line-height: var(--height-line-m);
+  border-radius: var(--border-radius-m);
+  cursor: pointer;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &_mode {
+    &-default {
+      color: var(--secondary-color);
+    }
+
+    &-contrast {
+      background: var(--bg-color);
+      color: var(--primary-color);
+    }
+  }
+}

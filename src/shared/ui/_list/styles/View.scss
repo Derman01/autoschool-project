@@ -1,0 +1,44 @@
+$color: #333333;
+$background-hover: #eff0f4;
+$background-selected: #e7e9ec;
+$marker-color: #cc3d00;
+
+.list__View {
+  &_item {
+    color: $color;
+    padding: 5px 14px;
+    font-size: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &-master {
+      border-radius: 8px;
+      padding: 8px 14px;
+
+      &.list__View_item-marker::before {
+        height: 16px;
+        border-radius: 2px;
+      }
+    }
+
+    &-selected {
+      font-weight: bold;
+      background: $background-selected;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: $background-hover;
+    }
+
+    &-marker::before {
+      content: '';
+      display: block;
+      background: $marker-color;
+      width: 3px;
+      position: absolute;
+      left: 0;
+    }
+  }
+}

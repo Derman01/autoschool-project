@@ -1,0 +1,13 @@
+@mixin icon_svg($name) {
+  content: url('~shared/assets/icons/' + $name + '.svg');
+}
+
+.Icon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+
+  &-plus {
+    @include icon_svg('plus');
+  }
+}

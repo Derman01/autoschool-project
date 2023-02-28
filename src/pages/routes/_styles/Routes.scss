@@ -1,0 +1,12 @@
+.Route {
+  &__page {
+    height: 100%;
+    display: flex;
+    max-width: 1980px;
+
+
+    &-enity {
+      display: block;
+    }
+  }
+}
