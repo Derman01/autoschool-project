@@ -71,25 +71,29 @@ export const View: FC<ViewOptions> = (options) => {
 			{loading ? (
 				<div>Loading...</div>
 			) : items.length ? (
-				items.map((item) => (
-					<Item
-						key={item[keyProperty]}
-						item={item}
-						templateItem={templateItem}
-						onClick={clickItemHandler}
-						className={classNames(
-							'list__View_item',
-							{
-								selected: item[keyProperty] === selectedKey && canSelected,
-								marker:
-									item[keyProperty] === selectedKey &&
-									markerVisible &&
-									canSelected,
-							},
-							[style]
-						)}
-					/>
-				))
+				<div className={'list__View_container'}>
+					{
+						items.map((item) => (
+							<Item
+								key={item[keyProperty]}
+								item={item}
+								templateItem={templateItem}
+								onClick={clickItemHandler}
+								className={classNames(
+									'list__View_item',
+									{
+										selected: item[keyProperty] === selectedKey && canSelected,
+										marker:
+											item[keyProperty] === selectedKey &&
+											markerVisible &&
+											canSelected,
+									},
+									[style]
+								)}
+							/>
+						))
+					}
+				</div>
 			) : (
 				<div>Пусто</div>
 			)}

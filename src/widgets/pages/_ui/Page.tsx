@@ -30,7 +30,6 @@ const Page: FC<PageOptions> = (options) => {
 				}
 			</div>
 			<Content className={'page__content'} />
-			<div className={'page__aside'}></div>
 		</div>
 	);
 };

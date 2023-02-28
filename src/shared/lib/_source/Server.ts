@@ -52,6 +52,6 @@ export class Server implements IData {
    constructor(data: IServerData) {
       this.$binding = data.binding;
       this.$endpoint = data.endpoint;
-      this.$model = data.model;
+      this.$model = data.model || Object;
    }
 }

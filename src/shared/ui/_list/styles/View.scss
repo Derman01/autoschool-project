@@ -4,6 +4,12 @@ $background-selected: #e7e9ec;
 $marker-color: #cc3d00;
 
 .list__View {
+
+  &_container {
+    height: 100%;
+    overflow: scroll;
+  }
+
   &_item {
     color: $color;
     padding: 5px 14px;

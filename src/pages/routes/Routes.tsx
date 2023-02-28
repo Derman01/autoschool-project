@@ -21,6 +21,7 @@ const Routes: FC<RoutesOptions> = ({
 			<div className={'Route__page'}>
 				<Accordion items={Object.values(navigation)}/>
 				<Page configuration={pageConfig}/>
+				<div className="Route__page_aside"/>
 			</div>
 		);
 	}
