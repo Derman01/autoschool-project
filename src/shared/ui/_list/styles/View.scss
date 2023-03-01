@@ -4,6 +4,7 @@ $background-selected: #e7e9ec;
 $marker-color: #cc3d00;
 
 .list__View {
+  overflow: hidden;
 
   &_container {
     height: 100%;
