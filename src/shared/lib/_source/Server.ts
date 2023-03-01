@@ -1,6 +1,10 @@
 import {IData, IItemData} from './IData';
 import axios, {AxiosResponse} from 'axios';
 
+interface Model {
+   new(value?: any): Object;
+}
+
 interface Response {
     success: boolean;
     message: string;
@@ -14,7 +18,7 @@ interface IMethods {
 interface IServerData {
    endpoint: string;
    binding?: IMethods;
-   model?: ObjectConstructor
+   model?: Model;
 }
 
 const API_URL = 'https://autoschool.evgfilim1.me/api/';
@@ -22,7 +26,7 @@ const API_URL = 'https://autoschool.evgfilim1.me/api/';
 export class Server implements IData {
    $endpoint: string;
    $binding: IMethods | undefined;
-   $model : ObjectConstructor;
+   $model : Model;
 
    query(params?: object): Promise<IItemData[]> {
       return this.call(this.$binding?.query, params);

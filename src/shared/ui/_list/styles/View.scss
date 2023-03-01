@@ -7,7 +7,7 @@ $marker-color: #cc3d00;
 
   &_container {
     height: 100%;
-    overflow: scroll;
+    overflow-y: auto;
   }
 
   &_item {

@@ -26,17 +26,27 @@ $color-payment: #999999;
     border-radius: 8px;
 
     &__item {
+      width: 100%;
       display: grid;
       grid-template-columns: auto 1fr auto;
       gap: 8px;
       height: 40px;
       position: relative;
 
+      &_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-      &:hover {
-        .pages-students__View_detail__item_options {
-          opacity: 1;
+        &Group {
+          font-size: 12px;
+          color: $color-count;
         }
+      }
+
+      &_payment {
+        font-size: 10px;
+        color: $color-payment;
       }
     }
   }
