@@ -1,10 +1,10 @@
 import './styles/Page.scss';
-import {FC, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { View } from 'shared/ui/list';
 import {
-	FILTER_GROUP_INITIAL_STATE,
+	FILTER_GROUP_INITIAL_STATE, getStackCreateGroup, getStackCreateStudent,
 	GROUP_ALL,
 	GROUP_ALL_ID,
 	SOURCE_GROUPS,
@@ -12,7 +12,7 @@ import {
 } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { usePopup } from 'shared/hooks/usePopup';
-import { StackOpener } from 'shared/ui/_popup/StackOpener';
+import { useCommand } from 'shared/hooks/useCommand';
 
 interface PageOptions extends ComponentOptions {
 }
@@ -21,6 +21,22 @@ interface PageOptions extends ComponentOptions {
 export const Page: FC<PageOptions> = (options) => {
 	const {className} = options;
 	const [filterStudents, setFilterStudents] = useState(FILTER_GROUP_INITIAL_STATE);
+	const openPopup = usePopup(state => state.openPopup);
+
+	useEffect(() => {
+		const createGroupId = useCommand.subscribe('open-panel-create-group', () => {
+			openPopup(getStackCreateGroup());
+		});
+
+		const createStudentId = useCommand.subscribe('open-panel-create-student', () => {
+			openPopup(getStackCreateStudent());
+		})
+		return () => {
+			useCommand.unsubscribe(createGroupId);
+			useCommand.unsubscribe(createStudentId);
+		}
+	});
+
 	const groupLoadCallback = (items: object[]) => {
 		items.unshift(GROUP_ALL);
 	};
@@ -34,7 +50,6 @@ export const Page: FC<PageOptions> = (options) => {
 			});
 		}
 	};
-
 
 
 	return (

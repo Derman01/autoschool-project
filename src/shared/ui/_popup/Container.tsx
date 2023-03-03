@@ -17,7 +17,7 @@ export const Container: FC<ContainerOptions> = (options) => {
 	} = options;
 
     return (
-        <div className={classNames(['StackContainer', className])}>
+        <div className={classNames(['StackContainer', className], {}, ['disable'])}>
 			{
 				children
 			}

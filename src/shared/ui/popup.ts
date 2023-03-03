@@ -3,5 +3,5 @@ export {
 } from './_popup/Controller';
 
 export {
-
-} from ''
+	StackOpener
+} from './_popup/StackOpener';

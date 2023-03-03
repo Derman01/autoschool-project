@@ -1,7 +1,5 @@
 import create from 'zustand';
 import { FC } from 'react';
-import { Stack } from 'shared/ui/_popup/Stack';
-import { StackOpener } from 'shared/ui/_popup/StackOpener';
 
 export interface PopupConfig {
 	id: string;

@@ -5,14 +5,12 @@ import { PopupConfig } from 'shared/hooks/usePopup';
 
 
 export class StackOpener {
-	private $id: string;
 
-	create(options: StackOpenerOptions): PopupConfig {
+	static create(options: StackOpenerOptions): PopupConfig {
 		const id = nanoid();
 		return {
 			id,
 			Popup: () => <Stack id={id} {...options.templateOptions}/>
 		}
 	}
-
 }

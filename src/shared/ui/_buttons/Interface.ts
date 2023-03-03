@@ -1,1 +1,1 @@
-export type IconName = 'plus' | 'close';
+export type IconName = 'plus' | 'close' | 'plus-group';
