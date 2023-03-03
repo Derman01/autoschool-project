@@ -2,15 +2,18 @@ import { NavigationConfiguration, routeConfigType } from 'entities/pages';
 import { StudentPage } from 'pages/Students';
 import React from 'react';
 import {Navigate} from 'react-router-dom';
+import { DemoPage } from 'pages/DemoPage';
 
 export enum PAGES {
 	Main = 'main',
-	Students = 'students'
+	Students = 'students',
+	Demo = 'demo',
 }
 
 export const ROUTE_PAGE: Record<PAGES, string> = {
 	[PAGES.Main]: '/',
-	[PAGES.Students]: '/students'
+	[PAGES.Students]: '/students',
+	[PAGES.Demo]: '/demo'
 };
 
 export const ROUTE_CONFIG: routeConfigType<PAGES> = {
@@ -26,10 +29,17 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
 		},
 		content: StudentPage,
 		headerButtons: [{
+			id: 'create-student',
 			icon: 'plus',
 			title: 'Добавить студента',
 			viewMode: 'icon'
 		}]
+	},
+	[PAGES.Demo]: {
+		routeProps: {
+			path: ROUTE_PAGE.demo,
+		},
+		content: DemoPage
 	}
 };
 

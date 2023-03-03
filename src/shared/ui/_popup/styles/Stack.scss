@@ -1,0 +1,54 @@
+$border-color: #f0f0f0;
+
+.Stack {
+  background: #F8F8F8;
+  display: flex;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  box-shadow: 0 0 6px 0 #33333340;
+
+
+  &__content {
+    flex: 1 1;
+  }
+
+  &__header {
+    padding: 0 12px;
+    border-bottom: 1px solid $border-color;
+    height: 44px;
+    display: flex;
+    align-items: center;
+
+    &_title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    background: #fff;
+    height: 100%;
+    padding: 12px;
+  }
+
+  &__aside {
+    flex: 0 0 50px;
+    border-left: 2px solid $border-color;
+    border-left: 2px solid $border-color;
+
+    &_container {
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      gap: 8px;
+    }
+  }
+
+  &__closeButton_container {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

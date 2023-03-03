@@ -1,12 +1,14 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
+import './styles/Button.scss';
 import {Icon} from './Icon';
+import {IconName} from './Interface';
 import {ComponentOptions} from 'shared/types';
 import {classNames} from 'shared/lib/helpers';
-import './styles/Button.scss';
 
 export interface ButtonOptions extends ComponentOptions {
    title?: string;
-   icon?: string;
+   icon?: IconName;
+   iconSize?: 'm' | 's'
    onClick?: () => void;
    viewMode?: 'icon' | 'default'
 }
@@ -18,7 +20,8 @@ export const Button: FC<ButtonOptions> = (options) => {
       icon,
       title,
       onClick,
-      viewMode = 'default'
+      viewMode = 'default',
+       iconSize
    } = options;
 
    return (
@@ -27,7 +30,7 @@ export const Button: FC<ButtonOptions> = (options) => {
                onClick={onClick}
        >
             <span className='button__container'>
-					{icon && <Icon icon={icon}/>}
+					{icon && <Icon size={iconSize} icon={icon}/>}
                {
                    title && viewMode === 'default' &&
 						<span className='button__text'>

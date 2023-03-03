@@ -11,6 +11,8 @@ import {
 	SOURCE_STUDENTS
 } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
+import { usePopup } from 'shared/hooks/usePopup';
+import { StackOpener } from 'shared/ui/_popup/StackOpener';
 
 interface PageOptions extends ComponentOptions {
 }
@@ -18,8 +20,7 @@ interface PageOptions extends ComponentOptions {
 
 export const Page: FC<PageOptions> = (options) => {
 	const {className} = options;
-	const [filterStudents, setFilterStudents] = useState(FILTER_GROUP_INITIAL_STATE)
-
+	const [filterStudents, setFilterStudents] = useState(FILTER_GROUP_INITIAL_STATE);
 	const groupLoadCallback = (items: object[]) => {
 		items.unshift(GROUP_ALL);
 	};
@@ -33,6 +34,8 @@ export const Page: FC<PageOptions> = (options) => {
 			});
 		}
 	};
+
+
 
 	return (
 		<div className={classNames(['page__students', className])}>

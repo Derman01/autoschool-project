@@ -23,7 +23,7 @@ const Page: FC<PageOptions> = (options) => {
 					<div className={'page__header_buttons'}>
 						{
 							configuration.headerButtons.map((button) =>
-								<Button {...button}/>
+								<Button key={button.id} {...button}/>
 							)
 						}
 					</div>

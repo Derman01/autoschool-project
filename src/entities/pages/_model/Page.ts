@@ -3,6 +3,10 @@ import { ComponentOptions } from 'shared/types';
 import { ButtonOptions } from 'shared/ui/buttons';
 import { FC } from 'react';
 
+interface HeaderButton extends ButtonOptions {
+	id: string;
+}
+
 export interface NavigationConfiguration {
 	path: string;
 	name: string;
@@ -12,7 +16,7 @@ export interface NavigationConfiguration {
 export interface PageConfiguration {
 	routeProps: RouteProps;
 	content: FC<ComponentOptions>
-	headerButtons?:  ButtonOptions[];
+	headerButtons?: HeaderButton[];
 }
 
 /**

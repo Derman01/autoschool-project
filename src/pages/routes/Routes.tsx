@@ -4,6 +4,7 @@ import { Route as ReactRoute, Routes as ReactRoutes } from 'react-router-dom';
 import { Accordion, Page } from 'widgets/pages';
 import { NavigationType, RouteConfigType } from 'app/config/route';
 import { PageConfiguration } from 'entities/pages';
+import { PopupController } from 'shared/ui/popup';
 
 interface RoutesOptions {
 	pages: RouteConfigType
@@ -22,6 +23,7 @@ const Routes: FC<RoutesOptions> = ({
 				<Accordion items={Object.values(navigation)}/>
 				<Page configuration={pageConfig}/>
 				<div className='Route__page_aside'/>
+				<PopupController/>
 			</div>
 		);
 	}
@@ -30,8 +32,8 @@ const Routes: FC<RoutesOptions> = ({
 		<ReactRoutes>
 			{Object.entries(pages).map(([_, page]) =>
 				<ReactRoute key={page.routeProps.path}
-								path={page.routeProps.path}
-								element={RouteContent(page)}/>
+							path={page.routeProps.path}
+							element={RouteContent(page)}/>
 			)}
 		</ReactRoutes>
 	);
