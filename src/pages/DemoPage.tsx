@@ -11,7 +11,7 @@ export const DemoPage: FC<DemoPageOptions> = (options) => {
     const {className} = options;
 	const openPopup = usePopup(state => state.openPopup);
 	const openPopupStack = () => {
-		const stack = new StackOpener().create({
+		const stack = StackOpener.create({
 			templateOptions: {
 				headerTitle: 'Создание карточки студента',
 				bodyContent: <div>Карточка Студента</div>

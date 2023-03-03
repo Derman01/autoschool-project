@@ -14,6 +14,9 @@
   &-close {
     @include icon_svg('close')
   }
+  &-plus-group {
+    @include icon_svg('plus-group')
+  }
 
   &_size- {
     &s {
