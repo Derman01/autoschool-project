@@ -35,7 +35,7 @@ export const Page: FC<PageOptions> = (options) => {
 			useCommand.unsubscribe(createGroupId);
 			useCommand.unsubscribe(createStudentId);
 		}
-	});
+	}, []);
 
 	const groupLoadCallback = (items: object[]) => {
 		items.unshift(GROUP_ALL);
