@@ -2,52 +2,78 @@ $color-count: #8991A9;
 $color-payment: #999999;
 
 .page__students {
-  display: flex;
-  height: 100%;
+   display: flex;
+   height: 100%;
 
-  &_master {
-    padding: 0 3px;
+   &_groups {
+      padding: 0 calc(var(--offset-2xl) - var(--offset-2xs));
 
-    &__item {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    &_count {
-      color: $color-count;
-    }
-  }
-
-  &_detail {
-    background: white;
-    width: 100%;
-    box-shadow: 0 0 6px 0 #33333340;
-    border-radius: 8px;
-
-    &__item {
-      width: 100%;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 8px;
-      height: 40px;
-      position: relative;
-
-      &_info {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        &Group {
-          font-size: 12px;
-          color: $color-count;
-        }
+      &_header {
+         padding: 8px 10px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
       }
 
-      &_payment {
-        font-size: 10px;
-        color: $color-payment;
+      &_title {
+         font-size: 20px;
+         font-weight: bold;
       }
-    }
-  }
+   }
+
+   &_groups_list {
+      &__item {
+         width: 100%;
+         display: flex;
+         justify-content: space-between;
+      }
+
+      &_count {
+         color: $color-count;
+      }
+   }
+
+   &_detail {
+
+      &_container {
+         width: 100%;
+         background: var(--background-color);
+         border-radius: var(--border-radius-l);
+         padding: var(--offset-xl) var(--offset-s);
+         box-shadow: 0 0 6px 0 var(--color-shadow);
+
+         &_header {
+            padding: 0 calc(var(--offset-2xl) - var(--offset-s));
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+         }
+      }
+
+      &__item {
+         width: 100%;
+         display: grid;
+         grid-template-columns: auto 1fr auto;
+         gap: 8px;
+         height: 40px;
+         position: relative;
+
+         &_info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &Group {
+               font-size: 12px;
+               color: $color-count;
+            }
+         }
+
+         &_payment {
+            font-size: 10px;
+            color: $color-payment;
+         }
+      }
+   }
 }

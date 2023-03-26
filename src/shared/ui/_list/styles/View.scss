@@ -1,51 +1,60 @@
-$color: #333333;
-$background-hover: #eff0f4;
-$background-selected: #e7e9ec;
-$marker-color: #cc3d00;
-
 .list__View {
-  overflow: hidden;
+   overflow: hidden;
 
-  &_container {
-    height: 100%;
-    overflow-y: auto;
-  }
+   &_container {
+      height: 100%;
+      padding: 6px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+   }
 
-  &_item {
-    color: $color;
-    padding: 5px 14px;
-    font-size: 14px;
-    position: relative;
-    display: flex;
-    align-items: center;
+   &_item {
+      font-size: 16px;
+      padding: var(--offset-xs) var(--offset-m);
+      position: relative;
+      display: flex;
+      align-items: center;
+      border-radius: var(--border-radius-s);
 
-    &-master {
-      border-radius: 8px;
-      padding: 8px 14px;
+      &-horizontalPaddings {
+         &_l {
+            padding-left: var(--offset-l);
+            padding-right: var(--offset-l);
+         }
 
-      &.list__View_item-marker::before {
-        height: 16px;
-        border-radius: 2px;
+         &_m {
+            padding-left: var(--offset-m);
+            padding-right: var(--offset-m);
+         }
+
+         &_s {
+            padding-left: var(--offset-s);
+            padding-right: var(--offset-s);
+         }
+
+         &_xs {
+            padding-left: var(--offset-xs);
+            padding-right: var(--offset-xs);
+         }
+
+         &_2xs {
+            padding-left: var(--offset-2xs);
+            padding-right: var(--offset-2xs);
+         }
       }
-    }
 
-    &-selected {
-      font-weight: bold;
-      background: $background-selected;
-    }
+      &-selected {
+         font-weight: bold;
+         background: var(--background-color);
+         box-shadow: 0 0 6px var(--color-shadow);
+      }
 
-    &:hover {
-      cursor: pointer;
-      background: $background-hover;
-    }
-
-    &-marker::before {
-      content: '';
-      display: block;
-      background: $marker-color;
-      width: 3px;
-      position: absolute;
-      left: 0;
-    }
-  }
+      &:hover:not(&-unselect) {
+         cursor: pointer;
+         background: var(--background-color);
+         box-shadow: 0 0 6px var(--color-shadow);
+      }
+   }
 }

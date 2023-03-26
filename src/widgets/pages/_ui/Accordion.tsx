@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import classNames from './styles/accordion.module.scss';
+import './styles/accordion.scss';
 import { NavLink } from 'react-router-dom';
 import { NavigationConfiguration } from 'entities/pages';
 
@@ -12,19 +12,19 @@ const Accordion: FC<AccordionOptions> = ({
 }) => {
 	const getClassNameItem = ({isActive}: {isActive: boolean}): string => {
 		return [
-			classNames.accordion__pages_item,
-			isActive ? classNames.accordion__pages_itemSelected : ''
+			'accordion__pages_item',
+			isActive ? 'accordion__pages_item-selected' : ''
 		].join(' ');
 	}
 
 	return (
-		<div className={classNames.accordion}>
-			<div className={classNames.accordion__logo}>
+		<div className={'accordion'}>
+			<div className={'accordion__logo'}>
 				{/*TODO*/}
-				<div className={classNames.accordion__logo_icon}></div>
-				<div className={classNames.accordion__logo_title}>Автошкола</div>
+				<div className={'accordion__logo_title'}>Автошкола</div>
+				<div className={'accordion__logo_icon'}></div>
 			</div>
-			<div className={classNames.accordion__pages}>
+			<div className={'accordion__pages'}>
 				{items.map((item) =>
 					<NavLink key={item.path} to={item.path}
 							 className={getClassNameItem}>
@@ -32,6 +32,7 @@ const Accordion: FC<AccordionOptions> = ({
 					</NavLink>
 				)}
 			</div>
+			<div className={'accordion__shadow'}></div>
 		</div>
 	);
 };

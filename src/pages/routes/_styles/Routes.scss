@@ -1,15 +1,10 @@
 .Route {
   &__page {
-    background: #F8F8F8;
     height: 100%;
     display: flex;
     max-width: 1980px;
     overflow: hidden;
     position: relative;
-
-    &_aside {
-      width: 50px;
-    }
 
     &-enity {
       display: block;

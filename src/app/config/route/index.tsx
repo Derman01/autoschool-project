@@ -27,18 +27,7 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
 		routeProps: {
 			path: ROUTE_PAGE.students,
 		},
-		content: StudentPage,
-		headerButtons: [{
-			id: 'open-panel-create-student',
-			icon: 'plus',
-			title: 'Добавить студента',
-			viewMode: 'icon'
-		}, {
-			id: 'open-panel-create-group',
-			icon: 'plus-group',
-			title: 'Добавить группу',
-			viewMode: 'icon'
-		}]
+		content: StudentPage
 	},
 	[PAGES.Demo]: {
 		routeProps: {

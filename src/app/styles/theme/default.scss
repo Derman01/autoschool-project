@@ -1,0 +1,31 @@
+.app.theme-default {
+   --color-primary: #3649f4;
+   --color-grey: #919093;
+   --color-border: #f1f1f3;
+   --color-shadow: rgba(0, 0, 0, 0.12);
+
+
+   --background-color: #fff;
+   --background-color-grey: #e1e1e1;
+   --background-color-primary: var(--color-primary);
+   --background-color-unaccented: #f9fbfc;
+   --background-color-selected: #d8deff;
+
+   --text-color: #000;
+   --text-color-unaccented: var(--color-grey);
+   --text-color-primary: var(--color-primary);
+
+   --border-radius-l: 16px;
+   --border-radius-m: 12px;
+   --border-radius-s: 8px;
+
+
+   --offset-3xl: 32px;
+   --offset-2xl: 24px;
+   --offset-xl: 16px;
+   --offset-l: 14px;
+   --offset-m: 12px;
+   --offset-s: 10px;
+   --offset-xs: 8px;
+   --offset-2xs: 6px;
+}

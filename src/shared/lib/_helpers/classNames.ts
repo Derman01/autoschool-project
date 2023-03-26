@@ -3,7 +3,7 @@ type Mods = Record<string, boolean | string>;
 const createClassNames = (cls: string, mods?: Mods, additional?: string[]): string => {
 	const createMode = (mode: string, value?: string | boolean) => {
 		if (value && typeof value === 'string') {
-			return `${cls}_${mode}-${value}`;
+			return `${cls}-${mode}_${value}`;
 		}
 		return `${cls}-${mode}`;
 	}

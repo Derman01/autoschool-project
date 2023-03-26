@@ -1,11 +1,6 @@
 import { RouteProps } from 'react-router-dom';
 import { ComponentOptions } from 'shared/types';
-import { ButtonOptions } from 'shared/ui/buttons';
 import { FC } from 'react';
-
-interface HeaderButton extends ButtonOptions {
-	id: string;
-}
 
 export interface NavigationConfiguration {
 	path: string;
@@ -15,8 +10,7 @@ export interface NavigationConfiguration {
 
 export interface PageConfiguration {
 	routeProps: RouteProps;
-	content: FC<ComponentOptions>
-	headerButtons?: HeaderButton[];
+	content: FC<ComponentOptions>;
 }
 
 /**

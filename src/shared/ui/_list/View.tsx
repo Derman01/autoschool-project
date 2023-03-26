@@ -15,8 +15,9 @@ interface ViewOptions extends ComponentOptions {
 	minWidth?: number;
 	canSelected?: boolean;
 	autoSelected?: boolean;
-	markerVisible?: boolean;
 	templateItem?: FC<TypeItem>;
+
+	horizontalPaddings?: 'm' | 's' | 'xs' | '2xs' | 'l';
 	selectedChanged?: (item: TypeItem) => void;
 	dataLoadCallback?: (items: TypeItem) => void;
 }
@@ -32,9 +33,9 @@ export const View: FC<ViewOptions> = (options) => {
 		filter,
 		autoSelected = true,
 		style = 'list',
-		markerVisible = true,
 		canSelected = true,
 		selectedChanged,
+		horizontalPaddings = 'm'
 	} = options;
 
 	const [selectedKey, setSelectedKey] = useState(null);
@@ -83,10 +84,8 @@ export const View: FC<ViewOptions> = (options) => {
 									'list__View_item',
 									{
 										selected: item[keyProperty] === selectedKey && canSelected,
-										marker:
-											item[keyProperty] === selectedKey &&
-											markerVisible &&
-											canSelected,
+										unselect: !canSelected,
+										horizontalPaddings,
 									},
 									[style]
 								)}

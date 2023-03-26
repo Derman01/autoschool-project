@@ -8,7 +8,7 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<Suspense fallback={''}>
-				<div className="app">
+				<div className="app theme-default">
 					<Routes pages={ROUTE_CONFIG}
 							navigation={NAVIGATION}/>
 				</div>

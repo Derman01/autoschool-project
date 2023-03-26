@@ -1,4 +1,6 @@
 @import "reset";
+@import "./theme/default";
+@import "shared/assets/fonts/gilroy.scss";
 
 html, body {
   height: 100%;
@@ -9,7 +11,7 @@ html, body {
 }
 
 .app {
-  font-family: "Roboto Thin", sans-serif;
+  font-family: "Gilroy", sans-serif;
   height: 100%;
-  background: #666;
+  background: var(--background-color);
 }
