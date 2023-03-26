@@ -1,12 +1,12 @@
 .list__View {
-   overflow: hidden;
+   max-height: 100%;
+   overflow-y: auto;
+   overflow-x: hidden;
 
    &_container {
-      height: 100%;
-      padding: 6px;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
+      padding: 6px;
       gap: 6px;
    }
 

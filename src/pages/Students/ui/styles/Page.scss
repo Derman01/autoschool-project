@@ -36,6 +36,8 @@ $color-payment: #999999;
    &_detail {
 
       &_container {
+         display: flex;
+         flex-direction: column;
          width: 100%;
          background: var(--background-color);
          border-radius: var(--border-radius-l);
