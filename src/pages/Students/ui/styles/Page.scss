@@ -51,15 +51,40 @@ $color-payment: #999999;
             align-items: center;
             justify-content: space-between;
          }
+
+         &_title-name {
+            font-weight: bold;
+         }
+      }
+
+      &_headers {
+         padding: var(--offset-s) var(--offset-l) var(--offset-xs);
+         display: grid;
+         align-items: center;
+         grid-auto-flow: column;
+         grid-template-columns: minmax(250px, 1fr) 150px 150px;
+         color: var(--text-color-unaccented);
+         font-size: 14px;
       }
 
       &__item {
          width: 100%;
          display: grid;
-         grid-template-columns: auto 1fr auto;
-         gap: 8px;
-         height: 40px;
+         grid-template-columns: min-content minmax(200px, 1fr) 150px 150px;
          position: relative;
+
+         &_photo {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-m);
+            background: #0a99ff;
+            margin-right: var(--offset-s);
+            color: white;
+            font-weight: bold;
+         }
 
          &_info {
             display: flex;
