@@ -12,6 +12,8 @@ import {
 } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { Button } from 'shared/ui/buttons';
+import { usePopup } from 'shared/hooks/usePopup';
+import { PopupOpener } from 'shared/ui/popup';
 
 interface PageOptions extends ComponentOptions {
 }
@@ -19,7 +21,8 @@ interface PageOptions extends ComponentOptions {
 
 export const Page: FC<PageOptions> = (options) => {
 	const {className} = options;
-	const [selectedGroup, setSelectedGroup]  = useState('');
+	const openPopup = usePopup(state => state.openPopup);
+	const [selectedGroup, setSelectedGroup] = useState('');
 	const [filterStudents, setFilterStudents] = useState(FILTER_GROUP_INITIAL_STATE);
 
 	const groupLoadCallback = (items: object[]) => {
@@ -38,6 +41,26 @@ export const Page: FC<PageOptions> = (options) => {
 		}
 	};
 
+	const openPopupCreateGroup = () => {
+		openPopup(PopupOpener.createModal({
+			templateOptions: {
+				headerTitle: 'Добление группы',
+				width: 430,
+				bodyContent: <div>Контент</div>
+			}
+		}));
+	};
+
+	const openPopupCreateStudent = () => {
+		openPopup(PopupOpener.createModal({
+			templateOptions: {
+				headerTitle: 'Добление студента',
+				width: 430,
+				bodyContent: <div>Контент</div>
+			}
+		}));
+	};
+
 	return (
 		<div className={classNames(['page__students', className])}>
 			<div className='page__students_groups'>
@@ -45,7 +68,7 @@ export const Page: FC<PageOptions> = (options) => {
 					<div className='page__students_groups_title'>
 						Группы
 					</div>
-					<Button iconSize={'m'} icon={'plus'}/>
+					<Button iconSize={'m'} icon={'plus'} onClick={openPopupCreateGroup}/>
 				</div>
 
 				<View source={SOURCE_GROUPS}
@@ -72,7 +95,7 @@ export const Page: FC<PageOptions> = (options) => {
 								Все группы
 							</div>
 					}
-					<Button icon={'plus'} iconSize={'m'}/>
+					<Button icon={'plus'} iconSize={'m'} onClick={openPopupCreateStudent}/>
 				</div>
 				<div className="page__students_detail_headers">
 					<div>ФИО</div>

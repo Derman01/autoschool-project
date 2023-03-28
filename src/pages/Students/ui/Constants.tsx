@@ -1,7 +1,5 @@
 import { Server } from 'shared/lib/source';
 import {StudentModel} from '../models/StudentModel';
-import { StackOpener } from 'shared/ui/popup';
-import { PopupConfig } from 'shared/hooks/usePopup';
 
 export const SOURCE_GROUPS = new Server({
    endpoint: 'groups'
@@ -24,22 +22,3 @@ interface FilterGroup {
 }
 
 export const FILTER_GROUP_INITIAL_STATE: FilterGroup | {} = {};
-
-export const getStackCreateGroup = (): PopupConfig => {
-   return StackOpener.create({
-      templateOptions: {
-         headerTitle: 'Создание группы',
-         width: 600,
-         bodyContent: <div>Создание группы</div>
-      }
-   });
-};
-
-export const getStackCreateStudent = (): PopupConfig => {
-   return StackOpener.create({
-      templateOptions: {
-         headerTitle: 'Создание карточки студента',
-         bodyContent: <div>Карточка Студента</div>
-      }
-   });
-};

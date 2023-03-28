@@ -1,4 +1,4 @@
-.StackContainer {
+.PopupContainer {
 
   &-disable {
     position: absolute;
@@ -8,5 +8,6 @@
     bottom: 0;
     z-index: 1;
     background: #33333350;
+    display: flex;
   }
 }

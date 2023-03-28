@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import './styles/StackContainer.scss'
+import './styles/PopupContainer.scss'
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 
@@ -17,7 +17,7 @@ export const Container: FC<ContainerOptions> = (options) => {
 	} = options;
 
     return (
-        <div className={classNames(['StackContainer', className], {}, ['disable'])}>
+        <div className={classNames(['PopupContainer', className], {}, ['disable'])}>
 			{
 				children
 			}
