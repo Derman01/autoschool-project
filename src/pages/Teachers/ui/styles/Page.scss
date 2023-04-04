@@ -1,0 +1,75 @@
+.page__teacher {
+   padding-left: var(--offset-3xl);
+   padding-right: var(--offset-3xl);
+
+   &_container {
+      height: 100%;
+      background: var(--background-color);
+      border-radius: var(--border-radius-l);
+      box-shadow: 0 0 6px 0 var(--color-shadow);
+      padding: var(--offset-xl) var(--offset-s);
+
+      &__header {
+         padding: 0 calc(var(--offset-2xl) - var(--offset-s));
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+
+         &_title {
+            font-size: 20px;
+         }
+      }
+   }
+
+   &_list {
+
+      &__header {
+         padding: var(--offset-s) var(--offset-l) var(--offset-xs);
+         display: grid;
+         align-items: center;
+         grid-auto-flow: column;
+         grid-template-columns: 1fr 200px;
+         color: var(--text-color-unaccented);
+         font-size: 14px;
+      }
+
+      &__item {
+         width: 100%;
+         display: grid;
+         grid-template-columns: min-content 1fr 200px;
+
+
+         &_photo {
+            width: 42px;
+            height: 42px;
+            background: #0a99ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-m);
+            color: white;
+            font-weight: bold;
+            margin-right: var(--offset-s);
+         }
+
+         &_info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &_name {
+
+            }
+
+            &_job {
+               font-size: 14px;
+               color: var(--text-color-unaccented)
+            }
+         }
+
+         &_phone {
+
+         }
+      }
+   }
+}

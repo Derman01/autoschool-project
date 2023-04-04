@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import './styles/View.scss';
 import { ComponentOptions } from 'shared/types';
 import { TypeItem } from './Interface';
@@ -39,17 +39,14 @@ export const View: FC<ViewOptions> = (options) => {
 	} = options;
 
 	const [selectedKey, setSelectedKey] = useState(null);
-	const [loading, setLoading] = useState(false);
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
-		setLoading(true);
 		source.query({filter}).then((items) => {
 			if (dataLoadCallback) {
 				dataLoadCallback(items);
 			}
 			setItems(items);
-			setLoading(false);
 			if (autoSelected) {
 				setSelectedKey(items.at(0)?.[keyProperty] || null);
 			}
@@ -68,10 +65,8 @@ export const View: FC<ViewOptions> = (options) => {
 		<div
 			className={classNames(['list__View', className])}
 			style={{minWidth: minWidth + 'px'}}
-		>
-			{loading ? (
-				<div>Loading...</div>
-			) : items.length ? (
+		> {
+			items.length ? (
 				<div className={'list__View_container'}>
 					{
 						items.map((item) => (

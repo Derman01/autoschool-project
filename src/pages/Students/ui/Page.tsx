@@ -3,13 +3,7 @@ import { FC, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { View } from 'shared/ui/list';
-import {
-	FILTER_GROUP_INITIAL_STATE,
-	GROUP_ALL,
-	GROUP_ALL_ID,
-	SOURCE_GROUPS,
-	SOURCE_STUDENTS
-} from './Constants';
+import { FILTER_GROUP_INITIAL_STATE, GROUP_ALL, SOURCE_GROUPS, SOURCE_STUDENTS } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { Button } from 'shared/ui/buttons';
 import { usePopup } from 'shared/hooks/usePopup';
@@ -21,44 +15,38 @@ interface PageOptions extends ComponentOptions {
 
 export const Page: FC<PageOptions> = (options) => {
 	const {className} = options;
-	const openPopup = usePopup(state => state.openPopup);
 	const [selectedGroup, setSelectedGroup] = useState('');
 	const [filterStudents, setFilterStudents] = useState(FILTER_GROUP_INITIAL_STATE);
 
-	const groupLoadCallback = (items: object[]) => {
-		items.unshift(GROUP_ALL);
+	const groupLoadCallback = (items: {name: string}[]) => {
+		setSelectedGroup(items[0].name)
 	};
 
-	const changeFolderHandler = (item: {id: string, name: string}) => {
-		if (item.id === GROUP_ALL_ID) {
-			setFilterStudents({});
-			setSelectedGroup('')
-		} else {
-			setFilterStudents({
-				group: item.id
-			});
-			setSelectedGroup(item.name);
-		}
+	const changeFolderHandler = (item: { id: string, name: string }) => {
+		setFilterStudents({
+			group: item.id
+		});
+		setSelectedGroup(item.name);
 	};
 
 	const openPopupCreateGroup = () => {
-		openPopup(PopupOpener.createModal({
+		PopupOpener.createModal({
 			templateOptions: {
-				headerTitle: 'Добление группы',
+				headerTitle: 'Добавление группы',
 				width: 430,
 				bodyContent: <div>Контент</div>
 			}
-		}));
+		});
 	};
 
 	const openPopupCreateStudent = () => {
-		openPopup(PopupOpener.createModal({
+		PopupOpener.createModal({
 			templateOptions: {
-				headerTitle: 'Добление студента',
+				headerTitle: 'Добавление студента',
 				width: 430,
 				bodyContent: <div>Контент</div>
 			}
-		}));
+		});
 	};
 
 	return (
@@ -78,22 +66,21 @@ export const Page: FC<PageOptions> = (options) => {
 					  minWidth={300}
 					  keyProperty={'id'}
 					  style={'master'}
-
+					  templateItem={({name, count}: {name: string, count: number}) => (
+						  <div className={'page__students_groups__item'}>
+							  <div>{name}</div>
+							  <div className={'page__students_groups__item_count'}>{count}</div>
+						  </div>
+					  )}
 				/>
 			</div>
 			<div className="page__students_detail_container">
 				<div className="page__students_detail_container_header">
 					{
-						selectedGroup
-							?
-							<div className="page__students_detail_container_title">
-								Группа
-								<span className={'page__students_detail_container_title-name'}> {selectedGroup}</span>
-							</div>
-							:
-							<div className="page__students_detail_container_title">
-								Все группы
-							</div>
+						<div className="page__students_detail_container_title">
+							Группа
+							<span className={'page__students_detail_container_title-name'}> {selectedGroup}</span>
+						</div>
 					}
 					<Button icon={'plus'} iconSize={'m'} onClick={openPopupCreateStudent}/>
 				</div>
@@ -106,7 +93,7 @@ export const Page: FC<PageOptions> = (options) => {
 					  source={SOURCE_STUDENTS}
 					  canSelected={false}
 					  filter={filterStudents}
-					  horizontalPaddings={'2xs'}
+					  horizontalPaddings={'xs'}
 					  templateItem={ItemTemplateStudent}
 				/>
 			</div>

@@ -1,19 +1,22 @@
 import { NavigationConfiguration, routeConfigType } from 'entities/pages';
 import { StudentPage } from 'pages/Students';
+import { TeacherPage } from 'pages/Teachers';
 import React from 'react';
-import {Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { DemoPage } from 'pages/DemoPage';
 
 export enum PAGES {
 	Main = 'main',
 	Students = 'students',
-	Demo = 'demo',
+	Teachers = 'teachers',
+	Demo = 'demo'
 }
 
 export const ROUTE_PAGE: Record<PAGES, string> = {
 	[PAGES.Main]: '/',
 	[PAGES.Students]: '/students',
-	[PAGES.Demo]: '/demo'
+	[PAGES.Demo]: '/demo',
+	[PAGES.Teachers]: '/teachers'
 };
 
 export const ROUTE_CONFIG: routeConfigType<PAGES> = {
@@ -34,6 +37,12 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
 			path: ROUTE_PAGE.demo,
 		},
 		content: DemoPage
+	},
+	[PAGES.Teachers]: {
+		routeProps: {
+			path: ROUTE_PAGE.teachers
+		},
+		content: TeacherPage
 	}
 };
 
@@ -45,8 +54,12 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
 	[PAGES.Students]: {
 		path: ROUTE_PAGE.students,
 		name: 'Студенты'
+	},
+	[PAGES.Teachers]: {
+		path: ROUTE_PAGE.teachers,
+		name: 'Преподаватели'
 	}
-}
+};
 
 export type RouteConfigType = typeof ROUTE_CONFIG;
 export type NavigationType = typeof NAVIGATION;
