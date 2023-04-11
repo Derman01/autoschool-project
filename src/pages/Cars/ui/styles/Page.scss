@@ -1,0 +1,9 @@
+.page__car {
+   padding: var(--offset-3xl);
+
+   &_cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+      gap: var(--offset-xl);
+   }
+}

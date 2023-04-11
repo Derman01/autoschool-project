@@ -21,7 +21,7 @@ export default class TeacherModel implements ITeacher {
 	constructor(data: ITeacher) {
 		this.id = data.id;
 		this.name = data.name;
-		this.surname = data.name;
+		this.surname = data.surname;
 		this.patronymic = data.patronymic;
 		this.phone = data.phone;
 		this.job = data.job;

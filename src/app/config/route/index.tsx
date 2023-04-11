@@ -1,14 +1,18 @@
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 import { NavigationConfiguration, routeConfigType } from 'entities/pages';
 import { StudentPage } from 'pages/Students';
 import { TeacherPage } from 'pages/Teachers';
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { CarsPage } from 'pages/Cars';
 import { DemoPage } from 'pages/DemoPage';
+import { CalendarPage } from 'pages/Сalendar';
 
 export enum PAGES {
 	Main = 'main',
 	Students = 'students',
 	Teachers = 'teachers',
+	Cars = 'cars',
+	Calendar = 'calendar',
 	Demo = 'demo'
 }
 
@@ -16,7 +20,9 @@ export const ROUTE_PAGE: Record<PAGES, string> = {
 	[PAGES.Main]: '/',
 	[PAGES.Students]: '/students',
 	[PAGES.Demo]: '/demo',
-	[PAGES.Teachers]: '/teachers'
+	[PAGES.Teachers]: '/teachers',
+	[PAGES.Cars]: '/cars',
+	[PAGES.Calendar]: '/calendar'
 };
 
 export const ROUTE_CONFIG: routeConfigType<PAGES> = {
@@ -43,6 +49,18 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
 			path: ROUTE_PAGE.teachers
 		},
 		content: TeacherPage
+	},
+	[PAGES.Cars]: {
+		routeProps: {
+			path: ROUTE_PAGE.cars
+		},
+		content: CarsPage
+	},
+	[PAGES.Calendar]: {
+		routeProps: {
+			path: ROUTE_PAGE.calendar
+		},
+		content: CalendarPage
 	}
 };
 
@@ -55,9 +73,17 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
 		path: ROUTE_PAGE.students,
 		name: 'Студенты'
 	},
+	[PAGES.Calendar]: {
+		path: ROUTE_PAGE.calendar,
+		name: 'Расписание'
+	},
 	[PAGES.Teachers]: {
 		path: ROUTE_PAGE.teachers,
 		name: 'Преподаватели'
+	},
+	[PAGES.Cars]: {
+		path: ROUTE_PAGE.cars,
+		name: 'Автомобили'
 	}
 };
 

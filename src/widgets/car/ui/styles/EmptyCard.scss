@@ -1,0 +1,26 @@
+.car__emptyCard {
+   background: var(--background-color);
+   padding: var(--offset-m) var(--offset-xl);
+   row-gap: var(--offset-xs);
+   border-radius: var(--border-radius-l);
+   box-shadow: 0 0 6px 0 var(--color-shadow);
+
+   display: flex;
+   align-items: center;
+
+   &_content {
+      width: 100%;
+      align-items: center;
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+   }
+
+   &_footer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+      font-weight: bold;
+   }
+}

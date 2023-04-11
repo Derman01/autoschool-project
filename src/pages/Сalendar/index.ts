@@ -1,0 +1,1 @@
+export {PageAsync as CalendarPage} from './ui/Page.async';
