@@ -73,10 +73,10 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
 		path: ROUTE_PAGE.students,
 		name: 'Студенты'
 	},
-	[PAGES.Calendar]: {
-		path: ROUTE_PAGE.calendar,
-		name: 'Расписание'
-	},
+	// [PAGES.Calendar]: {
+	// 	path: ROUTE_PAGE.calendar,
+	// 	name: 'Расписание'
+	// },
 	[PAGES.Teachers]: {
 		path: ROUTE_PAGE.teachers,
 		name: 'Преподаватели'
