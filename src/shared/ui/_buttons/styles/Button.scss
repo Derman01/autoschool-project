@@ -7,5 +7,26 @@
     display: flex;
     align-items: center;
     gap: 6px;
+
+    &-viewMode {
+      &_default {
+        padding: var(--offset-3xs) var(--offset-xl);
+        line-height: 24px;
+        border-radius: var(--border-radius-s);
+        font-size: 16px;
+      }
+    }
+
+    &-style {
+      &_primary {
+        background: var(--background-color-primary);
+        color: white;
+      }
+
+      &_unaccented {
+        background: var(--background-color-grey);
+        color: var(--text-color-unaccented)
+      }
+    }
   }
 }

@@ -1,8 +1,8 @@
 import './styles/Page.scss';
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
-import { View } from 'shared/ui/list';
+import { IViewRef, View } from 'shared/ui/list';
 import {
     FILTER_GROUP_INITIAL_STATE,
     SOURCE_GROUPS,
@@ -10,9 +10,8 @@ import {
 } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { Button } from 'shared/ui/buttons';
-import { PopupOpener } from 'shared/ui/popup';
-import { ContentCreateStudent } from './templates/contentCreateStudent';
-import { ContentCreateGroup } from 'pages/Students/ui/templates/contentCreateGroup';
+import { createGroup } from './helpers/createGroup';
+import { createStudent } from 'pages/Students/ui/helpers/createStudent';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -22,6 +21,9 @@ export const Page: FC<PageOptions> = (options) => {
     const [filterStudents, setFilterStudents] = useState(
         FILTER_GROUP_INITIAL_STATE
     );
+
+    const groupRef = useRef<IViewRef>(null);
+    const studentsRef = useRef<IViewRef>(null);
 
     const groupLoadCallback = (items: { name: string }[]) => {
         setSelectedGroup(items[0].name);
@@ -34,24 +36,11 @@ export const Page: FC<PageOptions> = (options) => {
         setSelectedGroup(item.name);
     };
 
-    const openPopupCreateGroup = () => {
-        PopupOpener.createModal({
-            templateOptions: {
-                headerTitle: 'Добавление группы',
-                width: 430,
-                bodyContent: <ContentCreateGroup />,
-            },
-        });
+    const afterCreateGroup = () => {
+        groupRef.current.reload();
     };
-
-    const openPopupCreateStudent = () => {
-        PopupOpener.createModal({
-            templateOptions: {
-                headerTitle: 'Добавление студента',
-                width: 430,
-                bodyContent: <ContentCreateStudent />,
-            },
-        });
+    const afterCreateStudent = () => {
+        studentsRef.current.reload();
     };
 
     return (
@@ -62,11 +51,13 @@ export const Page: FC<PageOptions> = (options) => {
                     <Button
                         iconSize={'m'}
                         icon={'plus'}
-                        onClick={openPopupCreateGroup}
+                        viewMode={'icon'}
+                        onClick={() => createGroup(afterCreateGroup)}
                     />
                 </div>
 
                 <View
+                    ref={groupRef}
                     source={SOURCE_GROUPS}
                     className={classNames('page__students_groups_list')}
                     dataLoadCallback={groupLoadCallback}
@@ -109,16 +100,18 @@ export const Page: FC<PageOptions> = (options) => {
                     }
                     <Button
                         icon={'plus'}
+                        viewMode={'icon'}
                         iconSize={'m'}
-                        onClick={openPopupCreateStudent}
+                        onClick={() => createStudent(afterCreateStudent)}
                     />
                 </div>
                 <div className="page__students_detail_headers">
                     <div>ФИО</div>
                     <div>Категории прав</div>
-                    <div>Оплата</div>
+                    <div>Оставшаяся плата</div>
                 </div>
                 <View
+                    ref={studentsRef}
                     className={classNames('page__students_detail')}
                     source={SOURCE_STUDENTS}
                     canSelected={false}

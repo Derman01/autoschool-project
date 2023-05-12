@@ -1,3 +1,1 @@
-export {
-	View
-} from './_list/View';
+export { View, IViewRef } from './_list/View';

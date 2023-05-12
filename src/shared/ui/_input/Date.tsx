@@ -1,22 +1,23 @@
 import { FC } from 'react';
-import './styles/Text.scss';
+import './styles/Date.scss';
 import { ComponentOptions } from 'shared/types';
 import { Field } from './Field';
 
-interface TextOptions extends ComponentOptions {
+interface DateOptions extends ComponentOptions {
     placeholder?: string;
     onChange?: (value: string) => void;
 }
 
-export const Text: FC<TextOptions> = (options) => {
+export const Date: FC<DateOptions> = (options) => {
     const { className, placeholder, onChange } = options;
 
     return (
         <Field
             onChange={onChange}
-            type={'text'}
-            className={className}
+            type={'date'}
             placeholder={placeholder}
+            className={className}
+            min={'2023-01-01'}
         />
     );
 };

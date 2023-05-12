@@ -1,1 +1,2 @@
-export { Menu, TDataForm } from './_form/Menu';
+export { Menu, TDataForm, MenuRef } from './_form/Menu';
+export { OpenForm } from './_form/Modal';

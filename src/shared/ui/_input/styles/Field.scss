@@ -1,0 +1,37 @@
+$label-color: #6d7885;
+
+input[type='date' i] {
+   height: 27px;
+}
+
+.Field {
+    &__fieldset {
+        border: 1px solid var(--color-border-fieldset);
+        border-radius: var(--border-radius-m);
+
+        &-focus {
+            border-color: var(--color-primary);
+        }
+    }
+
+    &__legend {
+        color: $label-color;
+        font-size: 13px;
+        margin-left: var(--offset-xl);
+
+        &-hidden {
+            width: 0;
+        }
+    }
+
+    &__input {
+        font-family: inherit;
+        width: 100%;
+        font-size: 16px;
+        padding: 0 var(--offset-xl) var(--offset-xs);
+
+        &::placeholder {
+            color: var(--color-grey);
+        }
+    }
+}
