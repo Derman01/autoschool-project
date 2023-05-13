@@ -3,32 +3,32 @@ import { FC, useRef, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { IViewRef, View } from 'shared/ui/list';
-import {
-    FILTER_GROUP_INITIAL_STATE,
-    SOURCE_GROUPS,
-    SOURCE_STUDENTS,
-} from './Constants';
+import { SOURCE_GROUPS, SOURCE_STUDENTS } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { Button } from 'shared/ui/buttons';
 import { createGroup } from './helpers/createGroup';
 import { createStudent } from 'pages/Students/ui/helpers/createStudent';
 import { Actions } from 'widgets/action';
 import { deleteStudent } from 'pages/Students/ui/helpers/deleteStudent';
+import { editStudent } from 'pages/Students/ui/helpers/editStudent';
+import { deleteGroup } from 'pages/Students/ui/helpers/deleteGroup';
+import { editGroup } from 'pages/Students/ui/helpers/editGroup';
 
 interface PageOptions extends ComponentOptions {}
 
 export const Page: FC<PageOptions> = (options) => {
     const { className } = options;
     const [selectedGroup, setSelectedGroup] = useState('');
-    const [filterStudents, setFilterStudents] = useState(
-        FILTER_GROUP_INITIAL_STATE
-    );
+    const [filterStudents, setFilterStudents] = useState({});
 
     const groupRef = useRef<IViewRef>(null);
     const studentsRef = useRef<IViewRef>(null);
 
-    const groupLoadCallback = (items: { name: string }[]) => {
+    const groupLoadCallback = (items: { name: string; id: string }[]) => {
         setSelectedGroup(items[0].name);
+        setFilterStudents({
+            group: items[0].id,
+        });
     };
 
     const changeFolderHandler = (item: { id: string; name: string }) => {
@@ -38,18 +38,12 @@ export const Page: FC<PageOptions> = (options) => {
         setSelectedGroup(item.name);
     };
 
-    const afterCreateGroup = () => {
-        groupRef.current.reload();
-    };
-    const afterCreateStudent = () => {
-        studentsRef.current.reload();
-    };
-
     const studentActions: Actions = [
         {
             id: 'edit',
             title: 'Редактировать',
-            handler: () => {
+            handler: (item) => {
+                editStudent(item, studentsRef.current.reload);
                 return Promise.resolve();
             },
         },
@@ -75,7 +69,51 @@ export const Page: FC<PageOptions> = (options) => {
                 },
                 {
                     id: 'print-1',
-                    title: 'Приказ на регистрацию группы для сдачи экзамена',
+                    title: 'Экзаменационная карточка водителя',
+                },
+                {
+                    id: 'print-2',
+                    title: 'Заявление в ГИБДД на получение государственной услуги экзамен - получение прав',
+                },
+            ],
+        },
+    ];
+
+    const groupActions: Actions = [
+        {
+            id: 'edit',
+            title: 'Редактировать',
+            handler: (item) => {
+                editGroup(item, groupRef.current.reload);
+                return Promise.resolve();
+            },
+        },
+        {
+            id: 'delete',
+            title: 'Удалить',
+            handler: (item) => {
+                return deleteGroup({
+                    id: item['id'],
+                }).then(() => {
+                    return groupRef.current.reload();
+                });
+            },
+        },
+        {
+            id: 'print',
+            title: 'Распечатать документ',
+            children: [
+                {
+                    id: 'print-1',
+                    title: 'Экзаменационный протокол',
+                },
+                {
+                    id: 'print-2',
+                    title: 'Справка о результатах экзамена ГИБДД',
+                },
+                {
+                    id: 'print-3',
+                    title: 'Заявление в ГИБДД на получение государственной услуги экзамен - получение прав',
                 },
             ],
         },
@@ -90,11 +128,12 @@ export const Page: FC<PageOptions> = (options) => {
                         iconSize={'m'}
                         icon={'plus'}
                         viewMode={'icon'}
-                        onClick={() => createGroup(afterCreateGroup)}
+                        onClick={() => createGroup(groupRef.current.reload)}
                     />
                 </div>
 
                 <View
+                    actions={groupActions}
                     ref={groupRef}
                     source={SOURCE_GROUPS}
                     className={classNames('page__students_groups_list')}
@@ -140,7 +179,9 @@ export const Page: FC<PageOptions> = (options) => {
                         icon={'plus'}
                         viewMode={'icon'}
                         iconSize={'m'}
-                        onClick={() => createStudent(afterCreateStudent)}
+                        onClick={() =>
+                            createStudent(studentsRef.current.reload)
+                        }
                     />
                 </div>
                 <div className="page__students_detail_headers">

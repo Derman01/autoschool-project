@@ -4,7 +4,6 @@ export class StudentModel {
         const names = this.name.split(' ');
         return `${this.surname} ${names[0]}.${names[1]}.`;
     }
-
     public get getFullName() {
         return `${this.surname} ${this.name} ${this.patronymic}`;
     }

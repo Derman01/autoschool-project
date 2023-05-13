@@ -19,6 +19,7 @@ interface FieldOptions extends ComponentOptions {
     min?: string | number;
     max?: string | number;
     fieldTemplate?: ReactElement;
+    value?: string;
     onChange?: (value: string) => void;
 }
 
@@ -27,8 +28,16 @@ export interface FieldRef {
 }
 
 export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
-    const { className, placeholder, type, min, max, fieldTemplate, onChange } =
-        options;
+    const {
+        className,
+        placeholder,
+        type,
+        min,
+        max,
+        fieldTemplate,
+        value,
+        onChange,
+    } = options;
 
     const [focus, setFocus] = useState(false);
     const [visibleLabel, setVisibleLabel] = useState<boolean>(false);
@@ -67,6 +76,7 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
                     fieldTemplate
                 ) : (
                     <input
+                        defaultValue={value}
                         className={'Field__input'}
                         onChange={(e) => onChange(e.target.value)}
                         type={visibleLabel ? type : 'text'}

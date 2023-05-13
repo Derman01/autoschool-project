@@ -10,9 +10,16 @@ interface IModalProps extends ComponentOptions {
     data: TDataForm;
     onResult: (data: object) => void;
     popupConfig: { id: string };
+    buttonActionText?: string;
 }
 const Modal: FC<IModalProps> = (props) => {
-    const { data, className, onResult, popupConfig } = props;
+    const {
+        data,
+        className,
+        onResult,
+        popupConfig,
+        buttonActionText = 'Добавить',
+    } = props;
 
     const menuRef = useRef<MenuRef>(null);
 
@@ -29,7 +36,7 @@ const Modal: FC<IModalProps> = (props) => {
         <div className={classNames(['form-Popup', className])}>
             <Menu data={data} ref={menuRef} />
             <div className={'form-Popup__buttons'}>
-                <Button onClick={onAddClickHandler} title={'Добавить'} />
+                <Button onClick={onAddClickHandler} title={buttonActionText} />
                 <Button style={'unaccented'} onClick={close} title={'Отмена'} />
             </div>
         </div>

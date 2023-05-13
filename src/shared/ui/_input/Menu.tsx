@@ -14,10 +14,11 @@ interface MenuOptions extends ComponentOptions {
     placeholder?: string;
     source?: IData;
     onChange?: (value: any) => void;
+    value?: any;
 }
 
 export const Menu: FC<MenuOptions> = (options) => {
-    const { source, onChange } = options;
+    const { source, onChange, value = 'null' } = options;
     const [items, setItems] = useState([]);
     const fieldRef = useRef<FieldRef>(null);
 
@@ -44,7 +45,7 @@ export const Menu: FC<MenuOptions> = (options) => {
             fieldTemplate={
                 <select
                     className={'Field__input'}
-                    defaultValue={'null'}
+                    defaultValue={value}
                     onChange={onChangeHandler}
                 >
                     <option disabled value={'null'}>

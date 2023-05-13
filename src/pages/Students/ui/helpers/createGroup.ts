@@ -1,16 +1,14 @@
 import { OpenForm } from 'shared/ui/form';
 import { Server } from 'shared/lib/source';
-import { StudentDataForm } from 'pages/Students/ui/helpers/Constants';
+import { GroupDataForm } from 'pages/Students/ui/helpers/Constants';
 
-export const createStudent = (afterCreate: () => void) => {
+export const createGroup = (afterCreate: () => void) => {
     const onResult = (data: object) => {
         return new Server({
-            endpoint: 'students',
+            endpoint: 'groups',
         })
             .call('create', {
                 ...data,
-                gearbox_type: 'manual',
-                photo_path: 'pic.txt',
             })
             .then(() => afterCreate());
     };
@@ -18,10 +16,10 @@ export const createStudent = (afterCreate: () => void) => {
     OpenForm(
         {
             width: 430,
-            headerTitle: 'Добавить студента',
+            headerTitle: 'Добавить группу',
         },
         {
-            data: StudentDataForm,
+            data: GroupDataForm,
             onResult,
         }
     );
