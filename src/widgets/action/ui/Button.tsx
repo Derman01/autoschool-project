@@ -11,7 +11,7 @@ interface ButtonOptions extends ComponentOptions {
 }
 
 export const Button: FC<ButtonOptions> = (options) => {
-    const { source, item } = options;
+    const { source, item, className } = options;
 
     const onClick = useCallback(() => {
         OpenMenu({
@@ -22,6 +22,7 @@ export const Button: FC<ButtonOptions> = (options) => {
 
     return (
         <UIButton
+            className={className}
             icon={'action'}
             viewMode={'icon'}
             iconSize={'m'}

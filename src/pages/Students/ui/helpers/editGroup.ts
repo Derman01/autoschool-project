@@ -17,7 +17,7 @@ export const editGroup = (data: object, afterCreate?: () => void) => {
     OpenForm(
         {
             width: 430,
-            headerTitle: 'Редактировать группу',
+            headerTitle: 'Редактирование',
         },
         {
             data: getGroupDataWithValue(data),

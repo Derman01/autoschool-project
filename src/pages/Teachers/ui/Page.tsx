@@ -6,7 +6,10 @@ import { IViewRef, View } from 'shared/ui/list';
 import { Server } from 'shared/lib/source';
 import TeacherModel from '../models/TeacherModel';
 import { Button } from 'shared/ui/buttons';
-import { createTeacher } from 'pages/Teachers/ui/helper/createTeacher';
+import { Actions } from 'widgets/action';
+import { editTeacher } from './helpers/editTeacher';
+import { createTeacher } from './helpers/createTeacher';
+import { deleteTeacher } from './helpers/deleteTeacher';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -18,6 +21,30 @@ const Page: FC<PageOptions> = (options) => {
         endpoint: 'instructors',
         model: TeacherModel,
     });
+
+    const actions: Actions = [
+        {
+            id: 'edit',
+            title: 'Редактировать',
+            handler: (item) => {
+                editTeacher(item, listRef.current.reload);
+                return Promise.resolve();
+            },
+        },
+        {
+            id: 'delete',
+            title: 'Удалить',
+            handler: (item) => {
+                return deleteTeacher(item).then(() => {
+                    return listRef.current.reload();
+                });
+            },
+        },
+        {
+            id: 'print',
+            title: 'Респечатать путевой лист',
+        },
+    ];
 
     return (
         <div className={classNames(['page__teacher', className])}>
@@ -38,6 +65,7 @@ const Page: FC<PageOptions> = (options) => {
                     <div>Номер телефона</div>
                 </div>
                 <View
+                    actions={actions}
                     ref={listRef}
                     source={source}
                     canSelected={false}

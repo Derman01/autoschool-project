@@ -4,7 +4,10 @@ import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { Server } from 'shared/lib/source';
 import { CarCard, CarModel, EmptyCardCar } from 'widgets/car';
-import { createCar } from 'pages/Cars/ui/helpers/createCar';
+import { Actions } from 'widgets/action';
+import { createCar } from './helpers/createCar';
+import { editCar } from './helpers/editCar';
+import { deleteCar } from './helpers/deleteCar';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -15,7 +18,6 @@ const Page: FC<PageOptions> = (options) => {
     const loadCars = () => {
         new Server({
             endpoint: 'cars',
-            model: CarModel,
         })
             .query()
             .then((cars: CarModel[]) => {
@@ -27,13 +29,36 @@ const Page: FC<PageOptions> = (options) => {
         loadCars();
     }, []);
 
+    const actions: Actions = [
+        {
+            id: 'edit',
+            title: 'Редактировать',
+            handler: (item) => {
+                editCar(item, loadCars);
+                return Promise.resolve();
+            },
+        },
+        {
+            id: 'remove',
+            title: 'Удалить',
+            handler: (item) => {
+                return deleteCar(item).then(loadCars);
+            },
+        },
+        {
+            id: 'print',
+            title: 'Печать документа “Карточка учета вождения автомобиля”',
+        },
+    ];
+
     return (
         <div className={classNames(['page__car', className])}>
             <div className="page__car_cards">
                 <EmptyCardCar actionHandler={() => createCar(loadCars)} />
-                {cars.length
-                    ? cars.map((car) => <CarCard key={car.id} item={car} />)
-                    : ''}
+                {cars.length &&
+                    cars.map((car) => (
+                        <CarCard actions={actions} key={car.id} item={car} />
+                    ))}
             </div>
         </div>
     );

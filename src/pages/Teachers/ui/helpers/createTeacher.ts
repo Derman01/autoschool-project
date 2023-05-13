@@ -1,14 +1,16 @@
 import { OpenForm } from 'shared/ui/form';
 import { Server } from 'shared/lib/source';
-import { CarDataForm } from '../helpers/Constants';
+import { TeacherDataForm } from './Constants';
 
-export const createCar = (afterCreate: () => void) => {
+export const createTeacher = (afterCreate: () => void) => {
     const onResult = (data: object) => {
         return new Server({
-            endpoint: 'cars',
+            endpoint: 'instructors',
         })
             .call('create', {
                 ...data,
+                job: 'null',
+                photo_path: 'pic.png',
             })
             .then(() => afterCreate());
     };
@@ -16,10 +18,10 @@ export const createCar = (afterCreate: () => void) => {
     OpenForm(
         {
             width: 430,
-            headerTitle: 'Добавить автомобиль',
+            headerTitle: 'Добавить инструктора',
         },
         {
-            data: CarDataForm,
+            data: TeacherDataForm,
             onResult,
         }
     );

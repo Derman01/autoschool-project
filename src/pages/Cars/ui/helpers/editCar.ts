@@ -1,18 +1,15 @@
 import { OpenForm } from 'shared/ui/form';
 import { Server } from 'shared/lib/source';
-import { getStudentDataWithValue } from './Constants';
+import { getDataWithValue, CarDataForm } from './Constants';
 
-export const editStudent = (data: object, afterCreate?: () => void) => {
+export const editCar = (data: object, afterCreate?: () => void) => {
     const onResult = (newData: object) => {
         return new Server({
-            endpoint: 'students',
+            endpoint: 'cars',
         })
             .call('update', {
                 ...data,
                 ...newData,
-
-                gearbox_type: 'manual',
-                photo_path: 'pic.txt',
             })
             .then(() => afterCreate && afterCreate());
     };
@@ -23,7 +20,7 @@ export const editStudent = (data: object, afterCreate?: () => void) => {
             headerTitle: 'Редактирование',
         },
         {
-            data: getStudentDataWithValue(data),
+            data: getDataWithValue(CarDataForm, data),
             onResult,
             buttonActionText: 'Редактировать',
         }
