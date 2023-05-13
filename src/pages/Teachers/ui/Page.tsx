@@ -1,98 +1,23 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import './styles/Page.scss';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
-import { View } from 'shared/ui/list';
+import { IViewRef, View } from 'shared/ui/list';
 import { Server } from 'shared/lib/source';
 import TeacherModel from '../models/TeacherModel';
 import { Button } from 'shared/ui/buttons';
-import { PopupOpener } from 'shared/ui/popup';
-import { Menu, TDataForm } from 'shared/ui/form';
+import { createTeacher } from 'pages/Teachers/ui/helper/createTeacher';
 
 interface PageOptions extends ComponentOptions {}
 
 const Page: FC<PageOptions> = (options) => {
     const { className } = options;
+    const listRef = useRef<IViewRef>(null);
+
     const source = new Server({
         endpoint: 'instructors',
         model: TeacherModel,
     });
-
-    const data: TDataForm = [
-        {
-            id: 'Surname',
-            type: 'text',
-            options: {
-                placeholder: 'Фамилия',
-            },
-        },
-        {
-            id: 'Name',
-            type: 'text',
-            options: {
-                placeholder: 'Имя',
-            },
-        },
-        {
-            id: 'SecondName',
-            type: 'text',
-            options: {
-                placeholder: 'Отчество',
-            },
-        },
-        {
-            id: 'dolgnost',
-            type: 'text',
-            options: {
-                placeholder: 'Должность',
-            },
-        },
-        {
-            id: 'education',
-            type: 'text',
-            options: {
-                placeholder: 'Образование',
-            },
-        },
-        {
-            id: 'udo',
-            type: 'text',
-            options: {
-                placeholder: 'Удостоверение',
-            },
-        },
-        {
-            id: 'category',
-            type: 'text',
-            options: {
-                placeholder: 'Категория',
-            },
-        },
-        {
-            id: 'vodudo',
-            type: 'text',
-            options: {
-                placeholder: 'Водительское удостоверение',
-            },
-        },
-        {
-            id: 'phone',
-            type: 'text',
-            options: {
-                placeholder: 'Телефон',
-            },
-        },
-    ];
-
-    const openModalCreateTeacher = () => {
-        PopupOpener.createModal({
-            templateOptions: {
-                bodyContent: <Menu data={data} />,
-                width: 500,
-                headerTitle: 'Добавление преподавателя',
-            },
-        });
-    };
 
     return (
         <div className={classNames(['page__teacher', className])}>
@@ -105,7 +30,7 @@ const Page: FC<PageOptions> = (options) => {
                         icon={'plus'}
                         viewMode={'icon'}
                         iconSize={'m'}
-                        onClick={openModalCreateTeacher}
+                        onClick={() => createTeacher(listRef.current.reload)}
                     />
                 </div>
                 <div className="page__teacher_list__header">
@@ -113,6 +38,7 @@ const Page: FC<PageOptions> = (options) => {
                     <div>Номер телефона</div>
                 </div>
                 <View
+                    ref={listRef}
                     source={source}
                     canSelected={false}
                     horizontalPaddings={'xs'}

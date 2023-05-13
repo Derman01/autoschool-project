@@ -1,12 +1,12 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import './styles/Card.scss';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { Button } from 'shared/ui/buttons';
-import { PopupOpener } from 'shared/ui/popup';
-import { Menu, TDataForm } from 'shared/ui/form';
 
-interface CardOptions extends ComponentOptions {}
+interface CardOptions extends ComponentOptions {
+    actionHandler: () => void;
+}
 
 const SVG = () => (
     <svg
@@ -40,40 +40,7 @@ const SVG = () => (
 );
 
 export const Card: FC<CardOptions> = (options) => {
-    const { className } = options;
-    const data: TDataForm = [
-        {
-            id: 'model',
-            type: 'text',
-            options: {
-                placeholder: 'Модель автомобиля',
-            },
-        },
-        {
-            id: 'number',
-            type: 'text',
-            options: {
-                placeholder: 'Гос. номер',
-            },
-        },
-        {
-            id: 'prepod',
-            type: 'text',
-            options: {
-                placeholder: 'Преподаватель',
-            },
-        },
-    ];
-
-    const openModelCreateCar = useCallback(() => {
-        PopupOpener.createModal({
-            templateOptions: {
-                bodyContent: <Menu data={data} />,
-                headerTitle: 'Добавить автомобиль',
-                width: 430,
-            },
-        });
-    }, []);
+    const { className, actionHandler } = options;
 
     return (
         <div className={classNames(['car__emptyCard', className])}>
@@ -82,7 +49,7 @@ export const Card: FC<CardOptions> = (options) => {
                 <div className="car__emptyCard_footer">
                     <div>Добавить новый автомобиль</div>
                     <Button
-                        onClick={openModelCreateCar}
+                        onClick={actionHandler}
                         icon={'plus'}
                         viewMode={'icon'}
                         iconSize={'m'}

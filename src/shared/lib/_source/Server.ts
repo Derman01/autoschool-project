@@ -45,12 +45,16 @@ export class Server implements IData {
                 params,
             })
             .then((data: AxiosResponse<Response>) => {
-                if (data.data.items?.length) {
-                    return data.data.items.map((item) => {
-                        return new this.$model(item) as IItemData;
-                    });
+                if (data.data.success) {
+                    if (data.data.items?.length) {
+                        return data.data.items.map((item) => {
+                            return new this.$model(item) as IItemData;
+                        });
+                    } else {
+                        return data.data.items;
+                    }
                 } else {
-                    return data.data.items;
+                    alert(data.data.message);
                 }
             });
     }

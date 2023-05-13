@@ -1,22 +1,5 @@
-interface IStudent {
-    id: string;
-    payment_needed: number;
-    group_id: 1;
-    group_name: string;
-    name: string;
-    surname: string;
-    birthday: string;
-    photo_path: string;
-    phone: string;
-    address: string;
-    studying_start_date: string;
-    studying_end_date: string;
-    examen_date: string;
-    instructor_id: 1;
-    patronymic: string;
-}
-
-export class StudentModel implements IStudent {
+export class StudentModel {
+    [key: string | number]: any;
     public get ShortName() {
         const names = this.name.split(' ');
         return `${this.surname} ${names[0]}.${names[1]}.`;
@@ -26,28 +9,9 @@ export class StudentModel implements IStudent {
         return `${this.surname} ${this.name} ${this.patronymic}`;
     }
 
-    constructor(data: IStudent) {
-        this.id = data.id;
-        this.surname = data.surname;
-        this.name = data.name;
-        this.group_name = data.group_name;
-        this.payment_needed = data.payment_needed;
-        this.patronymic = data.patronymic;
+    constructor(data: { [key: string | number]: any }) {
+        Object.keys(data).forEach((key: string | number) => {
+            this[key] = data[key];
+        });
     }
-
-    address: string;
-    birthday: string;
-    examen_date: string;
-    group_id: 1;
-    group_name: string;
-    id: string;
-    instructor_id: 1;
-    name: string;
-    payment_needed: number;
-    phone: string;
-    photo_path: string;
-    studying_end_date: string;
-    studying_start_date: string;
-    surname: string;
-    patronymic: string;
 }

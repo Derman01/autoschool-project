@@ -1,32 +1,37 @@
 @mixin icon_svg($name) {
-  content: url('~shared/assets/icons/' + $name + '.svg');
+    content: url('~shared/assets/icons/' + $name + '.svg');
 }
 
 .Icon {
-  width: 32px;
-  height: 32px;
-  position: relative;
+    width: 32px;
+    height: 32px;
+    position: relative;
 
-  &-plus {
-    @include icon_svg('plus');
-  }
-
-  &-close {
-    @include icon_svg('close')
-  }
-  &-plus-group {
-    @include icon_svg('plus-group')
-  }
-
-  &-size_ {
-    &s {
-      width: 16px;
-      height: 16px;
+    &-plus {
+        @include icon_svg('plus');
     }
 
-    &m {
-      width: 20px;
-      height: 20px;
+    &-close {
+        @include icon_svg('close');
     }
-  }
+
+    &-plus-group {
+        @include icon_svg('plus-group');
+    }
+
+    &-action {
+        @include icon_svg('action');
+    }
+
+    &-size_ {
+        &s {
+            width: 16px;
+            height: 16px;
+        }
+
+        &m {
+            width: 20px;
+            height: 20px;
+        }
+    }
 }

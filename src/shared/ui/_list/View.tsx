@@ -12,6 +12,7 @@ import { TypeItem } from './Interface';
 import { IData } from 'shared/lib/_source/IData';
 import Item from './Items';
 import { classNames } from 'shared/lib/helpers';
+import { Actions } from 'widgets/action';
 
 interface ViewOptions extends ComponentOptions {
     source: IData;
@@ -27,10 +28,12 @@ interface ViewOptions extends ComponentOptions {
     horizontalPaddings?: 'm' | 's' | 'xs' | '2xs' | 'l';
     selectedChanged?: (item: TypeItem) => void;
     dataLoadCallback?: (items: TypeItem) => void;
+    actions?: Actions;
+    canHover?: boolean;
 }
 
 export interface IViewRef {
-    reload: () => void;
+    reload: () => Promise<any>;
 }
 
 export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
@@ -46,7 +49,9 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
         style = 'list',
         canSelected = true,
         selectedChanged,
+        canHover = true,
         horizontalPaddings = 'm',
+        actions,
     } = options;
 
     useImperativeHandle(ref, () => ({
@@ -92,6 +97,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
                 <div className={'list__View_container'}>
                     {items.map((item) => (
                         <Item
+                            actions={actions}
                             key={item[keyProperty]}
                             item={item}
                             templateItem={templateItem}
@@ -102,7 +108,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
                                     selected:
                                         item[keyProperty] === selectedKey &&
                                         canSelected,
-                                    unselect: !canSelected,
+                                    unselect: !canHover,
                                     horizontalPaddings,
                                 },
                                 [style]

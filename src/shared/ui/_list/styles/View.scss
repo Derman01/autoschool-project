@@ -1,60 +1,69 @@
 .list__View {
-   max-height: 100%;
-   overflow-y: auto;
-   overflow-x: hidden;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-   &_container {
-      display: flex;
-      flex-direction: column;
-      padding: 6px;
-      gap: 6px;
-   }
+    &_container {
+        display: flex;
+        flex-direction: column;
+        padding: 6px;
+        gap: 6px;
+    }
 
-   &_item {
-      font-size: 16px;
-      padding: var(--offset-xs) var(--offset-m);
-      position: relative;
-      display: flex;
-      align-items: center;
-      border-radius: var(--border-radius-s);
+    &_item {
+        position: relative;
+        font-size: 16px;
+        padding: var(--offset-xs) var(--offset-m);
+        display: flex;
+        align-items: center;
+        border-radius: var(--border-radius-s);
 
-      &-horizontalPaddings {
-         &_l {
-            padding-left: var(--offset-l);
-            padding-right: var(--offset-l);
-         }
+        &Actions {
+            position: absolute;
+            right: 12px;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+        }
 
-         &_m {
-            padding-left: var(--offset-m);
-            padding-right: var(--offset-m);
-         }
+        &-horizontalPaddings {
+            &_l {
+                padding-left: var(--offset-l);
+                padding-right: var(--offset-l);
+            }
 
-         &_s {
-            padding-left: var(--offset-s);
-            padding-right: var(--offset-s);
-         }
+            &_m {
+                padding-left: var(--offset-m);
+                padding-right: var(--offset-m);
+            }
 
-         &_xs {
-            padding-left: var(--offset-xs);
-            padding-right: var(--offset-xs);
-         }
+            &_s {
+                padding-left: var(--offset-s);
+                padding-right: var(--offset-s);
+            }
 
-         &_2xs {
-            padding-left: var(--offset-2xs);
-            padding-right: var(--offset-2xs);
-         }
-      }
+            &_xs {
+                padding-left: var(--offset-xs);
+                padding-right: var(--offset-xs);
+            }
 
-      &-selected {
-         font-weight: bold;
-         background: var(--background-color);
-         box-shadow: 0 0 6px var(--color-shadow);
-      }
+            &_2xs {
+                padding-left: var(--offset-2xs);
+                padding-right: var(--offset-2xs);
+            }
+        }
 
-      &:hover:not(&-unselect) {
-         cursor: pointer;
-         background: var(--background-color);
-         box-shadow: 0 0 6px var(--color-shadow);
-      }
-   }
+        &-selected {
+            font-weight: bold;
+            background: var(--background-color);
+            box-shadow: 0 0 6px var(--color-shadow);
+        }
+
+        &:hover:not(&-unselect) {
+            cursor: pointer;
+            background: var(--background-color);
+            box-shadow: 0 0 6px var(--color-shadow);
+        }
+    }
 }
