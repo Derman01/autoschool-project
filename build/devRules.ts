@@ -11,13 +11,13 @@ const devRules = (options: BuildOptions): webpack.RuleSetRule[] => {
     const styleLoader: webpack.RuleSetRule = {
         test: /\.s[ac]ss$/i,
         use: [
-            'styles-loader',
+            'style-loader',
             {
                 loader: 'css-loader',
                 options: {
                     modules: {
                         auto: (fileName: string) =>
-                            !!fileName.includes('.models.'),
+                            !!fileName.includes('.module.'),
                         localIdentName: options.isDev
                             ? '[path][name]__[local]--[hash:base64:5]'
                             : '[hash:base64:8]',
