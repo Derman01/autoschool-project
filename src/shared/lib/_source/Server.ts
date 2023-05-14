@@ -27,6 +27,16 @@ interface IServerData {
 
 const API_URL = 'https://autoschool.evgfilim1.me/api/';
 
+export const downloadFile = (nameDoc: string, params: {[key: string| number]: any}) => {
+    const stringParams = Object.keys(params)
+        .map((key) => {
+            return `${key}=${params[key]}`;
+        })
+        .join('&');
+
+    window.open(API_URL + 'documents/' + nameDoc + '/create?' + stringParams);
+};
+
 export class Server implements IData {
     $endpoint: string;
     $binding: IMethods | undefined;

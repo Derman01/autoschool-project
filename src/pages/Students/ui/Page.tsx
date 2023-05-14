@@ -14,6 +14,7 @@ import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { StudentModel } from '../models/StudentModel';
 import { PopupOpener } from 'shared/ui/popup';
 import { PaymentList } from 'widgets/payments';
+import { downloadFile, Model, Server } from "shared/lib/source";
 
 interface PageOptions extends ComponentOptions {}
 
@@ -85,6 +86,12 @@ export const Page: FC<PageOptions> = (options) => {
                 {
                     id: 'print-0',
                     title: 'Акт о выполнении и оказания услуг по договору',
+                    handler: (item) => {
+                        downloadFile('service-performance-act', {
+                            student_id: item.id
+                        })
+                        return Promise.resolve();
+                    },
                 },
                 {
                     id: 'print-1',

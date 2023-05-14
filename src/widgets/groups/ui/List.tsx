@@ -6,6 +6,7 @@ import { GROUP_SOURCE } from './helper/Constants';
 import { createGroup } from './helper/createGroup';
 import { editGroup } from './helper/editGroup';
 import { deleteGroup } from './helper/deleteGroup';
+import { downloadFile } from "shared/lib/source";
 
 interface IListGroupProps {
     dataLoadCallback?: (items: any[]) => void;
@@ -42,6 +43,12 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
                 {
                     id: 'print-1',
                     title: 'Экзаменационный протокол',
+                    handler: (item) => {
+                      downloadFile('registration-order', {
+                        group_id: item.id
+                      });
+                      return Promise.resolve();
+                    }
                 },
                 {
                     id: 'print-2',
