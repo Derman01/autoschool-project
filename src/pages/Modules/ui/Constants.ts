@@ -17,7 +17,7 @@ export const MODULE_DATA_FORM: TDataForm = [
     },
     {
         id: 'description',
-        type: 'text',
+        type: 'textArea',
         options: { placeholder: 'Описание' },
     },
 ];

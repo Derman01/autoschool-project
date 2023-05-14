@@ -1,14 +1,15 @@
-import { TDataForm } from 'shared/ui/_form/Menu';
-import { Server } from 'shared/lib/_source/Server';
+import { Memory, Server } from 'shared/lib/source';
+import { StudentModel } from '../models/Model';
+import { TDataForm } from 'shared/ui/form';
 import { GROUP_SOURCE } from 'widgets/groups';
-import InstructorModel from '../../models/InstructorModel';
-import { Memory } from 'shared/lib/source';
+import InstructorModel from 'pages/Students/models/InstructorModel';
 
 export const STUDENT_SOURCE = new Server({
     endpoint: 'students',
+    model: StudentModel,
 });
 
-export const StudentDataForm: TDataForm = [
+export const STUDENTS_DATA_FORM: TDataForm = [
     {
         id: 'surname',
         type: 'text',

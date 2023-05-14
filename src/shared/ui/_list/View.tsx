@@ -74,7 +74,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
     useEffect(() => {
         sourceQuery().then((items) => {
             if (autoSelected) {
-                setSelectedKey(items.at(0)?.[keyProperty] || null);
+                setSelectedKey(items?.at(0)?.[keyProperty] || null);
             }
         });
     }, [filter]);
@@ -93,7 +93,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
             style={{ minWidth: minWidth + 'px' }}
         >
             {' '}
-            {items.length ? (
+            {items?.length ? (
                 <div className={'list__View_container'}>
                     {items.map((item) => (
                         <Item

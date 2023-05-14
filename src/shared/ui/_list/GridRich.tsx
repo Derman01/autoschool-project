@@ -1,23 +1,24 @@
 import { forwardRef } from 'react';
 import './styles/RichView.scss';
-import { ViewOptions, View, IViewRef } from './View';
+import { IViewRef } from './View';
 import { ComponentOptions } from 'shared/types';
 import { Container } from './Container';
+import { Grid, GridOptions } from './Grid';
 
-interface RichViewOptions extends ComponentOptions {
+interface RichGridOptions extends ComponentOptions {
     contrastBackground?: boolean;
     headerTitle: string;
     addingCallback: () => void;
-    listOptions: ViewOptions;
+    gridOptions: GridOptions;
 }
 
-export const RichView = forwardRef<IViewRef, RichViewOptions>(
+export const RichGrid = forwardRef<IViewRef, RichGridOptions>(
     (options, ref) => {
         const {
             className,
             headerTitle,
             addingCallback,
-            listOptions,
+            gridOptions,
             contrastBackground = true,
         } = options;
 
@@ -28,12 +29,7 @@ export const RichView = forwardRef<IViewRef, RichViewOptions>(
                 contrastBackground={contrastBackground}
                 addingCallback={addingCallback}
             >
-                <View
-                    ref={ref}
-                    horizontalPaddings={'xs'}
-                    canSelected={false}
-                    {...listOptions}
-                />
+                <Grid ref={ref} {...gridOptions} />
             </Container>
         );
     }

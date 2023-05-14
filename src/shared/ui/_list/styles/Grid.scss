@@ -1,0 +1,16 @@
+.list__grid {
+    &__item {
+        display: grid;
+        width: 100%;
+    }
+
+    &__headers {
+        display: grid;
+        width: 100%;
+        padding: var(--offset-s) var(--offset-l) var(--offset-xs);
+        align-items: center;
+        grid-auto-flow: column;
+        color: var(--text-color-unaccented);
+        font-size: 14px;
+    }
+}

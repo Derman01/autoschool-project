@@ -1,10 +1,10 @@
 import { FC, useRef } from 'react';
 import './styles/List.scss';
 import { ComponentOptions } from 'shared/types';
-import { IViewRef, RichGrid } from 'shared/ui/list';
-import { COURSES_SOURCE } from './Constants';
-import { createCourse, deleteCourse, editCourse } from './helper';
-import { CoursesModel } from '../models/Model';
+import { IViewRef, RichView } from 'shared/ui/list';
+import { STUDENT_SOURCE } from './Constants';
+import { createStudent, deleteStudent, editStudent } from './helper';
+import { StudentModel } from '../models/Model';
 import { Label } from 'shared/ui/input';
 import { Actions } from 'widgets/action';
 
@@ -16,7 +16,7 @@ export interface ListOptions extends ComponentOptions {
     filter?: IFilter;
 }
 
-const TemplateItem: FC = (item: CoursesModel) => {
+const TemplateItem: FC = (item: StudentModel) => {
     return (
         <div>
             <div>
@@ -42,47 +42,28 @@ export const List: FC<ListOptions> = (options) => {
             id: 'edit',
             title: 'Редактировать',
             handler: (item) => {
-                return editCourse(item, ref.current.reload);
+                return editStudent(item, ref.current.reload);
             },
         },
         {
             id: 'delete',
             title: 'Удалить',
             handler: (item) => {
-                return deleteCourse(item).then(ref.current.reload);
+                return deleteStudent(item).then(ref.current.reload);
             },
         },
     ];
 
     return (
-        <RichGrid
+        <RichView
             ref={ref}
             className={className}
             headerTitle={'Курсы'}
-            addingCallback={() => createCourse(ref.current.reload)}
-            gridOptions={{
-                captions: [
-                    {
-                        title: 'Название',
-                        width: '1fr',
-                    },
-                    {
-                        title: 'Категория',
-                        width: '200px',
-                    },
-                    {
-                        title: 'Стоимость',
-                        width: '200px',
-                    },
-                ],
-                columns: [
-                    (item: CoursesModel) => <>{item.name}</>,
-                    (item: CoursesModel) => <>{item.category}</>,
-                    (item: CoursesModel) => <>{item.price}</>,
-                ],
+            addingCallback={() => createStudent(ref.current.reload)}
+            listOptions={{
                 actions,
                 filter,
-                source: COURSES_SOURCE,
+                source: STUDENT_SOURCE,
                 templateItem: TemplateItem,
             }}
         />

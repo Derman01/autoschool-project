@@ -48,12 +48,15 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
         setVisibleLabel,
     }));
 
-    const onFocusOut = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.value) {
-            setVisibleLabel(false);
-        }
-        setFocus(false);
-    }, []);
+    const onFocusOut = useCallback(
+        (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            if (!e.target.value) {
+                setVisibleLabel(false);
+            }
+            setFocus(false);
+        },
+        []
+    );
 
     const onFocusIn = useCallback(() => {
         setVisibleLabel(true);
@@ -76,6 +79,16 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
                 </legend>
                 {type === 'custom' ? (
                     fieldTemplate
+                ) : type === 'textArea' ? (
+                    <textarea
+                        defaultValue={value}
+                        className={'Field__input'}
+                        onChange={(e) => onChange(e.target.value)}
+                        onBlur={onFocusOut}
+                        autoFocus={focus}
+                        onFocus={onFocusIn}
+                        placeholder={visibleLabel ? '' : placeholder}
+                    />
                 ) : (
                     <input
                         defaultValue={value}

@@ -38,31 +38,29 @@ export const Menu: FC<MenuOptions> = (options) => {
         []
     );
 
-    return (
+    return items?.length ? (
         <Field
             ref={fieldRef}
             type={'custom'}
             {...options}
             fieldTemplate={
-                items.length ? (
-                    <select
-                        className={'Field__input'}
-                        defaultValue={value}
-                        onChange={onChangeHandler}
-                    >
-                        <option disabled value={'null'}>
-                            {options.placeholder}
+                <select
+                    className={'Field__input'}
+                    defaultValue={value}
+                    onChange={onChangeHandler}
+                >
+                    <option disabled value={'null'}>
+                        {options.placeholder}
+                    </option>
+                    {items.map((item) => (
+                        <option key={item.id} value={item.id}>
+                            {item.title}
                         </option>
-                        {items.map((item) => (
-                            <option key={item.id} value={item.id}>
-                                {item.title}
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <></>
-                )
+                    ))}
+                </select>
             }
         />
+    ) : (
+        <div></div>
     );
 };

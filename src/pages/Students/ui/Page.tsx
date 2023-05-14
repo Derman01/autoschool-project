@@ -11,6 +11,9 @@ import { deleteStudent } from './helpers/deleteStudent';
 import { editStudent } from './helpers/editStudent';
 import { SOURCE_STUDENTS } from './Constants';
 import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
+import { StudentModel } from '../models/StudentModel';
+import { PopupOpener } from 'shared/ui/popup';
+import { PaymentList } from 'widgets/payments';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -40,8 +43,7 @@ export const Page: FC<PageOptions> = (options) => {
             id: 'edit',
             title: 'Редактировать',
             handler: (item) => {
-                editStudent(item, studentsRef.current.reload);
-                return Promise.resolve();
+                return editStudent(item, studentsRef.current.reload);
             },
         },
         {
@@ -54,6 +56,26 @@ export const Page: FC<PageOptions> = (options) => {
                 }).then(() => {
                     return studentsRef.current.reload();
                 });
+            },
+        },
+        {
+            id: 'payments',
+            title: 'Открыть платежи',
+            handler: (item: StudentModel) => {
+                PopupOpener.createModal({
+                    templateOptions: {
+                        width: 700,
+                        headerTitle: 'Платежи студента ' + item.ShortName,
+                        bodyContent: (
+                            <PaymentList
+                                filter={{
+                                    student_id: item.id,
+                                }}
+                            />
+                        ),
+                    },
+                });
+                return Promise.resolve();
             },
         },
         {

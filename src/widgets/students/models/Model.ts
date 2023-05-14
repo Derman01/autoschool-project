@@ -1,7 +1,6 @@
 import { Model } from 'shared/lib/source';
 
 export class StudentModel extends Model {
-    [key: string | number]: any;
     public get ShortName() {
         const names = this.name.split(' ');
         return `${this.surname} ${names[0]}.${names[1]}.`;
