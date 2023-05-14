@@ -3,16 +3,14 @@ import { FC, useRef, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { IViewRef, View } from 'shared/ui/list';
-import { SOURCE_GROUPS, SOURCE_STUDENTS } from './Constants';
-import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { Button } from 'shared/ui/buttons';
-import { createGroup } from './helpers/createGroup';
-import { createStudent } from 'pages/Students/ui/helpers/createStudent';
 import { Actions } from 'widgets/action';
-import { deleteStudent } from 'pages/Students/ui/helpers/deleteStudent';
-import { editStudent } from 'pages/Students/ui/helpers/editStudent';
-import { deleteGroup } from 'pages/Students/ui/helpers/deleteGroup';
-import { editGroup } from 'pages/Students/ui/helpers/editGroup';
+import { ListGroup } from 'widgets/groups';
+import { createStudent } from './helpers/createStudent';
+import { deleteStudent } from './helpers/deleteStudent';
+import { editStudent } from './helpers/editStudent';
+import { SOURCE_STUDENTS } from './Constants';
+import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -21,7 +19,6 @@ export const Page: FC<PageOptions> = (options) => {
     const [selectedGroup, setSelectedGroup] = useState('');
     const [filterStudents, setFilterStudents] = useState({});
 
-    const groupRef = useRef<IViewRef>(null);
     const studentsRef = useRef<IViewRef>(null);
 
     const groupLoadCallback = (items: { name: string; id: string }[]) => {
@@ -79,87 +76,12 @@ export const Page: FC<PageOptions> = (options) => {
         },
     ];
 
-    const groupActions: Actions = [
-        {
-            id: 'edit',
-            title: 'Редактировать',
-            handler: (item) => {
-                editGroup(item, groupRef.current.reload);
-                return Promise.resolve();
-            },
-        },
-        {
-            id: 'delete',
-            title: 'Удалить',
-            handler: (item) => {
-                return deleteGroup({
-                    id: item['id'],
-                }).then(() => {
-                    return groupRef.current.reload();
-                });
-            },
-        },
-        {
-            id: 'print',
-            title: 'Распечатать документ',
-            children: [
-                {
-                    id: 'print-1',
-                    title: 'Экзаменационный протокол',
-                },
-                {
-                    id: 'print-2',
-                    title: 'Справка о результатах экзамена ГИБДД',
-                },
-                {
-                    id: 'print-3',
-                    title: 'Заявление в ГИБДД на получение государственной услуги экзамен - получение прав',
-                },
-            ],
-        },
-    ];
-
     return (
         <div className={classNames(['page__students', className])}>
-            <div className="page__students_groups">
-                <div className="page__students_groups_header">
-                    <div className="page__students_groups_title">Группы</div>
-                    <Button
-                        iconSize={'m'}
-                        icon={'plus'}
-                        viewMode={'icon'}
-                        onClick={() => createGroup(groupRef.current.reload)}
-                    />
-                </div>
-
-                <View
-                    actions={groupActions}
-                    ref={groupRef}
-                    source={SOURCE_GROUPS}
-                    className={classNames('page__students_groups_list')}
-                    dataLoadCallback={groupLoadCallback}
-                    selectedChanged={changeFolderHandler}
-                    minWidth={300}
-                    keyProperty={'id'}
-                    style={'master'}
-                    templateItem={({
-                        name,
-                        count,
-                    }: {
-                        name: string;
-                        count: number;
-                    }) => (
-                        <div className={'page__students_groups__item'}>
-                            <div>{name}</div>
-                            <div
-                                className={'page__students_groups__item_count'}
-                            >
-                                {count}
-                            </div>
-                        </div>
-                    )}
-                />
-            </div>
+            <ListGroup
+                dataLoadCallback={groupLoadCallback}
+                selectedChanged={changeFolderHandler}
+            />
             <div className="page__students_detail_container">
                 <div className="page__students_detail_container_header">
                     {

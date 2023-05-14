@@ -1,24 +1,7 @@
-export interface ITeacher {
-    id: string;
-    name: string;
-    surname: string;
-    patronymic: string;
-}
+import { Model } from 'shared/lib/source';
 
-export default class InstructorModel implements ITeacher {
+export default class InstructorModel extends Model {
     public get title() {
         return `${this.surname} ${this.name} ${this.patronymic}`;
     }
-
-    constructor(data: ITeacher) {
-        this.id = data.id;
-        this.name = data.name;
-        this.surname = data.surname;
-        this.patronymic = data.patronymic;
-    }
-
-    id: string;
-    name: string;
-    patronymic: string;
-    surname: string;
 }

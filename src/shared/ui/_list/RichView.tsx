@@ -6,6 +6,7 @@ import { ViewOptions, View, IViewRef } from './View';
 import { ComponentOptions } from 'shared/types';
 
 interface RichViewOptions extends ComponentOptions {
+    contrastBackground?: boolean;
     headerTitle: string;
     addingCallback: () => void;
     listOptions: ViewOptions;
@@ -13,10 +14,20 @@ interface RichViewOptions extends ComponentOptions {
 
 export const RichView = forwardRef<IViewRef, RichViewOptions>(
     (options, ref) => {
-        const { className, headerTitle, addingCallback, listOptions } = options;
+        const {
+            className,
+            headerTitle,
+            addingCallback,
+            listOptions,
+            contrastBackground = true,
+        } = options;
 
         return (
-            <div className={classNames(['list__rich', className])}>
+            <div
+                className={classNames(['list__rich', className], {
+                    contrastBackground,
+                })}
+            >
                 <div className="list__rich_header">
                     <div className="list__rich_header_title">{headerTitle}</div>
                     <Button

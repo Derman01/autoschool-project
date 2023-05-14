@@ -5,46 +5,7 @@ $color-payment: #999999;
    display: flex;
    height: 100%;
 
-   &_groups {
-      padding: 0 calc(var(--offset-2xl) - var(--offset-2xs));
-
-      &_header {
-         padding: 8px 10px;
-         display: flex;
-         align-items: center;
-         justify-content: space-between;
-      }
-
-      &_title {
-         font-size: 20px;
-         font-weight: bold;
-      }
-
-      &__item {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-
-         &_count {
-            color: var(--text-color-unaccented);
-         }
-      }
-   }
-
-   &_groups_list {
-      &__item {
-         width: 100%;
-         display: flex;
-         justify-content: space-between;
-      }
-
-      &_count {
-         color: $color-count;
-      }
-   }
-
    &_detail {
-
       &_container {
          display: flex;
          flex-direction: column;

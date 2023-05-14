@@ -1,9 +1,12 @@
 .list__rich {
     height: 100%;
-    background: var(--background-color);
-    border-radius: var(--border-radius-l);
-    box-shadow: 0 0 6px 0 var(--color-shadow);
     padding: var(--offset-xl) var(--offset-s);
+
+    &-contrastBackground {
+        background: var(--background-color);
+        border-radius: var(--border-radius-l);
+        box-shadow: 0 0 6px 0 var(--color-shadow);
+    }
 
     &_header {
         padding: 0 calc(var(--offset-2xl) - var(--offset-s));

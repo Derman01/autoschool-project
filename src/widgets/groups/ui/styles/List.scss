@@ -1,0 +1,27 @@
+$color-count: #8991a9;
+
+.widget-group__List {
+    padding: 0 calc(var(--offset-2xl) - var(--offset-2xs));
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &_count {
+            color: var(--text-color-unaccented);
+        }
+    }
+
+    &_list {
+        &__item {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &_count {
+            color: $color-count;
+        }
+    }
+}
