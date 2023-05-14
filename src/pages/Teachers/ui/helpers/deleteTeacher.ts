@@ -1,11 +1,12 @@
-import { Server } from 'shared/lib/source';
+import { deleteData } from 'shared/lib/action';
+import { TEACHER_SOURCE } from './Constants';
 
 interface IParams {
     id: string;
 }
 
 export const deleteTeacher = ({ id }: IParams) => {
-    return new Server({
-        endpoint: 'instructors',
-    }).call('delete', { id });
+    return deleteData(TEACHER_SOURCE, {
+        id,
+    });
 };

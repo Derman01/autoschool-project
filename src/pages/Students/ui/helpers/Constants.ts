@@ -1,8 +1,16 @@
 import { TDataForm } from 'shared/ui/_form/Menu';
 import { Server } from 'shared/lib/_source/Server';
 import { GroupModel } from 'pages/Students/models/GroupModel';
-import InstructorModel from 'pages/Students/models/InstructorModel';
-import { CategoryModel } from 'pages/Students/models/CategoryModel';
+import InstructorModel from '../../models/InstructorModel';
+import { CategoryModel } from '../../models/CategoryModel';
+
+export const GROUP_SOURCE = new Server({
+    endpoint: 'groups',
+});
+
+export const STUDENT_SOURCE = new Server({
+    endpoint: 'students',
+});
 
 export const GroupDataForm: TDataForm = [
     {
@@ -130,39 +138,3 @@ export const StudentDataForm: TDataForm = [
         },
     },
 ].splice(0) as TDataForm;
-
-export const getDataStudentWithNewValue = (data: {
-    [key: string | number]: any;
-}) => {
-    const result: { [key: string | number]: any } = {};
-    StudentDataForm.forEach((value) => {
-        result[value.id] = data[value.id];
-    });
-    return result;
-};
-
-const getDataWithValue = (defaultData: TDataForm, data: AnyObject) => {
-    return defaultData.map((value) => {
-        if (data[value.id]) {
-            return {
-                ...value,
-                options: {
-                    ...value.options,
-                    value: data[value.id],
-                },
-            };
-        } else return value;
-    });
-};
-
-export const getStudentDataWithValue = (data: AnyObject) => {
-    return getDataWithValue(StudentDataForm, data);
-};
-
-export const getGroupDataWithValue = (data: AnyObject) => {
-    return getDataWithValue(GroupDataForm, data);
-};
-
-type AnyObject = {
-    [key: string | number]: any;
-};

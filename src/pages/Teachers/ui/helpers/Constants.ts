@@ -2,6 +2,10 @@ import { TDataForm } from 'shared/ui/_form/Menu';
 import { Memory, Server } from 'shared/lib/source';
 import CarModel from 'pages/Teachers/models/CardModel';
 
+export const TEACHER_SOURCE = new Server({
+    endpoint: 'instructors',
+});
+
 export const TeacherDataForm: TDataForm = [
     {
         id: 'surname',
@@ -128,21 +132,3 @@ export const TeacherDataForm: TDataForm = [
         },
     },
 ];
-
-export const getDataWithValue = (defaultData: TDataForm, data: AnyObject) => {
-    return defaultData.map((value) => {
-        if (data[value.id]) {
-            return {
-                ...value,
-                options: {
-                    ...value.options,
-                    value: data[value.id],
-                },
-            };
-        } else return value;
-    });
-};
-
-type AnyObject = {
-    [key: string | number]: any;
-};

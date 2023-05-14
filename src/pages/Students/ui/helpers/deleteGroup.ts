@@ -1,13 +1,12 @@
-import { Server } from 'shared/lib/source';
+import { deleteData } from 'shared/lib/action';
+import { GROUP_SOURCE } from './Constants';
 
 interface IParams {
     id: string;
 }
 
 export const deleteGroup = ({ id }: IParams) => {
-    return new Server({
-        endpoint: 'groups',
-    }).call('delete', {
+    return deleteData(GROUP_SOURCE, {
         id,
     });
 };

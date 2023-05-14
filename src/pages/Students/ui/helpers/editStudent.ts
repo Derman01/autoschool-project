@@ -1,31 +1,17 @@
-import { OpenForm } from 'shared/ui/form';
-import { Server } from 'shared/lib/source';
-import { getStudentDataWithValue } from './Constants';
+import { STUDENT_SOURCE, StudentDataForm } from './Constants';
+import { editData } from 'shared/lib/action';
 
 export const editStudent = (data: object, afterCreate?: () => void) => {
-    const onResult = (newData: object) => {
-        return new Server({
-            endpoint: 'students',
-        })
-            .call('update', {
+    return editData(
+        {
+            data: {
                 ...data,
-                ...newData,
-
                 gearbox_type: 'manual',
                 photo_path: 'pic.txt',
-            })
-            .then(() => afterCreate && afterCreate());
-    };
-
-    OpenForm(
-        {
-            width: 430,
-            headerTitle: 'Редактирование',
+            },
+            source: STUDENT_SOURCE,
+            modelDataForm: StudentDataForm,
         },
-        {
-            data: getStudentDataWithValue(data),
-            onResult,
-            buttonActionText: 'Редактировать',
-        }
+        afterCreate
     );
 };

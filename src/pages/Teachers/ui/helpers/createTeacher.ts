@@ -1,28 +1,17 @@
-import { OpenForm } from 'shared/ui/form';
-import { Server } from 'shared/lib/source';
-import { TeacherDataForm } from './Constants';
+import { TEACHER_SOURCE, TeacherDataForm } from './Constants';
+import { createData } from 'shared/lib/action';
 
 export const createTeacher = (afterCreate: () => void) => {
-    const onResult = (data: object) => {
-        return new Server({
-            endpoint: 'instructors',
-        })
-            .call('create', {
-                ...data,
+    return createData(
+        {
+            data: {
                 job: 'null',
                 photo_path: 'pic.png',
-            })
-            .then(() => afterCreate());
-    };
-
-    OpenForm(
-        {
-            width: 430,
+            },
+            modelDataForm: TeacherDataForm,
+            source: TEACHER_SOURCE,
             headerTitle: 'Добавить инструктора',
         },
-        {
-            data: TeacherDataForm,
-            onResult,
-        }
+        afterCreate
     );
 };

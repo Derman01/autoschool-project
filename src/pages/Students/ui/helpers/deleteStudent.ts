@@ -1,4 +1,5 @@
-import { Server } from 'shared/lib/source';
+import { deleteData } from 'shared/lib/action';
+import { STUDENT_SOURCE } from './Constants';
 
 interface IParams {
     groupId: string;
@@ -6,9 +7,7 @@ interface IParams {
 }
 
 export const deleteStudent = ({ studentId, groupId }: IParams) => {
-    return new Server({
-        endpoint: 'students',
-    }).call('delete', {
+    return deleteData(STUDENT_SOURCE, {
         group_id: groupId,
         id: studentId,
     });

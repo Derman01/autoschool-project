@@ -14,7 +14,7 @@ import Item from './Items';
 import { classNames } from 'shared/lib/helpers';
 import { Actions } from 'widgets/action';
 
-interface ViewOptions extends ComponentOptions {
+export interface ViewOptions extends ComponentOptions {
     source: IData;
     filter?: object;
     style?: 'master' | 'list';

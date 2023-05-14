@@ -1,26 +1,13 @@
-import { OpenForm } from 'shared/ui/form';
-import { Server } from 'shared/lib/source';
-import { GroupDataForm } from 'pages/Students/ui/helpers/Constants';
+import { GROUP_SOURCE, GroupDataForm } from './Constants';
+import { createData } from 'shared/lib/action';
 
 export const createGroup = (afterCreate: () => void) => {
-    const onResult = (data: object) => {
-        return new Server({
-            endpoint: 'groups',
-        })
-            .call('create', {
-                ...data,
-            })
-            .then(() => afterCreate());
-    };
-
-    OpenForm(
+    return createData(
         {
-            width: 430,
             headerTitle: 'Добавить группу',
+            source: GROUP_SOURCE,
+            modelDataForm: GroupDataForm,
         },
-        {
-            data: GroupDataForm,
-            onResult,
-        }
+        afterCreate
     );
 };

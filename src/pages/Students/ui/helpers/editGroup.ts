@@ -1,28 +1,13 @@
-import { OpenForm } from 'shared/ui/form';
-import { Server } from 'shared/lib/source';
-import { getGroupDataWithValue } from './Constants';
+import { GROUP_SOURCE, GroupDataForm } from './Constants';
+import { editData } from 'shared/lib/action';
 
 export const editGroup = (data: object, afterCreate?: () => void) => {
-    const onResult = (newData: object) => {
-        return new Server({
-            endpoint: 'groups',
-        })
-            .call('update', {
-                ...data,
-                ...newData,
-            })
-            .then(() => afterCreate && afterCreate());
-    };
-
-    OpenForm(
+    return editData(
         {
-            width: 430,
-            headerTitle: 'Редактирование',
+            data,
+            source: GROUP_SOURCE,
+            modelDataForm: GroupDataForm,
         },
-        {
-            data: getGroupDataWithValue(data),
-            onResult,
-            buttonActionText: 'Редактировать',
-        }
+        afterCreate
     );
 };
