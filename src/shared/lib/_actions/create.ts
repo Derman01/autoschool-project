@@ -6,7 +6,9 @@ export const createData = (params: IParams, afterCreate?: () => void) => {
         return params.source
             .create({
                 ...params.data,
-                ...data,
+                ...(params.convertDataFrom
+                    ? params.convertDataFrom(data)
+                    : data),
             })
             .then(() => afterCreate());
     };

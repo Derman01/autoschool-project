@@ -10,6 +10,8 @@ export interface IParams {
     modelDataForm: TDataForm;
     data?: object;
     headerTitle?: string;
+    convertDataFrom?: (data: AnyObject) => AnyObject;
+    convertDataTo?: (data: AnyObject) => AnyObject;
 }
 
 export const getDataWithValue = (defaultData: TDataForm, data: AnyObject) => {

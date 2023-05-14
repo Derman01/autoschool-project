@@ -7,6 +7,7 @@ import { CarsPage } from 'pages/Cars';
 import { DemoPage } from 'pages/DemoPage';
 import { CalendarPage } from 'pages/Сalendar';
 import { ModulesPage } from 'pages/Modules';
+import { CoursesPage } from 'pages/Courses';
 
 export enum PAGES {
     Main = 'main',
@@ -14,7 +15,9 @@ export enum PAGES {
     Teachers = 'teachers',
     Cars = 'cars',
     Modules = 'modules',
+
     Calendar = 'calendar',
+    Courses = 'courses',
     Demo = 'demo',
 }
 
@@ -26,6 +29,7 @@ export const ROUTE_PAGE: Record<PAGES, string> = {
     [PAGES.Cars]: '/cars',
     [PAGES.Modules]: '/modules',
     [PAGES.Calendar]: '/calendar',
+    [PAGES.Courses]: '/courses',
 };
 
 export const ROUTE_CONFIG: routeConfigType<PAGES> = {
@@ -71,6 +75,12 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
         },
         content: CalendarPage,
     },
+    [PAGES.Courses]: {
+        routeProps: {
+            path: ROUTE_PAGE.courses,
+        },
+        content: CoursesPage,
+    },
 };
 
 export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
@@ -82,10 +92,6 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
         path: ROUTE_PAGE.students,
         name: 'Студенты',
     },
-    // [PAGES.Calendar]: {
-    // 	path: ROUTE_PAGE.calendar,
-    // 	name: 'Расписание'
-    // },
     [PAGES.Teachers]: {
         path: ROUTE_PAGE.teachers,
         name: 'Преподаватели',
@@ -97,6 +103,14 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
     [PAGES.Modules]: {
         path: ROUTE_PAGE.modules,
         name: 'Модули',
+    },
+    [PAGES.Calendar]: {
+        path: ROUTE_PAGE.calendar,
+        name: 'Расписание',
+    },
+    [PAGES.Courses]: {
+        path: ROUTE_PAGE.courses,
+        name: 'Курсы',
     },
 };
 

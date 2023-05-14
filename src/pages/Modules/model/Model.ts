@@ -1,7 +1,7 @@
 import { Model } from 'shared/lib/source';
 
-export class GroupModel extends Model {
-    public get title() {
+export class ModuleModel extends Model {
+    public get title(): string {
         return this.name;
     }
 }

@@ -7,7 +7,6 @@ export const createStudent = (afterCreate: () => void) => {
             modelDataForm: StudentDataForm,
             source: STUDENT_SOURCE,
             data: {
-                gearbox_type: 'manual',
                 photo_path: 'pic.txt',
             },
             headerTitle: 'Добавить студента',

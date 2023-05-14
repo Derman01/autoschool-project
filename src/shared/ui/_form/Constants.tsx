@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Text, Date, Menu } from 'shared/ui/input';
+import { Text, Date, Menu, Time, Number } from 'shared/ui/input';
 
-export type TWidget = 'text' | 'date' | 'menu';
+export type TWidget = 'text' | 'date' | 'menu' | 'time' | 'number';
 
 export const WidgetParse: Record<
     TWidget,
@@ -10,4 +10,6 @@ export const WidgetParse: Record<
     text: Text,
     date: Date,
     menu: Menu,
+    time: Time,
+    number: Number,
 };

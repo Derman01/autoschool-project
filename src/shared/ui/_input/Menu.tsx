@@ -32,7 +32,8 @@ export const Menu: FC<MenuOptions> = (options) => {
         (event: ChangeEvent<HTMLSelectElement>) => {
             const value = event.target.value;
             fieldRef.current.setVisibleLabel(value !== 'null');
-            onChange(Number(value));
+            const formatValue = Number(value);
+            onChange(Number.isNaN(formatValue) ? value : formatValue);
         },
         []
     );

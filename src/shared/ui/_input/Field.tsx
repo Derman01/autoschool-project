@@ -40,7 +40,9 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
     } = options;
 
     const [focus, setFocus] = useState(false);
-    const [visibleLabel, setVisibleLabel] = useState<boolean>(false);
+    const [visibleLabel, setVisibleLabel] = useState<boolean>(
+        !!value || value === 'null'
+    );
 
     useImperativeHandle(ref, () => ({
         setVisibleLabel,

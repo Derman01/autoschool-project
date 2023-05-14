@@ -8,8 +8,8 @@ import { editGroup } from './helper/editGroup';
 import { deleteGroup } from './helper/deleteGroup';
 
 interface IListGroupProps {
-    dataLoadCallback?: (items: any) => void;
-    selectedChanged?: (items: any) => void;
+    dataLoadCallback?: (items: any[]) => void;
+    selectedChanged?: (item: any) => void;
 }
 
 export const ListGroup: FC<IListGroupProps> = (props) => {
@@ -21,8 +21,7 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
             id: 'edit',
             title: 'Редактировать',
             handler: (item) => {
-                editGroup(item, listRef.current.reload);
-                return Promise.resolve();
+                return editGroup(item, listRef.current.reload);
             },
         },
         {
@@ -51,6 +50,11 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
                 {
                     id: 'print-3',
                     title: 'Заявление в ГИБДД на получение государственной услуги экзамен - получение прав',
+                },
+
+                {
+                    id: 'print-4',
+                    title: 'Расписание занятий',
                 },
             ],
         },

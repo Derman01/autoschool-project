@@ -6,7 +6,6 @@ export const editStudent = (data: object, afterCreate?: () => void) => {
         {
             data: {
                 ...data,
-                gearbox_type: 'manual',
                 photo_path: 'pic.txt',
             },
             source: STUDENT_SOURCE,

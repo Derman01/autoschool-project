@@ -1,48 +1,34 @@
-import { FC } from 'react';
-// import './styles/Page.scss';
+import { FC, useCallback, useState } from 'react';
+import './styles/Page.scss';
 import { ComponentOptions } from 'shared/types';
+import { ListGroup } from 'widgets/groups';
+import { LessonList, IFilter } from 'widgets/lesson';
 import { classNames } from 'shared/lib/helpers';
-import { Button } from 'shared/ui/buttons';
 
-interface PageOptions extends ComponentOptions {
-}
-
-const data = [{
-	date: '25.11.2001',
-	timeStart: '8_00',
-	timeEnd: '8_30',
-	place: '15 аудитория',
-	type: 'Теория',
-	group: 'B23-01'
-}];
-
-const NAMES_MONTH = [
-	'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'
-];
+interface PageOptions extends ComponentOptions {}
 
 const Page: FC<PageOptions> = (options) => {
-	const {className} = options;
-	const nowDate = new Date();
-	const dateNumber = nowDate.getDate();
-	const dateMonth = nowDate.getMonth();
-	const dateYear = nowDate.getFullYear();
+    const { className } = options;
+    const [filter, setFilter] = useState<IFilter>({});
 
-	return (
-		<div className={classNames(['page__calendar', className])}>
-			<div className="calendar">
-				В разработке
-				{/*<div className="calendar_header">*/}
-				{/*	<div className="calendar_header_buttons">*/}
-				{/*		<Button title={'Прошлая'}/>*/}
-				{/*		<Button title={'Следующая'}/>*/}
-				{/*	</div>*/}
-				{/*	<div className="calendar_header_data">*/}
-				{/*		{dateNumber} {NAMES_MONTH[dateMonth]} -*/}
-				{/*	</div>*/}
-				{/*</div>*/}
-			</div>
-		</div>
-	);
+    const changeFilter = useCallback((id: string) => {
+        setFilter({
+            group: id,
+        });
+    }, []);
+
+    return (
+        <div className={classNames(['page-calendar__page', className])}>
+            <ListGroup
+                dataLoadCallback={(items) => changeFilter(items[0].id)}
+                selectedChanged={(item) => changeFilter(item.id)}
+            />
+            <LessonList
+                filter={filter}
+                className={'page-calendar__page_lessons'}
+            />
+        </div>
+    );
 };
 
 export default Page;

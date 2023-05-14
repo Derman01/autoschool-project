@@ -6,10 +6,16 @@ export const editData = (params?: IParams, afterCreate?: () => void) => {
         return params.source
             .edit({
                 ...params.data,
-                ...newData,
+                ...(params.convertDataFrom
+                    ? params.convertDataFrom(newData)
+                    : newData),
             })
             .then(() => afterCreate && afterCreate());
     };
+
+    const data = params.convertDataTo
+        ? params.convertDataTo(params.data)
+        : params.data;
 
     OpenForm(
         {
@@ -17,7 +23,7 @@ export const editData = (params?: IParams, afterCreate?: () => void) => {
             headerTitle: 'Редактирование',
         },
         {
-            data: getDataWithValue(params.modelDataForm, params.data),
+            data: getDataWithValue(params.modelDataForm, data),
             onResult,
             buttonActionText: 'Редактировать',
         }

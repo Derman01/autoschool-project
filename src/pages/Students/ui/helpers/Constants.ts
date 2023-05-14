@@ -2,6 +2,7 @@ import { TDataForm } from 'shared/ui/_form/Menu';
 import { Server } from 'shared/lib/_source/Server';
 import { GROUP_SOURCE } from 'widgets/groups';
 import InstructorModel from '../../models/InstructorModel';
+import { Memory } from 'shared/lib/source';
 
 export const STUDENT_SOURCE = new Server({
     endpoint: 'students',
@@ -71,9 +72,28 @@ export const StudentDataForm: TDataForm = [
     },
     {
         id: 'payment_needed',
-        type: 'text',
+        type: 'number',
         options: {
             placeholder: 'Оплата',
         },
     },
-].splice(0) as TDataForm;
+    {
+        id: 'gearbox_type',
+        type: 'menu',
+        options: {
+            placeholder: 'Коробка передач',
+            source: new Memory({
+                data: [
+                    {
+                        id: 'auto',
+                        title: 'Автомат',
+                    },
+                    {
+                        id: 'manual',
+                        title: 'Механика',
+                    },
+                ],
+            }),
+        },
+    },
+];

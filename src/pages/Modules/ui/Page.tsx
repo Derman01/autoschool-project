@@ -6,8 +6,23 @@ import { IViewRef, RichView } from 'shared/ui/list';
 import { MODULE_DATA_FORM, MODULE_SOURCE } from './Constants';
 import { Actions } from 'widgets/action';
 import { createData, deleteData, editData } from 'shared/lib/action';
+import { ModuleModel } from '../model/Model';
+import { Label } from 'shared/ui/input';
 
 interface PageOptions extends ComponentOptions {}
+
+const TemplateItem = (item: ModuleModel) => {
+    return (
+        <div>
+            <div>
+                <Label title={'Название'} text={item.name} />
+            </div>
+            <div>
+                <Label title={'Описание'} text={item.description} />
+            </div>
+        </div>
+    );
+};
 
 const Page: FC<PageOptions> = (options) => {
     const { className } = options;
@@ -57,6 +72,7 @@ const Page: FC<PageOptions> = (options) => {
                 listOptions={{
                     source: MODULE_SOURCE,
                     actions,
+                    templateItem: TemplateItem,
                 }}
             />
         </div>
