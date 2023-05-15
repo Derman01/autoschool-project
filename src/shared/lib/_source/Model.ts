@@ -1,5 +1,9 @@
 import { IItemData } from './IData';
 
+export interface AnyObject {
+    [key: string | number]: any;
+}
+
 export class Model implements IItemData {
     id: string;
     [key: string | number]: any;

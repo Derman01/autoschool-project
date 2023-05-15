@@ -1,7 +1,17 @@
-import { Model } from 'shared/lib/source';
+import { Model, AnyObject } from 'shared/lib/source';
 
 export class StudentModel extends Model {
-    [key: string | number]: any;
+    public get payment_needed(): number {
+        const payment = this.payments.length
+            ? this.payments.reduce(
+                  (a: AnyObject, b: AnyObject) =>
+                      Number(a.value) + Number(b.value),
+                  { value: 0 }
+              )
+            : 0;
+        return Number(this.course_price) - payment;
+    }
+
     public get ShortName() {
         const names = this.name.split(' ');
         return `${this.surname} ${names[0]}.${names[1]}.`;

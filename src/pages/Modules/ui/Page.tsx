@@ -61,7 +61,7 @@ const Page: FC<PageOptions> = (options) => {
                     captions: [
                         {
                             title: 'Название',
-                            width: '500px',
+                            width: '1fr',
                         },
                         {
                             title: 'Описание',
