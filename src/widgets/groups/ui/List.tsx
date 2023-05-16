@@ -42,7 +42,7 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
             children: [
                 {
                     id: 'print-1',
-                    title: 'Экзаменационный протокол',
+                    title: 'Заявление на регистрацию в ГИБДД',
                     handler: (item) => {
                         downloadFile('registration-order', {
                             group_id: item.id,
