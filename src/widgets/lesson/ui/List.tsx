@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react';
 import './styles/List.scss';
 import { ComponentOptions } from 'shared/types';
-import { IViewRef, RichView } from 'shared/ui/list';
+import { IViewRef, RichGrid, RichView } from 'shared/ui/list';
 import { LESSON_SOURCE } from './Constants';
 import { createLesson, deleteLesson, editLesson } from './helper';
 import { LessonModel } from '../models/Model';
@@ -15,30 +15,6 @@ export interface IFilter {
 export interface ListOptions extends ComponentOptions {
     filter?: IFilter;
 }
-
-const TemplateItem: FC = (item: LessonModel) => {
-    let [date, timeStart] = item.time_start.split(' ');
-    let [_, timeEnd] = item.time_end.split(' ');
-    timeStart = timeStart.split(':').slice(0, 2).join(':');
-    timeEnd = timeEnd.split(':').slice(0, 2).join(':');
-
-    return (
-        <div className={'widget-lesson__item'}>
-            <div className="widget-lesson__item_moduleName">
-                <Label title={'Название'} text={item.module_name} />
-            </div>
-            <div className="widget-lesson__item_groupName">
-                <Label title={'Группа'} text={item.group_name} />
-            </div>
-            <div className="widget-lesson__item_date">
-                <Label title={'Дата'} text={date} />
-            </div>
-            <div className="widget-lesson__item_times">
-                <Label title={'Время'} text={`${timeStart} - ${timeEnd}`} />
-            </div>
-        </div>
-    );
-};
 
 export const List: FC<ListOptions> = (options) => {
     const { className, filter } = options;
@@ -63,16 +39,40 @@ export const List: FC<ListOptions> = (options) => {
     ];
 
     return (
-        <RichView
+        <RichGrid
             ref={ref}
             className={className}
             headerTitle={'Расписание уроков'}
             addingCallback={() => createLesson(ref.current.reload)}
-            listOptions={{
+            gridOptions={{
                 actions,
                 filter,
+                canSelected: false,
                 source: LESSON_SOURCE,
-                templateItem: TemplateItem,
+                captions: [
+                    {
+                        title: 'Название',
+                        width: '3fr',
+                    },
+                    {
+                        title: 'Группа',
+                        width: '1fr',
+                    },
+                    {
+                        title: 'Дата',
+                        width: '1fr',
+                    },
+                    {
+                        title: 'Время',
+                        width: '1fr',
+                    },
+                ],
+                columns: [
+                    (item: LessonModel) => <>{item.module_name}</>,
+                    (item: LessonModel) => <>{item.group_name}</>,
+                    (item: LessonModel) => <>{item.date}</>,
+                    (item: LessonModel) => <>{item.time}</>,
+                ],
             }}
         />
     );
