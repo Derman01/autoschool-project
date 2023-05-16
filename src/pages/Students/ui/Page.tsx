@@ -14,7 +14,8 @@ import { ItemTemplateStudent } from './templates/ItemTemplateStudent';
 import { StudentModel } from '../models/StudentModel';
 import { PopupOpener } from 'shared/ui/popup';
 import { PaymentList } from 'widgets/payments';
-import { downloadFile, Model, Server } from "shared/lib/source";
+import { downloadFile } from 'shared/lib/source';
+import { ListExam } from 'widgets/exams';
 
 interface PageOptions extends ComponentOptions {}
 
@@ -80,26 +81,72 @@ export const Page: FC<PageOptions> = (options) => {
             },
         },
         {
+            id: 'exams',
+            title: 'Открыть список экзаменов',
+            handler: (item: StudentModel) => {
+                PopupOpener.createModal({
+                    templateOptions: {
+                        width: 700,
+                        headerTitle: 'Экзамены студента ' + item.ShortName,
+                        bodyContent: <ListExam studentId={item.id} />,
+                    },
+                });
+                return Promise.resolve();
+            },
+        },
+        {
             id: 'print',
             title: 'Распечатать документ',
             children: [
                 {
                     id: 'print-0',
-                    title: 'Акт о выполнении и оказания услуг по договору',
+                    title: 'Карточка учета вождения автомобиля',
                     handler: (item) => {
-                        downloadFile('service-performance-act', {
-                            student_id: item.id
-                        })
+                        downloadFile('car-driving-registration-card', {
+                            student_id: item.id,
+                        });
                         return Promise.resolve();
                     },
                 },
                 {
                     id: 'print-1',
                     title: 'Экзаменационная карточка водителя',
+                    handler: (item) => {
+                        downloadFile('driver-exam-card', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
                 },
                 {
                     id: 'print-2',
-                    title: 'Заявление в ГИБДД на получение государственной услуги экзамен - получение прав',
+                    title: 'Акт на оказание услуг',
+                    handler: (item) => {
+                        downloadFile('service-delivery-act', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-3',
+                    title: 'Акт о выполнении услуги',
+                    handler: (item) => {
+                        downloadFile('service-performance-act', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-4',
+                    title: 'Путевой лист',
+                    handler: (item) => {
+                        downloadFile('waybill', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
                 },
             ],
         },

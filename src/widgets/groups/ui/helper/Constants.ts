@@ -11,13 +11,6 @@ export const GROUP_SOURCE = new Server({
 
 export const GroupDataForm: TDataForm = [
     {
-        id: 'name',
-        type: 'text',
-        options: {
-            placeholder: 'Название',
-        },
-    },
-    {
         id: 'studying_start_date',
         type: 'date',
         options: {

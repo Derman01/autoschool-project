@@ -5,3 +5,4 @@ export { Label } from './_input/Label';
 export { Time } from './_input/Time';
 export { Number } from './_input/Number';
 export { Area } from './_input/Area';
+export { Checkbox } from './_input/Checkbox';

@@ -21,6 +21,7 @@ interface FieldOptions extends ComponentOptions {
     fieldTemplate?: ReactElement;
     value?: string;
     onChange?: (value: string) => void;
+    visibleLabel?: boolean;
 }
 
 export interface FieldRef {
@@ -41,7 +42,7 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
 
     const [focus, setFocus] = useState(false);
     const [visibleLabel, setVisibleLabel] = useState<boolean>(
-        !!value || value === 'null'
+        options.visibleLabel || !!value || value === 'null'
     );
 
     useImperativeHandle(ref, () => ({

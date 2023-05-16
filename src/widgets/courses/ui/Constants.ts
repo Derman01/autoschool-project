@@ -1,6 +1,7 @@
 import { Memory, Server } from 'shared/lib/source';
 import { CoursesModel } from '../models/Model';
 import { TDataForm } from 'shared/ui/form';
+import { MODULE_SOURCE } from 'pages/Modules';
 
 export const COURSES_SOURCE = new Server({
     endpoint: 'courses',
@@ -48,6 +49,14 @@ export const COURSES_DATA_FORM: TDataForm = [
         type: 'number',
         options: {
             placeholder: 'Стоимость',
+        },
+    },
+    {
+        id: 'modules',
+        type: 'checkbox',
+        options: {
+            placeholder: 'Модули',
+            source: MODULE_SOURCE,
         },
     },
 ];

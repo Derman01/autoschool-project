@@ -6,6 +6,14 @@ export const editCourse = (data: object, afterCreate?: () => void) => {
         {
             modelDataForm: COURSES_DATA_FORM,
             source: COURSES_SOURCE,
+            convertDataTo: (data) => {
+                return {
+                    ...data,
+                    modules: data.modules.map(
+                        (module: { id: string }) => module.id
+                    ),
+                };
+            },
             data,
         },
         afterCreate
