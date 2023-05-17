@@ -60,6 +60,16 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
                         return Promise.resolve();
                     },
                 },
+              {
+                id: 'print-3',
+                title: 'Расписание',
+                handler: (item) => {
+                  downloadFile('schedule', {
+                    group_id: item.id,
+                  });
+                  return Promise.resolve();
+                },
+              },
             ],
         },
     ];

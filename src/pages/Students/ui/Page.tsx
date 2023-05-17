@@ -148,6 +148,26 @@ export const Page: FC<PageOptions> = (options) => {
                         return Promise.resolve();
                     },
                 },
+                {
+                    id: 'print-5',
+                    title: 'Заявление в ГИБДД на получение прав',
+                    handler: (item) => {
+                        downloadFile('driver-license-application', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-6',
+                    title: 'Экзаменационный протокол',
+                    handler: (item) => {
+                        downloadFile('exam-protocol', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
             ],
         },
     ];
