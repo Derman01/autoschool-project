@@ -7,13 +7,15 @@ interface TextOptions extends ComponentOptions {
     placeholder?: string;
     onChange?: (value: string) => void;
     value?: any;
+    patterns?: string[];
 }
 
 export const Text: FC<TextOptions> = (options) => {
-    const { className, placeholder, onChange, value } = options;
+    const { className, patterns, placeholder, onChange, value } = options;
 
     return (
         <Field
+            patterns={patterns}
             onChange={onChange}
             type={'text'}
             value={value}

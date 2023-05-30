@@ -13,6 +13,14 @@ export const CarDataForm: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Гос. номер',
+            patterns: [
+                /[АВЕКМНОРСТУХ]/,
+                /\d/,
+                /\d/,
+                /\d/,
+                /[АВЕКМНОРСТУХ]/,
+                /[АВЕКМНОРСТУХ]/,
+            ],
         },
     },
 ];

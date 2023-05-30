@@ -22,6 +22,7 @@ interface FieldOptions extends ComponentOptions {
     value?: string;
     onChange?: (value: string) => void;
     visibleLabel?: boolean;
+    patterns?: string[];
 }
 
 export interface FieldRef {
@@ -38,8 +39,10 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
         fieldTemplate,
         value,
         onChange,
+        patterns,
     } = options;
 
+    const [valueState, setValueState] = useState(value || '');
     const [focus, setFocus] = useState(false);
     const [visibleLabel, setVisibleLabel] = useState<boolean>(
         options.visibleLabel || !!value || value === 'null'
@@ -63,6 +66,21 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
         setVisibleLabel(true);
         setFocus(true);
     }, []);
+
+    const onChangeValue = (value: string) => {
+        let test = true;
+        if (patterns) {
+            value.split('').forEach((s, index) => {
+                if (test && !new RegExp(patterns[index]).test(s)) {
+                    test = false;
+                }
+            });
+        }
+        if (test) {
+            setValueState(value);
+            onChange(value);
+        }
+    };
 
     return (
         <div className={classNames(['Field', className])}>
@@ -94,8 +112,9 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
                     <input
                         defaultValue={value}
                         className={'Field__input'}
-                        onChange={(e) => onChange(e.target.value)}
+                        onChange={(e) => onChangeValue(e.target.value)}
                         type={visibleLabel ? type : 'text'}
+                        value={valueState}
                         min={min}
                         max={max}
                         onBlur={onFocusOut}
