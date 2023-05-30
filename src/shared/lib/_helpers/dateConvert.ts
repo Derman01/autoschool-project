@@ -1,4 +1,4 @@
-export const getDateString = (date: string): string => {
+export const getDateString = (date: Date): string => {
     if (!date) {
         return '';
     }
@@ -9,5 +9,5 @@ export const getDateString = (date: string): string => {
     };
     console.log(date);
     // @ts-ignore
-    return new Date(date)?.toLocaleDateString('ru-RS', options);
+    return date?.toLocaleDateString('ru-RS', options);
 };

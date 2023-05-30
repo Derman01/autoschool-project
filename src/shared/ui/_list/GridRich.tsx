@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, ReactElement } from 'react';
 import './styles/RichView.scss';
 import { IViewRef } from './View';
 import { ComponentOptions } from 'shared/types';
@@ -7,7 +7,7 @@ import { Grid, GridOptions } from './Grid';
 
 interface RichGridOptions extends ComponentOptions {
     contrastBackground?: boolean;
-    headerTitle: string;
+    headerTitle: string | ReactElement;
     addingCallback: () => void;
     gridOptions: GridOptions;
 }

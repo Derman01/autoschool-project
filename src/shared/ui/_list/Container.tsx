@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactElement, ReactNode } from 'react';
 import './styles/Container.scss';
 import { classNames } from 'shared/lib/helpers';
 import { Button } from 'shared/ui/buttons';
@@ -6,7 +6,7 @@ import { ComponentOptions } from 'shared/types';
 
 interface ContainerOptions extends ComponentOptions {
     contrastBackground?: boolean;
-    headerTitle: string;
+    headerTitle: string | ReactElement;
     addingCallback: () => void;
     children?: ReactNode;
 }

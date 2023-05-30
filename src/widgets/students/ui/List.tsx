@@ -1,12 +1,16 @@
-import { FC, useRef } from 'react';
+import { FC, ReactElement, useRef } from 'react';
 import './styles/List.scss';
 import { ComponentOptions } from 'shared/types';
-import { IViewRef, RichView } from 'shared/ui/list';
+import { IViewRef, RichGrid, RichView } from 'shared/ui/list';
 import { STUDENT_SOURCE } from './Constants';
 import { createStudent, deleteStudent, editStudent } from './helper';
 import { StudentModel } from '../models/Model';
 import { Label } from 'shared/ui/input';
 import { Actions } from 'widgets/action';
+import { downloadFile } from 'shared/lib/source';
+import { PopupOpener } from 'shared/ui/popup';
+import { PaymentList } from 'widgets/payments';
+import { ListExam } from 'widgets/exams';
 
 export interface IFilter {
     group?: string;
@@ -14,6 +18,7 @@ export interface IFilter {
 
 export interface ListOptions extends ComponentOptions {
     filter?: IFilter;
+    headerTitle?: ReactElement | string;
 }
 
 const TemplateItem: FC = (item: StudentModel) => {
@@ -32,8 +37,40 @@ const TemplateItem: FC = (item: StudentModel) => {
     );
 };
 
+const CAPTION = [
+    { title: 'ФИО', width: '3fr' },
+    {
+        title: 'Оплаченно',
+        width: '1fr',
+    },
+    {
+        title: 'Дата следующего платежа',
+        width: '1fr',
+    },
+];
+
+const COLUMNS: ((student: StudentModel) => ReactElement)[] = [
+    (student) => (
+        <div style={{ display: 'flex', gap: '12px' }}>
+            <div className="page__students_detail__item_photo">
+                {student.name[0] + student.surname[0]}
+            </div>
+            <div className="page__students_detail__item_info">
+                <span className={'page__students_detail__item_infoName'}>
+                    {student.getFullName}
+                </span>
+                <span className={'page__students_detail__item_infoGroup'}>
+                    {student.group_name}
+                </span>
+            </div>
+        </div>
+    ),
+    (student) => <>{student.payment}</>,
+    (student) => <>{student.nextPayment}</>,
+];
+
 export const List: FC<ListOptions> = (options) => {
-    const { className, filter } = options;
+    const { className, filter, headerTitle } = options;
 
     const ref = useRef<IViewRef>();
 
@@ -49,22 +86,139 @@ export const List: FC<ListOptions> = (options) => {
             id: 'delete',
             title: 'Удалить',
             handler: (item) => {
-                return deleteStudent(item).then(ref.current.reload);
+                return deleteStudent({
+                    studentId: item['id'],
+                    groupId: item['group_id'],
+                }).then(() => {
+                    return ref.current.reload();
+                });
             },
+        },
+        {
+            id: 'payments',
+            title: 'Открыть платежи',
+            handler: (item: StudentModel) => {
+                PopupOpener.createModal({
+                    templateOptions: {
+                        width: 1000,
+                        headerTitle: 'Платежи студента ' + item.ShortName,
+                        bodyContent: (
+                            <PaymentList
+                                filter={{
+                                    student_id: item.id,
+                                }}
+                            />
+                        ),
+                    },
+                });
+                return Promise.resolve();
+            },
+        },
+        {
+            id: 'exams',
+            title: 'Открыть список экзаменов',
+            handler: (item: StudentModel) => {
+                PopupOpener.createModal({
+                    templateOptions: {
+                        width: 1000,
+                        headerTitle: 'Экзамены студента ' + item.ShortName,
+                        bodyContent: <ListExam studentId={item.id} />,
+                    },
+                });
+                return Promise.resolve();
+            },
+        },
+        {
+            id: 'print',
+            title: 'Распечатать документ',
+            children: [
+                {
+                    id: 'print-0',
+                    title: 'Карточка учета вождения автомобиля',
+                    handler: (item) => {
+                        downloadFile('car-driving-registration-card', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-1',
+                    title: 'Экзаменационная карточка водителя',
+                    handler: (item) => {
+                        downloadFile('driver-exam-card', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-2',
+                    title: 'Акт на оказание услуг',
+                    handler: (item) => {
+                        downloadFile('service-delivery-act', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-3',
+                    title: 'Акт о выполнении услуги',
+                    handler: (item) => {
+                        downloadFile('service-performance-act', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-4',
+                    title: 'Путевой лист',
+                    handler: (item) => {
+                        downloadFile('waybill', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-5',
+                    title: 'Заявление в ГИБДД на получение прав',
+                    handler: (item) => {
+                        downloadFile('driver-license-application', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+                {
+                    id: 'print-6',
+                    title: 'Экзаменационный протокол',
+                    handler: (item) => {
+                        downloadFile('exam-protocol', {
+                            student_id: item.id,
+                        });
+                        return Promise.resolve();
+                    },
+                },
+            ],
         },
     ];
 
     return (
-        <RichView
+        <RichGrid
             ref={ref}
             className={className}
-            headerTitle={'Курсы'}
+            headerTitle={headerTitle}
             addingCallback={() => createStudent(ref.current.reload)}
-            listOptions={{
+            gridOptions={{
                 actions,
                 filter,
                 source: STUDENT_SOURCE,
                 templateItem: TemplateItem,
+                captions: CAPTION,
+                columns: COLUMNS,
             }}
         />
     );
