@@ -1,11 +1,11 @@
 import './styles/Page.scss';
 import { FC, useRef, useState } from 'react';
 import { ComponentOptions } from 'shared/types';
-import { classNames } from 'shared/lib/helpers';
+import { classNames, getDateString } from 'shared/lib/helpers';
 import { IViewRef, View } from 'shared/ui/list';
 import { Button } from 'shared/ui/buttons';
 import { Actions } from 'widgets/action';
-import { ListGroup } from 'widgets/groups';
+import { ListGroup, GroupModel } from 'widgets/groups';
 import { createStudent } from './helpers/createStudent';
 import { deleteStudent } from './helpers/deleteStudent';
 import { editStudent } from './helpers/editStudent';
@@ -21,23 +21,23 @@ interface PageOptions extends ComponentOptions {}
 
 export const Page: FC<PageOptions> = (options) => {
     const { className } = options;
-    const [selectedGroup, setSelectedGroup] = useState('');
+    const [selectedGroup, setSelectedGroup] = useState<GroupModel>(null);
     const [filterStudents, setFilterStudents] = useState({});
 
     const studentsRef = useRef<IViewRef>(null);
 
-    const groupLoadCallback = (items: { name: string; id: string }[]) => {
-        setSelectedGroup(items[0].name);
+    const groupLoadCallback = (items: GroupModel[]) => {
+        setSelectedGroup(items?.[0]);
         setFilterStudents({
             group: items[0].id,
         });
     };
 
-    const changeFolderHandler = (item: { id: string; name: string }) => {
+    const changeFolderHandler = (item: GroupModel) => {
         setFilterStudents({
             group: item.id,
         });
-        setSelectedGroup(item.name);
+        setSelectedGroup(item);
     };
 
     const studentActions: Actions = [
@@ -162,14 +162,26 @@ export const Page: FC<PageOptions> = (options) => {
                 <div className="page__students_detail_container_header">
                     {
                         <div className="page__students_detail_container_title">
-                            Группа
-                            <span
-                                className={
-                                    'page__students_detail_container_title-name'
-                                }
-                            >
-                                {' '}
-                                {selectedGroup}
+                            Группа{': '}
+                            <span className="page__students_detail_container_title-name">
+                                {selectedGroup?.title}
+                            </span>
+                            {'; '}
+                            Категория прав{': '}
+                            <span className="page__students_detail_container_title-name">
+                                {selectedGroup?.course_category}
+                            </span>
+                            {'; '}
+                            Старт обучения{': '}
+                            <span className="page__students_detail_container_title-name">
+                                {getDateString(
+                                    selectedGroup?.studying_start_date
+                                )}
+                            </span>
+                            {'; '}
+                            Тип группы{': '}
+                            <span className="page__students_detail_container_title-name">
+                                {selectedGroup?.timing_type}
                             </span>
                         </div>
                     }
