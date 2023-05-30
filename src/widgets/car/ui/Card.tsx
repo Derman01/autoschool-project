@@ -3,10 +3,10 @@ import './styles/EmptyCard.scss';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { ActionButton, Actions } from 'widgets/action';
-import { Model } from 'shared/lib/source';
+import { CarModel } from '../models/CarModel';
 
 interface CardOptions extends ComponentOptions {
-    item: Model;
+    item: CarModel;
     actions?: Actions;
 }
 
@@ -20,6 +20,15 @@ export const Card: FC<CardOptions> = (options) => {
                 <span className={'car__card_number'}>Гос. номер </span>
                 {item.reg_number}
             </div>
+            {item.gearbox_type && (
+                <div>
+                    <span className={'car__card_number'}>
+                        Коробока передач{' '}
+                    </span>
+                    {item.gearboxString}
+                </div>
+            )}
+
             <div className="car__card_teacher"></div>
             {actions && (
                 <ActionButton

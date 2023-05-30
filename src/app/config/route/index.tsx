@@ -98,7 +98,7 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
     },
     [PAGES.Cars]: {
         path: ROUTE_PAGE.cars,
-        name: 'Автомобили',
+        name: 'Транспорт',
     },
     [PAGES.Modules]: {
         path: ROUTE_PAGE.modules,

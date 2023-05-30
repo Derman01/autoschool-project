@@ -18,6 +18,7 @@ const Page: FC<PageOptions> = (options) => {
     const loadCars = () => {
         new Server({
             endpoint: 'cars',
+            model: CarModel,
         })
             .query()
             .then((cars: CarModel[]) => {
