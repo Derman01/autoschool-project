@@ -4,6 +4,8 @@
     padding: 8px 8px 8px 0;
 
     &__wrapper {
+        position: relative;
+        display: grid;
         overflow: hidden;
         border-left: 2px solid var(--color-primary);
         box-shadow: 0 0 6px var(--color-shadow);
@@ -17,13 +19,28 @@
             background: var(--background-color-primary);
             color: white;
             cursor: pointer;
+
+            .Lesson__milk {
+                background: linear-gradient(transparent 0, var(--background-color-primary) 20px, var(--background-color-primary))
+            }
         }
     }
 
     &__time {
         font-weight: bold;
     }
+
     &__name {
+        max-height: 100%;
         margin-top: 12px;
+    }
+
+    &__milk {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 30px;
+        background: linear-gradient(transparent 0, #edf6ff 20px, #edf6ff)
     }
 }

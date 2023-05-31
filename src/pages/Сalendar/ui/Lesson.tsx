@@ -19,6 +19,7 @@ export const Lesson: FC<LessonOptions> = (options) => {
                 </div>
                 <div className="Lesson__group">Группа {lesson.GroupName}</div>
                 <div className="Lesson__name">{lesson.Title}</div>
+                <div className="Lesson__milk"></div>
             </div>
         </div>
     );
