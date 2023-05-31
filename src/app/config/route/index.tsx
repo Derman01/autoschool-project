@@ -37,7 +37,7 @@ export const ROUTE_CONFIG: routeConfigType<PAGES> = {
         routeProps: {
             path: ROUTE_PAGE.main,
         },
-        content: () => <Navigate to={'/students'} />,
+        content: () => <Navigate to={ROUTE_PAGE[PAGES.Calendar]} />,
     },
     [PAGES.Students]: {
         routeProps: {
@@ -88,6 +88,10 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
     // 	path: ROUTE_CONFIG.main.routeProps.path,
     // 	name: 'Главная'
     // },
+    [PAGES.Calendar]: {
+        path: ROUTE_PAGE.calendar,
+        name: 'Расписание',
+    },
     [PAGES.Students]: {
         path: ROUTE_PAGE.students,
         name: 'Студенты',
@@ -100,17 +104,13 @@ export const NAVIGATION: Partial<Record<PAGES, NavigationConfiguration>> = {
         path: ROUTE_PAGE.cars,
         name: 'Транспорт',
     },
-    [PAGES.Modules]: {
-        path: ROUTE_PAGE.modules,
-        name: 'Модули',
-    },
-    [PAGES.Calendar]: {
-        path: ROUTE_PAGE.calendar,
-        name: 'Расписание',
-    },
     [PAGES.Courses]: {
         path: ROUTE_PAGE.courses,
         name: 'Курсы',
+    },
+    [PAGES.Modules]: {
+        path: ROUTE_PAGE.modules,
+        name: 'Модули',
     },
 };
 
