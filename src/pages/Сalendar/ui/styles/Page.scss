@@ -1,8 +1,5 @@
 .page-calendar__page {
     display: flex;
     gap: 12px;
-
-    &_lessons {
-        width: 100%;
-    }
+    padding: var(--offset-3xl);
 }

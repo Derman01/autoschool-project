@@ -1,0 +1,29 @@
+.Lesson {
+    height: 100%;
+    width: 100%;
+    padding: 8px 8px 8px 0;
+
+    &__wrapper {
+        overflow: hidden;
+        border-left: 2px solid var(--color-primary);
+        box-shadow: 0 0 6px var(--color-shadow);
+        background: #edf6ff;
+        border-top-right-radius: var(--border-radius-s);
+        border-bottom-right-radius: var(--border-radius-s);
+        height: 100%;
+        padding: 4px 12px;
+
+        &:hover {
+            background: var(--background-color-primary);
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    &__time {
+        font-weight: bold;
+    }
+    &__name {
+        margin-top: 12px;
+    }
+}

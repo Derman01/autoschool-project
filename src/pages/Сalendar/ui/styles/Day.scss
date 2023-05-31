@@ -1,0 +1,17 @@
+.Day {
+    width: 100%;
+}
+.half-hours {
+    display: grid;
+    grid-auto-rows: 50px;
+    gap: 1px;
+    border-radius: var(--border-radius-s);
+}
+
+.half-hour {
+    background: var(--background-color-grey);
+}
+
+.time-label {
+    padding-left: 10px;
+}
