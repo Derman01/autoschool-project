@@ -1,7 +1,10 @@
 import { OpenForm } from 'shared/ui/form';
 import { IParams } from './helper';
 
-export const createData = (params: IParams, afterCreate?: () => void) => {
+export const createData = (
+    params: IParams,
+    afterCreate?: () => Promise<void>
+) => {
     const onResult = (data: object) => {
         return params.source
             .create({
@@ -10,7 +13,10 @@ export const createData = (params: IParams, afterCreate?: () => void) => {
                     ? params.convertDataFrom(data)
                     : data),
             })
-            .then(() => afterCreate());
+            .then(() => {
+                return afterCreate().then(() => true);
+            })
+            .catch(() => false);
     };
 
     OpenForm(

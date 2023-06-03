@@ -1,7 +1,7 @@
 import { Memory, Server } from 'shared/lib/source';
 import { CoursesModel } from '../models/Model';
 import { TDataForm } from 'shared/ui/form';
-import { MODULE_SOURCE } from 'pages/Modules';
+import { MODULE_SOURCE } from 'widgets/modules';
 
 export const COURSES_SOURCE = new Server({
     endpoint: 'courses',

@@ -2,7 +2,7 @@ import { FC, forwardRef, useMemo } from 'react';
 import './styles/Grid.scss';
 import { ViewOptions, View, IViewRef } from './View';
 
-interface Caption {
+export interface Caption {
     title: string;
     width: string;
 }

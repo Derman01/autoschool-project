@@ -16,7 +16,7 @@ const Page: FC<PageOptions> = (options) => {
     const [cars, setCars] = useState<CarModel[]>([]);
 
     const loadCars = () => {
-        new Server({
+        return new Server({
             endpoint: 'cars',
             model: CarModel,
         })

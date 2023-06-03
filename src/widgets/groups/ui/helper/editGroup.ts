@@ -1,7 +1,7 @@
 import { GROUP_SOURCE, GroupDataForm } from './Constants';
 import { editData } from 'shared/lib/action';
 
-export const editGroup = (data: object, afterCreate?: () => void) => {
+export const editGroup = (data: object, afterCreate?: () => Promise<void>) => {
     return editData(
         {
             data,

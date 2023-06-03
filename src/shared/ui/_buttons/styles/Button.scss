@@ -28,5 +28,10 @@
         color: var(--text-color-unaccented)
       }
     }
+
+    &-disabled {
+      color: var(--text-color-unaccented);
+      background: var(--background-color-unaccented);
+    }
   }
 }

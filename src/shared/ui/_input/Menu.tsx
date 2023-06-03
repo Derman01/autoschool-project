@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { Field, FieldRef } from './Field';
-import { IData } from 'shared/lib/source';
+import { IData, IItemData } from 'shared/lib/source';
 
 interface MenuOptions extends ComponentOptions {
     placeholder?: string;
@@ -23,7 +23,7 @@ export const Menu: FC<MenuOptions> = (options) => {
     const fieldRef = useRef<FieldRef>(null);
 
     useEffect(() => {
-        source.query().then((items) => {
+        source.query().then((items: IItemData[]) => {
             setItems(items);
         });
     }, [source]);

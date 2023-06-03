@@ -2,7 +2,7 @@ import { OpenForm } from 'shared/ui/form';
 import { Server } from 'shared/lib/source';
 import { getDataWithValue, CarDataForm } from './Constants';
 
-export const editCar = (data: object, afterCreate?: () => void) => {
+export const editCar = (data: object, afterCreate?: () => Promise<void>) => {
     const onResult = (newData: object) => {
         return new Server({
             endpoint: 'cars',
@@ -11,7 +11,13 @@ export const editCar = (data: object, afterCreate?: () => void) => {
                 ...data,
                 ...newData,
             })
-            .then(() => afterCreate && afterCreate());
+            .then(() => {
+                if (afterCreate) {
+                    return afterCreate().then(() => true);
+                }
+                return true;
+            })
+            .catch(() => false);
     };
 
     OpenForm(

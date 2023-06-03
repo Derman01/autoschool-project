@@ -12,6 +12,7 @@ export interface ButtonOptions extends ComponentOptions {
     onClick?: () => void;
     viewMode?: 'icon' | 'default';
     style?: 'primary' | 'unaccented';
+    disabled?: boolean;
 }
 
 export const Button: FC<ButtonOptions> = (options) => {
@@ -23,10 +24,12 @@ export const Button: FC<ButtonOptions> = (options) => {
         viewMode = 'default',
         iconSize,
         style = 'primary',
+        disabled,
     } = options;
 
     return (
         <button
+            disabled={disabled}
             className={classNames(['button', className])}
             title={title}
             onClick={onClick}
@@ -34,6 +37,7 @@ export const Button: FC<ButtonOptions> = (options) => {
             <span
                 className={classNames('button__container', {
                     viewMode,
+                    disabled,
                     style: viewMode === 'default' && style,
                 })}
             >

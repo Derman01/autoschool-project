@@ -1,7 +1,7 @@
 import { TEACHER_SOURCE, TeacherDataForm } from './Constants';
 import { createData } from 'shared/lib/action';
 
-export const createTeacher = (afterCreate: () => void) => {
+export const createTeacher = (afterCreate: () => Promise<void>) => {
     return createData(
         {
             data: {

@@ -5,6 +5,7 @@
     width: 100%;
     padding: var(--offset-m);
     display: grid;
+    grid-template-rows: auto 1fr;
 
     &__controls {
         display: flex;
@@ -24,12 +25,15 @@
     &__calendar {
         max-height: 100%;
         display: grid;
+        grid-template-rows: auto 1fr;
         flex-direction: column;
         overflow: scroll;
 
         &__names,
         &__times {
-            display: flex;
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-columns: auto repeat(7, 1fr);
             gap: var(--offset-m);
             width: 100%;
             margin-top: var(--offset-m);
@@ -61,9 +65,14 @@
     flex-direction: column;
     border-radius: var(--border-radius-m);
     box-shadow: 0 0 var(--border-radius-s) var(--color-shadow);
+    text-align: center;
 
     &-current {
         background: var(--background-color-primary);
         color: white;
+    }
+
+    &__name {
+        font-weight: bold;
     }
 }

@@ -1,7 +1,10 @@
 import { OpenForm } from 'shared/ui/form';
 import { getDataWithValue, IParams } from './helper';
 
-export const editData = (params?: IParams, afterCreate?: () => void) => {
+export const editData = (
+    params?: IParams,
+    afterCreate?: () => Promise<void>
+) => {
     const onResult = (newData: object) => {
         return params.source
             .edit({
@@ -10,7 +13,16 @@ export const editData = (params?: IParams, afterCreate?: () => void) => {
                     ? params.convertDataFrom(newData)
                     : newData),
             })
-            .then(() => afterCreate && afterCreate());
+            .then(() => {
+                if (afterCreate)
+                    return afterCreate().then(() => {
+                        return true;
+                    });
+                else return true;
+            })
+            .catch(() => {
+                return false;
+            });
     };
 
     const data = params.convertDataTo

@@ -9,7 +9,7 @@ import {
 import './styles/View.scss';
 import { ComponentOptions } from 'shared/types';
 import { TypeItem } from './Interface';
-import { IData } from 'shared/lib/_source/IData';
+import { IData, IItemData } from 'shared/lib/_source/IData';
 import Item from './Items';
 import { classNames } from 'shared/lib/helpers';
 import { Actions } from 'widgets/action';
@@ -62,7 +62,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
     const [items, setItems] = useState([]);
 
     const sourceQuery = useCallback(() => {
-        return source.query({ filter }).then((items) => {
+        return source.query({ filter }).then((items: IItemData[]) => {
             if (dataLoadCallback) {
                 dataLoadCallback(items);
             }

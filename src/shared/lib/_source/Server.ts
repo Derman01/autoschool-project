@@ -27,7 +27,10 @@ interface IServerData {
 
 const API_URL = 'https://autoschool.evgfilim1.me/api/';
 
-export const downloadFile = (nameDoc: string, params: {[key: string| number]: any}) => {
+export const downloadFile = (
+    nameDoc: string,
+    params: { [key: string | number]: any }
+) => {
     const stringParams = Object.keys(params)
         .map((key) => {
             return `${key}=${params[key]}`;
@@ -42,23 +45,23 @@ export class Server implements IData {
     $binding: IMethods | undefined;
     $model: Model;
 
-    query(params?: object): Promise<IItemData[]> {
+    query(params?: object): Promise<IItemData[] | void> {
         return this.call(this.$binding?.query, params);
     }
 
-    delete(params?: object): Promise<IItemData[]> {
+    delete(params?: object): Promise<IItemData[] | void> {
         return this.call(this.$binding?.delete, params);
     }
 
-    edit(params?: object): Promise<IItemData[]> {
+    edit(params?: object): Promise<IItemData[] | void> {
         return this.call(this.$binding?.edit, params);
     }
 
-    create(params?: object): Promise<IItemData[]> {
+    create(params?: object): Promise<IItemData[] | void> {
         return this.call(this.$binding?.create, params);
     }
 
-    public call(method?: string, params?: object): Promise<IItemData[]> {
+    public call(method?: string, params?: object): Promise<IItemData[] | void> {
         const pathList = [this.$endpoint];
         if (method) {
             pathList.push(method);
@@ -66,23 +69,27 @@ export class Server implements IData {
 
         const path = pathList.join('/');
 
-        return axios
-            .get(API_URL + path, {
-                params,
-            })
-            .then((data: AxiosResponse<Response>) => {
-                if (data.data.success) {
-                    if (data.data.items?.length) {
-                        return data.data.items.map((item) => {
-                            return new this.$model(item) as IItemData;
-                        });
+        return (
+            axios
+                .get(API_URL + path, {
+                    params,
+                })
+                // @ts-ignore
+                .then((data: AxiosResponse<Response>) => {
+                    if (data.data.success) {
+                        if (data.data.items?.length) {
+                            return data.data.items.map((item) => {
+                                return new this.$model(item) as IItemData;
+                            });
+                        } else {
+                            return data.data.items;
+                        }
                     } else {
-                        return data.data.items;
+                        alert(data.data.message);
+                        return Promise.reject();
                     }
-                } else {
-                    alert(data.data.message);
-                }
-            });
+                })
+        );
     }
 
     constructor(data: IServerData) {

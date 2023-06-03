@@ -1,7 +1,7 @@
 import { createData } from 'shared/lib/action';
 import { COURSES_DATA_FORM, COURSES_SOURCE } from '../Constants';
 
-export const createCourse = (afterCreate: () => void) =>
+export const createCourse = (afterCreate: () => Promise<void>) =>
     createData(
         {
             headerTitle: 'Добавить курс',

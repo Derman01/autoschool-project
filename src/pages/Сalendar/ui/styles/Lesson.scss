@@ -7,6 +7,7 @@
         position: relative;
         display: grid;
         overflow: hidden;
+        grid-template-columns: 100%;
         border-left: 2px solid var(--color-primary);
         box-shadow: 0 0 6px var(--color-shadow);
         background: #edf6ff;
@@ -33,6 +34,8 @@
     &__name {
         max-height: 100%;
         margin-top: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__milk {

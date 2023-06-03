@@ -1,7 +1,7 @@
 import { createData } from 'shared/lib/action';
 import { STUDENTS_DATA_FORM, STUDENT_SOURCE } from '../Constants';
 
-export const createStudent = (afterCreate: () => void) =>
+export const createStudent = (afterCreate: () => Promise<void>) =>
     createData(
         {
             headerTitle: 'Добавить студента',
