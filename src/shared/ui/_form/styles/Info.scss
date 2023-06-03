@@ -1,0 +1,12 @@
+.Info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--offset-m);
+
+    &__title {
+        font-weight: bold;
+    }
+
+    &__value {
+    }
+}

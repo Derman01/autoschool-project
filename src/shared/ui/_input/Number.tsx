@@ -7,10 +7,11 @@ interface NumberOptions extends ComponentOptions {
     placeholder?: string;
     onChange?: (value: string) => void;
     value?: any;
+    patterns?: string[];
 }
 
 export const Number: FC<NumberOptions> = (options) => {
-    const { className, placeholder, onChange, value } = options;
+    const { className, placeholder, onChange, value, patterns } = options;
 
     return (
         <Field
@@ -19,6 +20,7 @@ export const Number: FC<NumberOptions> = (options) => {
             type={'number'}
             placeholder={placeholder}
             className={className}
+            patterns={patterns}
             min={0}
         />
     );

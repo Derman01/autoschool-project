@@ -70,11 +70,15 @@ export const Field = forwardRef<FieldRef, FieldOptions>((options, ref) => {
     const onChangeValue = (value: string) => {
         let test = true;
         if (patterns) {
-            value.split('').forEach((s, index) => {
-                if (test && !new RegExp(patterns[index]).test(s)) {
-                    test = false;
-                }
-            });
+            if (patterns.length < value.length) {
+                test = false;
+            } else {
+                value.split('').forEach((s, index) => {
+                    if (test && !new RegExp(patterns[index]).test(s)) {
+                        test = false;
+                    }
+                });
+            }
         }
         if (test) {
             setValueState(value);

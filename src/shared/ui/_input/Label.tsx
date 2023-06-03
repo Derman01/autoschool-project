@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import './styles/Label.scss';
 import { ComponentOptions } from 'shared/types';
 
 interface LabelOptions extends ComponentOptions {
     title: string;
-    text: string;
+    text: string | ReactElement;
 }
 
 export const Label: FC<LabelOptions> = (options) => {

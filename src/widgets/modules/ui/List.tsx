@@ -1,10 +1,11 @@
 import { FC, useRef } from 'react';
 import './styles/List.scss';
 import { Caption, IViewRef, RichGrid } from 'shared/ui/list';
-import { Actions } from 'widgets/action';
 import { MODULE_SOURCE } from './helper/Constants';
 import { createModule } from './helper/createModule';
 import { ModuleModel } from '../models/Model';
+import { PopupOpener } from 'shared/ui/popup';
+import { Card } from './Card';
 
 interface IListModulesProps {
     dataLoadCallback?: (items: any[]) => void;
@@ -30,12 +31,20 @@ const CAPTION: Caption[] = [
 export const ListModules: FC<IListModulesProps> = () => {
     const listRef = useRef<IViewRef>();
 
-    const actions: Actions = [
-        {
-            id: 'create',
-            title: '',
-        },
-    ];
+    const openCard = (module: ModuleModel) => {
+        PopupOpener.createModal({
+            templateOptions: {
+                headerTitle: 'Карточка модуля',
+                width: 600,
+                bodyContent: (
+                    <Card
+                        module={module}
+                        afterUpdate={listRef.current.reload}
+                    />
+                ),
+            },
+        });
+    };
 
     return (
         <RichGrid
@@ -44,6 +53,7 @@ export const ListModules: FC<IListModulesProps> = () => {
             addingCallback={() => createModule(listRef.current.reload)}
             gridOptions={{
                 source: MODULE_SOURCE,
+                selectedChanged: openCard,
                 canSelected: false,
                 autoSelected: true,
                 columns: COLUMNS,

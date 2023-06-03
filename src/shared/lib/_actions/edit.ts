@@ -3,19 +3,20 @@ import { getDataWithValue, IParams } from './helper';
 
 export const editData = (
     params?: IParams,
-    afterCreate?: () => Promise<void>
+    afterCreate?: (data?: object) => Promise<void>
 ) => {
     const onResult = (newData: object) => {
+        const newObject = {
+            ...params.data,
+            ...(params.convertDataFrom
+                ? params.convertDataFrom(newData)
+                : newData),
+        };
         return params.source
-            .edit({
-                ...params.data,
-                ...(params.convertDataFrom
-                    ? params.convertDataFrom(newData)
-                    : newData),
-            })
+            .edit(newObject)
             .then(() => {
                 if (afterCreate)
-                    return afterCreate().then(() => {
+                    return afterCreate(newObject).then(() => {
                         return true;
                     });
                 else return true;

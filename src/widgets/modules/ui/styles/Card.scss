@@ -1,0 +1,28 @@
+.widget-module__Card {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--offset-m);
+
+    &_name {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    &_description {
+        margin-top: var(--offset-m);
+    }
+
+    &_hours {
+        margin-top: var(--offset-l);
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    &_actions {
+        margin-top: var(--offset-3xl);
+        display: flex;
+        gap: var(--offset-m);
+    }
+}

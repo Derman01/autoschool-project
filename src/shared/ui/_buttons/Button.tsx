@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 import './styles/Button.scss';
 import { Icon } from './Icon';
 import { IconName } from './Interface';
@@ -9,9 +9,9 @@ export interface ButtonOptions extends ComponentOptions {
     title?: string;
     icon?: IconName;
     iconSize?: 'm' | 's';
-    onClick?: () => void;
+    onClick?: (e?: MouseEvent) => void;
     viewMode?: 'icon' | 'default';
-    style?: 'primary' | 'unaccented';
+    style?: 'primary' | 'unaccented' | 'danger';
     disabled?: boolean;
 }
 

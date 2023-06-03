@@ -14,16 +14,15 @@ export const ModuleDataForm: TDataForm = [
         options: {
             placeholder: 'Название',
             required: true,
-            conditionSuccess: (value) => !!value,
         },
     },
     {
         id: 'hours',
-        type: 'number',
+        type: 'text',
         options: {
             placeholder: 'Академические часы',
             required: true,
-            conditionSuccess: (value) => !!value,
+            patterns: [/[1-9]/, /\d/],
         },
     },
     {

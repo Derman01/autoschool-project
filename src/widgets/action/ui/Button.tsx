@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, MouseEvent } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { Button as UIButton } from 'shared/ui/buttons';
 import { Actions } from './Interface';
@@ -13,12 +13,16 @@ interface ButtonOptions extends ComponentOptions {
 export const Button: FC<ButtonOptions> = (options) => {
     const { source, item, className } = options;
 
-    const onClick = useCallback(() => {
-        OpenMenu({
-            source,
-            item,
-        });
-    }, [source, item]);
+    const onClick = useCallback(
+        (e: MouseEvent) => {
+            e.stopPropagation();
+            OpenMenu({
+                source,
+                item,
+            });
+        },
+        [source, item]
+    );
 
     return (
         <UIButton

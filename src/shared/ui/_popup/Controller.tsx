@@ -3,6 +3,7 @@ import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
 import { PopupConfig, usePopup } from 'shared/hooks/usePopup';
 import { useCommand } from 'shared/hooks/useCommand';
+import { PopupContext } from 'shared/context/popup';
 
 interface ControllerOptions extends ComponentOptions {}
 
@@ -33,7 +34,14 @@ export const Controller: FC<ControllerOptions> = (options) => {
     return (
         <div className={classNames(['PopupController', className])}>
             {popups.map(({ id, Popup }) => (
-                <Popup key={id} />
+                <PopupContext.Provider
+                    key={id}
+                    value={{
+                        closePopup: () => closePopup(id),
+                    }}
+                >
+                    <Popup />
+                </PopupContext.Provider>
             ))}
         </div>
     );

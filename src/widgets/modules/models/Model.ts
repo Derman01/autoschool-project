@@ -5,8 +5,8 @@ export class ModuleModel extends Model {
         return this.name;
     }
 
-    public get Description(): string {
-        return this.description;
+    public get Description(): string[] {
+        return this.description.split('\n');
     }
 
     public get Hours(): number {

@@ -9,6 +9,8 @@ interface IDataObjectOptions extends AnyObject {
     placeholder: string;
     required?: boolean;
     conditionSuccess?: (value: any) => boolean;
+    value?: any;
+    patterns?: RegExp[];
 }
 
 interface IDataObjectForm {
@@ -35,7 +37,9 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
             const res: AnyObject = {};
             data.forEach((value) => {
                 if (value.options.required) {
-                    res[value.id] = false;
+                    res[value.id] = value.options.conditionSuccess
+                        ? value.options.conditionSuccess(value)
+                        : !!value.options.value;
                 }
             });
             return res;
