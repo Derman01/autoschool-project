@@ -11,6 +11,7 @@ interface Response {
     message: string;
     errors: [string];
     items: IItemData[];
+    payload?: IItemData;
 }
 
 interface IMethods {
@@ -46,23 +47,26 @@ export class Server implements IData {
     $binding: IMethods | undefined;
     $model: Model;
 
-    query(params?: object): Promise<IItemData[] | void> {
+    query(params?: object): Promise<IItemData[] | IItemData | void> {
         return this.call(this.$binding?.query, params);
     }
 
-    delete(params?: object): Promise<IItemData[] | void> {
-        return this.call(this.$binding?.delete, params);
+    delete(params?: object): Promise<void> {
+        return this.call(this.$binding?.delete, params) as Promise<void>;
     }
 
-    edit(params?: object): Promise<IItemData[] | void> {
-        return this.call(this.$binding?.edit, params);
+    edit(params?: object): Promise<IItemData | void> {
+        return this.call(this.$binding?.edit, params) as Promise<IItemData>;
     }
 
-    create(params?: object): Promise<IItemData[] | void> {
-        return this.call(this.$binding?.create, params);
+    create(params?: object): Promise<IItemData | void> {
+        return this.call(this.$binding?.create, params) as Promise<IItemData>;
     }
 
-    public call(method?: string, params?: object): Promise<IItemData[] | void> {
+    public call(
+        method?: string,
+        params?: object
+    ): Promise<IItemData[] | IItemData | void> {
         const pathList = [this.$endpoint];
         if (method) {
             pathList.push(method);
@@ -78,12 +82,18 @@ export class Server implements IData {
                 // @ts-ignore
                 .then((data: AxiosResponse<Response>) => {
                     if (data.data.success) {
-                        if (data.data.items?.length) {
-                            return data.data.items.map((item) => {
-                                return new this.$model(item) as IItemData;
-                            });
+                        if (data.data.items) {
+                            if (data.data.items?.length) {
+                                return data.data.items.map((item) => {
+                                    return new this.$model(item) as IItemData;
+                                });
+                            } else {
+                                return data.data.items;
+                            }
                         } else {
-                            return data.data.items;
+                            return new this.$model(
+                                data.data.payload
+                            ) as IItemData;
                         }
                     } else {
                         alert(data.data.errors[0]);

@@ -1,22 +1,27 @@
 import { OpenForm } from 'shared/ui/form';
 import { getDataWithValue, IParams } from './helper';
+import { IItemData } from 'shared/lib/_source/IData';
 
 export const editData = (
     params?: IParams,
     afterCreate?: (data?: object) => Promise<void>
 ) => {
+    const data = params.convertDataTo
+        ? params.convertDataTo(params.data)
+        : params.data;
+
     const onResult = (newData: object) => {
         const newObject = {
-            ...params.data,
+            ...data,
             ...(params.convertDataFrom
                 ? params.convertDataFrom(newData)
                 : newData),
         };
         return params.source
             .edit(newObject)
-            .then(() => {
+            .then((payload) => {
                 if (afterCreate)
-                    return afterCreate(newObject).then(() => {
+                    return afterCreate(payload as IItemData).then(() => {
                         return true;
                     });
                 else return true;
@@ -26,13 +31,9 @@ export const editData = (
             });
     };
 
-    const data = params.convertDataTo
-        ? params.convertDataTo(params.data)
-        : params.data;
-
     OpenForm(
         {
-            width: 430,
+            width: 500 || params.width,
             headerTitle: 'Редактирование',
         },
         {

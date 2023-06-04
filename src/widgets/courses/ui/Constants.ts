@@ -60,7 +60,7 @@ export const COURSES_DATA_FORM: TDataForm = [
             placeholder: 'Модули',
             source: MODULE_SOURCE,
             required: true,
-            conditionSuccess: (value) => !!value.length,
+            conditionSuccess: (value) => !!value?.length,
         },
     },
     {

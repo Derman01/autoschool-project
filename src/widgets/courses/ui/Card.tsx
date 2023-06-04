@@ -2,42 +2,42 @@ import { FC, useCallback, useState } from 'react';
 import './styles/Card.scss';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
-import { ModuleModel } from '../models/Model';
+import { CoursesModel } from '../models/Model';
 import { Button } from 'shared/ui/buttons';
-import { editModule } from './helper/editModule';
 import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
-import { deleteModule } from 'widgets/modules/ui/helper/deleteModule';
+import { deleteCourse, editCourse } from './helper';
 
 interface CardOptions extends ComponentOptions {
-    module: ModuleModel;
+    course: CoursesModel;
     afterUpdate: () => Promise<void>;
 }
 
 export const Card: FC<CardOptions> = (options) => {
     const { className, afterUpdate } = options;
-    const [module, setModule] = useState(options.module);
+    const [coursesModel, setCoursesModel] = useState(options.course);
     const { closePopup } = usePopupContext();
 
     const onEditHandler = useCallback(() => {
-        editModule(module, (item: ModuleModel) => {
-            setModule(
-                new ModuleModel({
-                    ...module,
-                    ...item,
-                })
+        editCourse(coursesModel, (item: CoursesModel) => {
+            setCoursesModel(
+                (module) =>
+                    new CoursesModel({
+                        ...module,
+                        ...item,
+                    })
             );
             return afterUpdate();
         });
-    }, [module]);
+    }, [coursesModel]);
 
     const onDeleteHandler = useCallback(() => {
-        deleteModule(module).then(() => {
+        deleteCourse(coursesModel).then(() => {
             afterUpdate().then(() => {
                 closePopup();
             });
         });
-    }, [module]);
+    }, [coursesModel]);
 
     return (
         <div className={classNames(['widget-module__Card', className])}>
@@ -45,24 +45,36 @@ export const Card: FC<CardOptions> = (options) => {
                 data={[
                     {
                         title: 'Название',
-                        value: module.name,
+                        value: coursesModel.name,
                     },
                     {
-                        title: 'Описание',
+                        title: 'Категория',
                         value: (
                             <>
-                                {module.Description.map((row, index) => (
-                                    <span key={index}>
-                                        {row}
-                                        <br />
-                                    </span>
-                                ))}
+                                {coursesModel.Category}:{' '}
+                                {coursesModel.category_description}
                             </>
                         ),
                     },
                     {
-                        title: 'Ак. часы',
-                        value: module.Hours + '',
+                        title: 'Инструктор',
+                        value: coursesModel.Instructor,
+                    },
+                    {
+                        title: 'Часов практики',
+                        value: coursesModel.DrivingHours + '',
+                    },
+                    {
+                        title: 'Часов лекций',
+                        value: coursesModel.LessonHours + '',
+                    },
+                    {
+                        title: 'Стоимость',
+                        value: coursesModel.price,
+                    },
+                    {
+                        title: 'Модули',
+                        value: coursesModel.ModuleList,
                     },
                 ]}
             />

@@ -4,5 +4,5 @@ export interface IItemData {
 }
 
 export interface IData {
-    query(params?: object): Promise<IItemData[] | void>;
+    query(params?: object): Promise<IItemData[] | IItemData | void>;
 }

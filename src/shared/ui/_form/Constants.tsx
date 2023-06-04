@@ -21,7 +21,7 @@ export type TWidget =
 
 export const WidgetParse: Record<
     TWidget,
-    FC<{ onChange: (value: any) => void; filter: AnyObject }>
+    FC<{ onChange: (value: any) => void; filter?: AnyObject }>
 > = {
     text: Text,
     date: Date,

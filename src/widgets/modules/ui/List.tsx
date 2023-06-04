@@ -13,7 +13,7 @@ interface IListModulesProps {
 }
 
 const COLUMNS: FC<ModuleModel>[] = [
-    (props) => <>{props.title}</>,
+    (props) => <>{props.name}</>,
     (props) => <>{props.Hours}</>,
 ];
 

@@ -1,4 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import {
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useState,
+} from 'react';
 import './styles/Menu.scss';
 import { ComponentOptions } from 'shared/types';
 import { classNames } from 'shared/lib/helpers';
@@ -38,14 +44,22 @@ interface MenuOptions extends ComponentOptions {
 
 export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
     const { className, data, onDataInput } = options;
-    const [result, setResult] = useState<AnyObject>({});
+    const [result, setResult] = useState<AnyObject>(
+        (() => {
+            const res: AnyObject = {};
+            data.forEach((value) => {
+                res[value.id] = value.options.value || null;
+            });
+            return res;
+        })()
+    );
     const [dataSuccess, setDataSuccess] = useState(
         (() => {
             const res: AnyObject = {};
             data.forEach((value) => {
                 if (value.options.required) {
                     res[value.id] = value.options.conditionSuccess
-                        ? value.options.conditionSuccess(value)
+                        ? value.options.conditionSuccess(value.options.value)
                         : !!value.options.value;
                 }
             });
@@ -66,25 +80,33 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
         onDataInput(isSuccess);
     }, [dataSuccess]);
 
-    const updateDataSuccess = (id: string, value: any) => {
-        const field = data.find((value) => value.id === id);
-        if (field.options.required) {
-            setDataSuccess((data) => ({
-                ...data,
-                [id]: field.options.conditionSuccess
-                    ? field.options.conditionSuccess(value)
-                    : !!value,
-            }));
-        }
-    };
+    const updateDataSuccess = useCallback(
+        (id: string, value: any) => {
+            const field = data.find((value) => value.id === id);
+            if (field.options.required) {
+                setDataSuccess((data) => ({
+                    ...data,
+                    [id]: field.options.conditionSuccess
+                        ? field.options.conditionSuccess(value)
+                        : !!value,
+                }));
+            }
+        },
+        [data]
+    );
 
-    const onChange = (id: string, value: any) => {
-        setResult((result) => ({
-            ...result,
-            [id]: value,
-        }));
-        updateDataSuccess(id, value);
-    };
+    const onChange = useCallback(
+        (id: string, value: any) => {
+            if (result[id] !== value) {
+                setResult((result) => ({
+                    ...result,
+                    [id]: value,
+                }));
+                updateDataSuccess(id, value);
+            }
+        },
+        [result]
+    );
 
     return (
         <div className={classNames(['form-Menu', className])}>
@@ -96,20 +118,26 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
                 )
                 .map((object) => {
                     const Widget = WidgetParse[object.type];
-                    const filter = object.dependence
-                        ? object.dependence.convertFilter(
-                              result[object.dependence.id]
-                          )
-                        : {};
+                    let filter = object.options.filter;
+
+                    if (object.dependence) {
+                        const newFilter = object.dependence
+                            ? object.dependence.convertFilter(
+                                  result[object.dependence.id]
+                              )
+                            : {};
+                        filter = {
+                            ...filter,
+                            ...newFilter,
+                        };
+                    }
+
                     return (
                         <Widget
                             onChange={(value) => onChange(object.id, value)}
                             key={object.id}
                             {...object.options}
-                            filter={{
-                                ...object.options?.filter,
-                                ...filter,
-                            }}
+                            filter={filter}
                         />
                     );
                 })}

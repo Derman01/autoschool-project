@@ -8,7 +8,6 @@ export class ModuleModel extends Model {
                 style={{
                     display: 'grid',
                     gap: '10px',
-                    alignItems: 'center',
                     gridAutoFlow: 'column',
                     gridTemplateColumns: '1fr 100px',
                     justifyContent: 'space-between',
