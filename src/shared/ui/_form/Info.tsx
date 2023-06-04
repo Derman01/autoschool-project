@@ -19,8 +19,12 @@ export const Info: FC<InfoOptions> = (options) => {
         <div className={classNames(['Info', className])}>
             {data.map((row) => (
                 <>
-                    <div className={'Info__title'}>{row.title}:</div>
-                    <div className={'Info__value'}>{row.value}</div>
+                    {row && (
+                        <>
+                            <div className={'Info__title'}>{row.title}:</div>
+                            <div className={'Info__value'}>{row.value}</div>
+                        </>
+                    )}
                 </>
             ))}
         </div>

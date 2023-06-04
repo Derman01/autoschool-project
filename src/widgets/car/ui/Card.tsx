@@ -8,15 +8,18 @@ import { CarModel } from '../models/CarModel';
 interface CardOptions extends ComponentOptions {
     item: CarModel;
     actions?: Actions;
+    onClick?: (item: CarModel) => void;
 }
 
 export const Card: FC<CardOptions> = (options) => {
-    const { className, item, actions } = options;
-
+    const { className, item, actions, onClick } = options;
     return (
-        <div className={classNames(['car__card', className])}>
+        <div
+            className={classNames(['car__card', className])}
+            onClick={() => onClick(item)}
+        >
             <div className="car__card_name">
-                {item.car_name}{' '}
+                {item.Name}{' '}
                 <span
                     className={classNames('car__card_status', {
                         free: item.isFree,
