@@ -6,6 +6,7 @@ export const CarDataForm: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Модель автомобиля',
+            required: true,
         },
     },
     {
@@ -13,6 +14,7 @@ export const CarDataForm: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Гос. номер',
+            required: true,
             patterns: [
                 /[АВЕКМНОРСТУХ]/,
                 /\d/,

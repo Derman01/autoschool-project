@@ -59,6 +59,9 @@ export const COURSES_DATA_FORM: TDataForm = [
         options: {
             placeholder: 'Модули',
             source: MODULE_SOURCE,
+            filter: {
+                exams: false,
+            },
             required: true,
             conditionSuccess: (value) => !!value?.length,
         },

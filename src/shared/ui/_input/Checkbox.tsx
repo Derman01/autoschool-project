@@ -8,17 +8,18 @@ import {
 } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { Field, FieldRef } from './Field';
-import { IData, IItemData } from 'shared/lib/source';
+import { AnyObject, IData, IItemData } from 'shared/lib/source';
 
 interface MenuOptions extends ComponentOptions {
     placeholder?: string;
     source?: IData;
     onChange?: (value: any) => void;
     value?: any;
+    filter?: AnyObject;
 }
 
 export const Checkbox: FC<MenuOptions> = (options) => {
-    const { source, onChange, value = [] } = options;
+    const { source, onChange, value = [], filter } = options;
     const [items, setItems] = useState([]);
     const fieldRef = useRef<FieldRef>(null);
 
@@ -27,11 +28,11 @@ export const Checkbox: FC<MenuOptions> = (options) => {
     );
 
     useEffect(() => {
-        source.query().then((items: IItemData[]) => {
+        source.query({ filter }).then((items: IItemData[]) => {
             setItems(items);
             fieldRef.current?.setVisibleLabel(true);
         });
-    }, [source]);
+    }, [source, filter]);
 
     const onChangeHandler = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
