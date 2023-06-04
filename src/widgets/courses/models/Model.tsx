@@ -26,7 +26,7 @@ export class CoursesModel extends Model {
     }
 
     public get Instructor(): string {
-        return `${this.instructor_surname} ${this.instructor_surname} ${this.instructor_patronymic}`;
+        return `${this.instructor_surname} ${this.instructor_name} ${this.instructor_patronymic}`;
     }
 
     public get ModuleList(): ReactElement {

@@ -15,7 +15,16 @@ export const Card: FC<CardOptions> = (options) => {
 
     return (
         <div className={classNames(['car__card', className])}>
-            <div className="car__card_name">{item.name}</div>
+            <div className="car__card_name">
+                {item.car_name}{' '}
+                <span
+                    className={classNames('car__card_status', {
+                        free: item.isFree,
+                    })}
+                >
+                    {item.isFree ? 'Свободна' : 'Занята'}
+                </span>
+            </div>
             <div>
                 <span className={'car__card_number'}>Гос. номер </span>
                 {item.reg_number}
@@ -28,7 +37,12 @@ export const Card: FC<CardOptions> = (options) => {
                     {item.gearboxString}
                 </div>
             )}
-
+            {!item.isFree && (
+                <div>
+                    <span className={'car__card_number'}>Инструктор </span>
+                    {item.Teacher}
+                </div>
+            )}
             <div className="car__card_teacher"></div>
             {actions && (
                 <ActionButton
