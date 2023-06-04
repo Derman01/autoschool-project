@@ -8,25 +8,26 @@ import {
 } from 'react';
 import { ComponentOptions } from 'shared/types';
 import { Field, FieldRef } from './Field';
-import { IData, IItemData } from 'shared/lib/source';
+import { AnyObject, IData, IItemData } from 'shared/lib/source';
 
 interface MenuOptions extends ComponentOptions {
     placeholder?: string;
     source?: IData;
     onChange?: (value: any) => void;
     value?: any;
+    filter?: AnyObject;
 }
 
 export const Menu: FC<MenuOptions> = (options) => {
-    const { source, onChange, value = 'null' } = options;
+    const { source, onChange, filter, value = 'null' } = options;
     const [items, setItems] = useState([]);
     const fieldRef = useRef<FieldRef>(null);
 
     useEffect(() => {
-        source.query().then((items: IItemData[]) => {
+        source.query({ filter }).then((items: IItemData[]) => {
             setItems(items);
         });
-    }, [source]);
+    }, [source, filter]);
 
     const onChangeHandler = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {

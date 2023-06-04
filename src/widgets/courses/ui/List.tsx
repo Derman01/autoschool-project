@@ -1,11 +1,10 @@
 import { FC, useRef } from 'react';
 import './styles/List.scss';
 import { ComponentOptions } from 'shared/types';
-import { IViewRef, RichGrid } from 'shared/ui/list';
+import { Caption, IViewRef, RichGrid } from 'shared/ui/list';
 import { COURSES_SOURCE } from './Constants';
 import { createCourse, deleteCourse, editCourse } from './helper';
 import { CoursesModel } from '../models/Model';
-import { Label } from 'shared/ui/input';
 import { Actions } from 'widgets/action';
 
 export interface IFilter {
@@ -16,21 +15,20 @@ export interface ListOptions extends ComponentOptions {
     filter?: IFilter;
 }
 
-const TemplateItem: FC = (item: CoursesModel) => {
-    return (
-        <div>
-            <div>
-                <Label title={'Название'} text={item.name} />
-            </div>
-            <div>
-                <Label title={'Категория'} text={item.category} />
-            </div>
-            <div>
-                <Label title={'Стоимость'} text={item.price} />
-            </div>
-        </div>
-    );
-};
+const CAPTIONS: Caption[] = [
+    {
+        title: 'Название',
+        width: '1fr',
+    },
+    {
+        title: 'Категория',
+        width: '200px',
+    },
+    {
+        title: 'Стоимость',
+        width: '200px',
+    },
+];
 
 export const List: FC<ListOptions> = (options) => {
     const { className, filter } = options;
@@ -61,29 +59,15 @@ export const List: FC<ListOptions> = (options) => {
             headerTitle={'Курсы'}
             addingCallback={() => createCourse(ref.current.reload)}
             gridOptions={{
-                captions: [
-                    {
-                        title: 'Название',
-                        width: '1fr',
-                    },
-                    {
-                        title: 'Категория',
-                        width: '200px',
-                    },
-                    {
-                        title: 'Стоимость',
-                        width: '200px',
-                    },
-                ],
+                captions: CAPTIONS,
                 columns: [
-                    (item: CoursesModel) => <>{item.name}</>,
-                    (item: CoursesModel) => <>{item.category}</>,
-                    (item: CoursesModel) => <>{item.price}</>,
+                    (item: CoursesModel) => <>{item.title}</>,
+                    (item: CoursesModel) => <>{item.Category}</>,
+                    (item: CoursesModel) => <>{item.Price}</>,
                 ],
                 actions,
                 filter,
                 source: COURSES_SOURCE,
-                templateItem: TemplateItem,
             }}
         />
     );

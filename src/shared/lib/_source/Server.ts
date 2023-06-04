@@ -9,6 +9,7 @@ interface Model {
 interface Response {
     success: boolean;
     message: string;
+    errors: [string];
     items: IItemData[];
 }
 
@@ -85,7 +86,7 @@ export class Server implements IData {
                             return data.data.items;
                         }
                     } else {
-                        alert(data.data.message);
+                        alert(data.data.errors[0]);
                         return Promise.reject();
                     }
                 })
