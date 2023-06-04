@@ -55,6 +55,9 @@ export const ListModules: FC<IListModulesProps> = () => {
                 source: MODULE_SOURCE,
                 selectedChanged: openCard,
                 canSelected: false,
+                filter: {
+                    exams: false,
+                },
                 autoSelected: true,
                 columns: COLUMNS,
                 captions: CAPTION,
