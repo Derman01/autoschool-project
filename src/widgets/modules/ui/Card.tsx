@@ -8,6 +8,7 @@ import { editModule } from './helper/editModule';
 import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
 import { deleteModule } from 'widgets/modules/ui/helper/deleteModule';
+import items from 'shared/ui/_list/Items';
 
 interface CardOptions extends ComponentOptions {
     module: ModuleModel;
@@ -72,11 +73,13 @@ export const Card: FC<CardOptions> = (options) => {
                     title={'Редактировать'}
                     onClick={onEditHandler}
                 />
-                <Button
-                    style={'danger'}
-                    title={'Удалить'}
-                    onClick={onDeleteHandler}
-                />
+                {module.metadata === 'module' && (
+                    <Button
+                        style={'danger'}
+                        title={'Удалить'}
+                        onClick={onDeleteHandler}
+                    />
+                )}
             </div>
         </div>
     );

@@ -28,6 +28,6 @@ export const ModuleDataForm: TDataForm = [
     {
         id: 'description',
         type: 'textArea',
-        options: { placeholder: 'Описание' },
+        options: { placeholder: 'Описание', required: true },
     },
 ];
