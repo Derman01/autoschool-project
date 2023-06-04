@@ -1,9 +1,9 @@
-import { FC, forwardRef, useMemo } from 'react';
+import { FC, forwardRef, ReactElement, useMemo } from 'react';
 import './styles/Grid.scss';
 import { ViewOptions, View, IViewRef } from './View';
 
 export interface Caption {
-    title: string;
+    title: string | ReactElement;
     width: string;
 }
 

@@ -6,6 +6,7 @@
 
     &__headers {
         display: grid;
+        gap: var(--offset-m);
         width: 100%;
         padding: var(--offset-s) var(--offset-l) var(--offset-xs);
         align-items: center;

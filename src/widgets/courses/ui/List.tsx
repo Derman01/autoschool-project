@@ -19,15 +19,25 @@ export interface ListOptions extends ComponentOptions {
 const CAPTIONS: Caption[] = [
     {
         title: 'Название',
-        width: '1fr',
+        width: '4fr',
     },
     {
         title: 'Категория',
-        width: '200px',
+        width: '1fr',
+    },
+    {
+        title: (
+            <>
+                Ак. часов
+                <br />
+                (практика/лекции)
+            </>
+        ),
+        width: '1fr',
     },
     {
         title: 'Стоимость',
-        width: '200px',
+        width: '1fr',
     },
 ];
 
@@ -59,6 +69,11 @@ export const List: FC<ListOptions> = (options) => {
                 columns: [
                     (item: CoursesModel) => <>{item.title}</>,
                     (item: CoursesModel) => <>{item.Category}</>,
+                    (item: CoursesModel) => (
+                        <>
+                            {item.DrivingHours}/{item.LessonHours}
+                        </>
+                    ),
                     (item: CoursesModel) => <>{item.Price}</>,
                 ],
                 selectedChanged: openCard,
