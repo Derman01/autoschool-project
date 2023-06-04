@@ -44,7 +44,7 @@ export const Page: FC<PageOptions> = (options) => {
                         {'; '}
                         Категория прав{': '}
                         <span className="page__students_detail_container_title-name">
-                            {selectedGroup?.course_category}
+                            {selectedGroup?.category_name}
                         </span>
                         {'; '}
                         Старт обучения{': '}
