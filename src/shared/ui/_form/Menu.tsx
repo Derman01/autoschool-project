@@ -10,13 +10,20 @@ interface IDataObjectOptions extends AnyObject {
     required?: boolean;
     conditionSuccess?: (value: any) => boolean;
     value?: any;
+    filter?: AnyObject;
     patterns?: RegExp[];
+}
+
+interface IDependence {
+    id: string;
+    convertFilter: (value: any) => AnyObject;
 }
 
 interface IDataObjectForm {
     id: string;
     type: TWidget;
     options: IDataObjectOptions;
+    dependence?: IDependence;
 }
 
 export type TDataForm = IDataObjectForm[];
@@ -31,7 +38,7 @@ interface MenuOptions extends ComponentOptions {
 
 export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
     const { className, data, onDataInput } = options;
-    const [result, setResult] = useState({});
+    const [result, setResult] = useState<AnyObject>({});
     const [dataSuccess, setDataSuccess] = useState(
         (() => {
             const res: AnyObject = {};
@@ -81,16 +88,31 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
 
     return (
         <div className={classNames(['form-Menu', className])}>
-            {data.map((object) => {
-                const Widget = WidgetParse[object.type];
-                return (
-                    <Widget
-                        onChange={(value) => onChange(object.id, value)}
-                        key={object.id}
-                        {...object.options}
-                    />
-                );
-            })}
+            {data
+                .filter(
+                    (object) =>
+                        !object.dependence ||
+                        (object.dependence && dataSuccess[object.dependence.id])
+                )
+                .map((object) => {
+                    const Widget = WidgetParse[object.type];
+                    const filter = object.dependence
+                        ? object.dependence.convertFilter(
+                              result[object.dependence.id]
+                          )
+                        : {};
+                    return (
+                        <Widget
+                            onChange={(value) => onChange(object.id, value)}
+                            key={object.id}
+                            {...object.options}
+                            filter={{
+                                ...object.options?.filter,
+                                ...filter,
+                            }}
+                        />
+                    );
+                })}
         </div>
     );
 });

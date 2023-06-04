@@ -37,6 +37,12 @@ export const COURSES_DATA_FORM: TDataForm = [
             required: true,
             filter: { is_practician: false },
         },
+        dependence: {
+            id: 'category_id',
+            convertFilter: (value) => ({
+                category_id: value,
+            }),
+        },
     },
     {
         id: 'price',

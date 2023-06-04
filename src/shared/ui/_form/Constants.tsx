@@ -8,6 +8,7 @@ import {
     Area,
     Checkbox,
 } from 'shared/ui/input';
+import { AnyObject } from 'shared/lib/source';
 
 export type TWidget =
     | 'text'
@@ -20,7 +21,7 @@ export type TWidget =
 
 export const WidgetParse: Record<
     TWidget,
-    FC<{ onChange: (value: any) => void }>
+    FC<{ onChange: (value: any) => void; filter: AnyObject }>
 > = {
     text: Text,
     date: Date,
