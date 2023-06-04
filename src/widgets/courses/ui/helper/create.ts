@@ -6,6 +6,7 @@ export const createCourse = (afterCreate: () => Promise<void>) =>
         {
             headerTitle: 'Добавить курс',
             source: COURSES_SOURCE,
+            width: 600,
             modelDataForm: COURSES_DATA_FORM,
         },
         afterCreate

@@ -3,14 +3,12 @@ import { getDateString } from 'shared/lib/helpers';
 
 export class StudentModel extends Model {
     public get payment(): string {
-        const payment = this.payments.length
-            ? this.payments.reduce(
-                  (a: AnyObject, b: AnyObject) =>
-                      Number(a.value) + Number(b.value),
-                  { value: 0 }
-              )
+        const payment: number = this.payments.length
+            ? this.payments
+                  .map((value: AnyObject) => value.value)
+                  .reduce((a: string, b: string) => Number(a) + Number(b), 0)
             : 0;
-        return `${payment}/${this.course_price}`;
+        return Math.round((payment * 100) / this.course_price) + '%';
     }
 
     public get nextPayment(): string {

@@ -21,7 +21,7 @@ export const createData = (
 
     OpenForm(
         {
-            width: 430,
+            width: params.width || 500,
             headerTitle: params.headerTitle,
         },
         {

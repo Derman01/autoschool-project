@@ -66,7 +66,14 @@ export const Checkbox: FC<MenuOptions> = (options) => {
                                 id={item.id}
                                 name={item.id}
                             />
-                            <label htmlFor="scales">{item.title}</label>
+                            <label
+                                style={{
+                                    width: '100%',
+                                }}
+                                htmlFor={item.id}
+                            >
+                                {item.title}
+                            </label>
                         </div>
                     ))}
                 </div>

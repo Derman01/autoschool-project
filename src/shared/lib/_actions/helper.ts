@@ -6,6 +6,7 @@ export interface AnyObject {
 }
 
 export interface IParams {
+    width?: number;
     source: Server;
     modelDataForm: TDataForm;
     data?: object;
