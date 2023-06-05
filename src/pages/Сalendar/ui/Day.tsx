@@ -16,7 +16,7 @@ export const Day: FC<DayOptions> = (options) => {
     const events = lessons ? [...lessons] : [];
 
     const fakeTime = (day: Date) => {
-        const formattedTime = day.toLocaleString('default', {
+        const formattedTime = day.toLocaleString('ru-RU', {
             hour: 'numeric',
             minute: 'numeric',
         });

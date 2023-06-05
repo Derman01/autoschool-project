@@ -21,7 +21,7 @@ export class LessonModel extends Model {
     }
 
     public get StartTimeString(): string {
-        return this.StartTime.toLocaleString('default', {
+        return this.StartTime.toLocaleString('ru-RU', {
             hour: 'numeric',
             minute: 'numeric',
         });
@@ -35,7 +35,7 @@ export class LessonModel extends Model {
     }
 
     public get EndTimeString(): string {
-        return this.EndTime.toLocaleString('default', {
+        return this.EndTime.toLocaleString('ru-RU', {
             hour: 'numeric',
             minute: 'numeric',
         });

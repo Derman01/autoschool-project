@@ -56,7 +56,7 @@ export const Weekday: FC<WeekdayOptions> = (options) => {
                 })}
             >
                 <div className="weekday__day__name">
-                    {day.toLocaleString('default', {
+                    {day.toLocaleString('ru-RU', {
                         weekday: 'short',
                     })}
                 </div>
@@ -92,7 +92,7 @@ export const Weekday: FC<WeekdayOptions> = (options) => {
         <div className={classNames(['Weekday', className])}>
             <div className="Weekday__controls">
                 <div className="Weekday__controls__year">
-                    {currentDate.toLocaleString('default', { year: 'numeric' })}
+                    {currentDate.toLocaleString('ru-RU', { year: 'numeric' })}
                 </div>
                 <div className="Weekday__controls__buttons">
                     <Button title={'Прошлая неделя'} onClick={handlePrevWeek} />
