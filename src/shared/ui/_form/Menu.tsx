@@ -22,7 +22,8 @@ interface IDataObjectOptions extends AnyObject {
 
 interface IDependence {
     id: string;
-    convertFilter: (value: any) => AnyObject;
+    convertFilter?: (value: any) => AnyObject;
+    conditionRequired?: (value: any) => boolean;
 }
 
 interface IDataObjectForm {
@@ -83,7 +84,18 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
     const updateDataSuccess = useCallback(
         (id: string, value: any) => {
             const field = data.find((value) => value.id === id);
-            if (field.options.required) {
+            const fieldsCondition = data.filter(
+                (value) => value?.dependence?.id === field.id
+            );
+
+            if (
+                field.options.required ||
+                (field.dependence?.id &&
+                    field.dependence.conditionRequired &&
+                    field.dependence.conditionRequired(
+                        result[field.dependence.id]
+                    ))
+            ) {
                 setDataSuccess((data) => ({
                     ...data,
                     [id]: field.options.conditionSuccess
@@ -91,8 +103,32 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
                         : !!value,
                 }));
             }
+
+            if (fieldsCondition.length) {
+                fieldsCondition.forEach((field) => {
+                    if (
+                        field.options.required ||
+                        (field.dependence.conditionRequired &&
+                            field.dependence.conditionRequired(value))
+                    ) {
+                        setDataSuccess((data) => ({
+                            ...data,
+                            [field.id]: false,
+                        }));
+                    } else {
+                        setDataSuccess((data) => ({
+                            ...data,
+                            [field.id]: true,
+                        }));
+                    }
+                    setResult((res) => ({
+                        ...res,
+                        [field.id]: null,
+                    }));
+                });
+            }
         },
-        [data]
+        [data, dataSuccess, result]
     );
 
     const onChange = useCallback(
@@ -114,13 +150,18 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
                 .filter(
                     (object) =>
                         !object.dependence ||
-                        (object.dependence && dataSuccess[object.dependence.id])
+                        (object.dependence &&
+                            dataSuccess[object.dependence.id] &&
+                            (!object.dependence.conditionRequired ||
+                                object.dependence.conditionRequired(
+                                    result[object.dependence.id]
+                                )))
                 )
                 .map((object) => {
                     const Widget = WidgetParse[object.type];
                     let filter = object.options.filter;
 
-                    if (object.dependence) {
+                    if (object.dependence && object.dependence.convertFilter) {
                         const newFilter = object.dependence
                             ? object.dependence.convertFilter(
                                   result[object.dependence.id]

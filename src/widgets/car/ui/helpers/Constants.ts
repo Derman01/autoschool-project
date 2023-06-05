@@ -1,4 +1,12 @@
-import { TDataForm } from 'shared/ui/_form/Menu';
+import { TDataForm } from 'shared/ui/form';
+import { Memory, Server } from 'shared/lib/source';
+import { CATEGORY_SOURCE } from 'widgets/category';
+import { CarModel } from 'widgets/car';
+
+export const CAR_SOURCE = new Server({
+    endpoint: 'cars',
+    model: CarModel,
+});
 
 export const CarDataForm: TDataForm = [
     {
@@ -23,6 +31,41 @@ export const CarDataForm: TDataForm = [
                 /[АВЕКМНОРСТУХ]/,
                 /[АВЕКМНОРСТУХ]/,
             ],
+        },
+    },
+    {
+        id: 'category_id',
+        type: 'menu',
+        options: {
+            placeholder: 'Категория',
+            required: true,
+            source: CATEGORY_SOURCE,
+        },
+    },
+    {
+        id: 'gearbox_type',
+        type: 'menu',
+        options: {
+            placeholder: 'Коробка передач',
+            source: new Memory({
+                data: [
+                    {
+                        id: 'auto',
+                        title: 'Автомат',
+                    },
+                    {
+                        id: 'manual',
+                        title: 'Механика',
+                    },
+                ],
+                keyProperty: 'id',
+            }),
+        },
+        dependence: {
+            id: 'category_id',
+            conditionRequired: (value) => {
+                return [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(value);
+            },
         },
     },
 ];
