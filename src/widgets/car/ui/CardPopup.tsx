@@ -62,7 +62,7 @@ export const CardPopup: FC<CardOptions> = (options) => {
                         ),
                     },
                     carModel.gearbox_type && {
-                        title: 'Коробка передач',
+                        title: 'КПП',
                         value: carModel.gearboxString,
                     },
                     !carModel.isFree && {

@@ -46,16 +46,16 @@ export const CarDataForm: TDataForm = [
         id: 'gearbox_type',
         type: 'menu',
         options: {
-            placeholder: 'Коробка передач',
+            placeholder: 'КПП',
             source: new Memory({
                 data: [
                     {
                         id: 'auto',
-                        title: 'Автомат',
+                        title: 'АКПП',
                     },
                     {
                         id: 'manual',
-                        title: 'Механика',
+                        title: 'МКПП',
                     },
                 ],
                 keyProperty: 'id',

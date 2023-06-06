@@ -34,9 +34,7 @@ export const Card: FC<CardOptions> = (options) => {
             </div>
             {item.gearbox_type && (
                 <div>
-                    <span className={'car__card_number'}>
-                        Коробока передач{' '}
-                    </span>
+                    <span className={'car__card_number'}>КПП </span>
                     {item.gearboxString}
                 </div>
             )}

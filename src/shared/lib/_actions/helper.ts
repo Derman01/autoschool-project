@@ -17,7 +17,7 @@ export interface IParams {
 
 export const getDataWithValue = (defaultData: TDataForm, data: AnyObject) => {
     return defaultData.map((value) => {
-        if (data[value.id]) {
+        if (data[value.id] !== undefined) {
             return {
                 ...value,
                 options: {

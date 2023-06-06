@@ -39,8 +39,9 @@ export const COURSES_DATA_FORM: TDataForm = [
         },
         dependence: {
             id: 'category_id',
-            convertFilter: (value) => ({
-                category_id: value,
+            filterIds: ['category_id'],
+            convertFilter: ([category_id]) => ({
+                category_id,
             }),
         },
     },

@@ -22,7 +22,8 @@ interface IDataObjectOptions extends AnyObject {
 
 interface IDependence {
     id: string;
-    convertFilter?: (value: any) => AnyObject;
+    filterIds?: string[];
+    convertFilter?: (values: any[]) => AnyObject;
     conditionRequired?: (value: any) => boolean;
 }
 
@@ -164,7 +165,9 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
                     if (object.dependence && object.dependence.convertFilter) {
                         const newFilter = object.dependence
                             ? object.dependence.convertFilter(
-                                  result[object.dependence.id]
+                                  object.dependence.filterIds.map(
+                                      (res) => result[res]
+                                  )
                               )
                             : {};
                         filter = {

@@ -7,6 +7,10 @@ export interface ICard {
 }
 
 export class CarModel extends Model {
+    public get title(): string {
+        return this.Name;
+    }
+
     public get Name(): string {
         return this.car_name;
     }
