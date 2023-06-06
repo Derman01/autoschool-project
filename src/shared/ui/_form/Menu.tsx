@@ -14,7 +14,7 @@ import { AnyObject } from 'shared/lib/source';
 interface IDataObjectOptions extends AnyObject {
     placeholder: string;
     required?: boolean;
-    conditionSuccess?: (value: any) => boolean;
+    conditionSuccess?: (value: any | string[]) => boolean;
     value?: any;
     filter?: AnyObject;
     patterns?: RegExp[];
@@ -156,6 +156,11 @@ export const Menu = forwardRef<MenuRef, MenuOptions>((options, ref) => {
                             (!object.dependence.conditionRequired ||
                                 object.dependence.conditionRequired(
                                     result[object.dependence.id]
+                                )) &&
+                            (!object.dependence.filterIds?.length ||
+                                object.dependence.filterIds.reduce(
+                                    (a, b) => a && dataSuccess[b],
+                                    true
                                 )))
                 )
                 .map((object) => {
