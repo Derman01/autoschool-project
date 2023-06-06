@@ -28,7 +28,7 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
             .query({
                 filter: {
                     exam: true,
-                    group: group.id,
+                    group_id: group.id,
                 },
             })
             .then((lessons: LessonModel[]) => {

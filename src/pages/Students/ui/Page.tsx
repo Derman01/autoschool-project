@@ -33,6 +33,7 @@ export const Page: FC<PageOptions> = (options) => {
                 selectedChanged={changeFolderHandler}
             />
             <StudentList
+                group={selectedGroup}
                 className={'page__students_student'}
                 filter={filterStudents}
                 headerTitle={

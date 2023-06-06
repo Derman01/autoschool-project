@@ -12,6 +12,7 @@ import { PaymentList } from 'widgets/payments';
 import { ListExam } from 'widgets/exams';
 import { classNames } from 'shared/lib/helpers';
 import { Card } from './Card';
+import { GroupModel } from 'widgets/groups';
 
 export interface IFilter {
     group?: string;
@@ -20,6 +21,7 @@ export interface IFilter {
 export interface ListOptions extends ComponentOptions {
     filter?: IFilter;
     headerTitle?: ReactElement | string;
+    group?: GroupModel;
 }
 
 const CAPTION = [
@@ -54,7 +56,7 @@ const COLUMNS: ((student: StudentModel) => ReactElement)[] = [
 ];
 
 export const List: FC<ListOptions> = (options) => {
-    const { className, filter, headerTitle } = options;
+    const { className, filter, headerTitle, group } = options;
 
     const ref = useRef<IViewRef>();
 
@@ -206,7 +208,7 @@ export const List: FC<ListOptions> = (options) => {
             ref={ref}
             className={className}
             headerTitle={headerTitle}
-            addingCallback={() => createStudent(ref.current.reload)}
+            addingCallback={() => createStudent(group, ref.current.reload)}
             gridOptions={{
                 actions,
                 filter,

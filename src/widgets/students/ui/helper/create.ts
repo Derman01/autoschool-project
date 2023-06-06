@@ -1,12 +1,16 @@
 import { createData } from 'shared/lib/action';
-import { STUDENTS_DATA_FORM, STUDENT_SOURCE } from '../Constants';
+import { STUDENT_SOURCE, getData } from '../Constants';
+import { GroupModel } from 'widgets/groups';
 
-export const createStudent = (afterCreate: () => Promise<void>) =>
+export const createStudent = (
+    group: GroupModel,
+    afterCreate: () => Promise<void>
+) =>
     createData(
         {
             headerTitle: 'Добавить студента',
             source: STUDENT_SOURCE,
-            modelDataForm: STUDENTS_DATA_FORM,
+            modelDataForm: getData(group),
         },
         afterCreate
     );

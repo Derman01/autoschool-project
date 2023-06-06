@@ -1,8 +1,9 @@
-import { Memory, Server } from 'shared/lib/source';
+import { IItemData, Memory, Server } from 'shared/lib/source';
 import { StudentModel } from '../models/Model';
 import { TDataForm } from 'shared/ui/form';
-import { GROUP_SOURCE } from 'widgets/groups';
+import { GROUP_SOURCE, GroupModel } from 'widgets/groups';
 import InstructorModel from 'pages/Students/models/InstructorModel';
+import { CoursesModel } from 'widgets/courses';
 
 export const STUDENT_SOURCE = new Server({
     endpoint: 'students',
@@ -15,6 +16,7 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Фамилия',
+            required: true,
         },
     },
     {
@@ -22,6 +24,7 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Имя',
+            required: true,
         },
     },
     {
@@ -29,6 +32,7 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Отчество',
+            required: true,
         },
     },
     {
@@ -36,6 +40,7 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'date',
         options: {
             placeholder: 'Дата рождения',
+            required: true,
         },
     },
     {
@@ -43,6 +48,21 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Телефон',
+            required: true,
+            conditionSuccess: (value) => new RegExp(/\d{11}/).test(value),
+            patterns: [
+                /\d/,
+                /\d/, //1
+                /\d/, //2
+                /\d/, //3
+                /\d/, //4
+                /\d/, //5
+                /\d/, //6
+                /\d/, //7
+                /\d/, //8
+                /\d/, //9
+                /\d/, //10
+            ],
         },
     },
     {
@@ -50,14 +70,7 @@ export const STUDENTS_DATA_FORM: TDataForm = [
         type: 'text',
         options: {
             placeholder: 'Адрес',
-        },
-    },
-    {
-        id: 'group_id',
-        type: 'menu',
-        options: {
-            placeholder: 'Группа',
-            source: GROUP_SOURCE,
+            required: true,
         },
     },
     {
@@ -71,23 +84,58 @@ export const STUDENTS_DATA_FORM: TDataForm = [
             }),
         },
     },
-    {
-        id: 'gearbox_type',
-        type: 'menu',
-        options: {
-            placeholder: 'КПП',
-            source: new Memory({
-                data: [
-                    {
-                        id: 'auto',
-                        title: 'АКПП',
-                    },
-                    {
-                        id: 'manual',
-                        title: 'МКПП',
-                    },
-                ],
-            }),
-        },
-    },
 ];
+
+export const getData = (groupModel: GroupModel): TDataForm => {
+    const price = Number(groupModel.course_price);
+
+    const paymentsData: IItemData[] = [
+        {
+            id: price / 2 + '',
+            title: 'Частичная - ' + price / 2,
+        },
+        {
+            id: price + '',
+            title: 'Полная - ' + price,
+        },
+    ];
+
+    return [
+        ...STUDENTS_DATA_FORM,
+        {
+            id: 'payment_value',
+            type: 'menu',
+            options: {
+                placeholder: 'Оплата',
+                required: true,
+                source: new Memory({
+                    data: paymentsData,
+                }),
+            },
+        },
+        {
+            id: 'group_id',
+            type: 'text',
+            options: {
+                placeholder: 'Оплата',
+                required: true,
+                value: groupModel.id,
+            },
+            dependence: {
+                id: 'null',
+            },
+        },
+        {
+            id: 'photo_path',
+            type: 'text',
+            options: {
+                placeholder: 'Оплата',
+                required: true,
+                value: 'pic.txt',
+            },
+            dependence: {
+                id: 'null',
+            },
+        },
+    ];
+};
