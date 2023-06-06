@@ -11,6 +11,7 @@ import { downloadFile } from 'shared/lib/source';
 import { PopupOpener } from 'shared/ui/popup';
 import { PaymentList } from 'widgets/payments';
 import { ListExam } from 'widgets/exams';
+import { classNames } from 'shared/lib/helpers';
 
 export interface IFilter {
     group?: string;
@@ -21,30 +22,10 @@ export interface ListOptions extends ComponentOptions {
     headerTitle?: ReactElement | string;
 }
 
-const TemplateItem: FC = (item: StudentModel) => {
-    return (
-        <div>
-            <div>
-                <Label title={'Название'} text={item.name} />
-            </div>
-            <div>
-                <Label title={'Категория'} text={item.category} />
-            </div>
-            <div>
-                <Label title={'Стоимость'} text={item.price} />
-            </div>
-        </div>
-    );
-};
-
 const CAPTION = [
     { title: 'ФИО', width: '3fr' },
     {
         title: 'Оплаченно',
-        width: '1fr',
-    },
-    {
-        title: 'Дата следующего платежа',
         width: '1fr',
     },
 ];
@@ -65,8 +46,11 @@ const COLUMNS: ((student: StudentModel) => ReactElement)[] = [
             </div>
         </div>
     ),
-    (student) => <>{student.payment}</>,
-    (student) => <>{student.nextPayment}</>,
+    (student) => (
+        <div className={classNames('student_item__payment')}>
+            {student.payment}
+        </div>
+    ),
 ];
 
 export const List: FC<ListOptions> = (options) => {
@@ -216,7 +200,6 @@ export const List: FC<ListOptions> = (options) => {
                 actions,
                 filter,
                 source: STUDENT_SOURCE,
-                templateItem: TemplateItem,
                 captions: CAPTION,
                 columns: COLUMNS,
             }}
