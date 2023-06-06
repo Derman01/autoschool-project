@@ -23,6 +23,10 @@
         @include icon_svg('action');
     }
 
+    &-info {
+        @include icon_svg('info')
+    }
+
     &-size_ {
         &s {
             width: 16px;

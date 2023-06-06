@@ -1,12 +1,12 @@
-import { FC, useRef } from 'react';
+import { FC, MouseEvent, useCallback, useRef } from 'react';
 import './styles/List.scss';
 import { IViewRef, RichView } from 'shared/ui/list';
-import { Actions } from 'widgets/action';
 import { GROUP_SOURCE } from './helper/Constants';
 import { createGroup } from './helper/createGroup';
-import { editGroup } from './helper/editGroup';
-import { deleteGroup } from './helper/deleteGroup';
-import { downloadFile } from 'shared/lib/source';
+import { Button } from 'shared/ui/buttons';
+import { GroupModel } from '../models/Model';
+import { PopupOpener } from 'shared/ui/popup';
+import { Card } from './Card';
 
 interface IListGroupProps {
     dataLoadCallback?: (items: any[]) => void;
@@ -17,62 +17,18 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
     const { dataLoadCallback, selectedChanged } = props;
     const listRef = useRef<IViewRef>();
 
-    const actions: Actions = [
-        {
-            id: 'edit',
-            title: 'Редактировать',
-            handler: (item) => {
-                return editGroup(item, listRef.current.reload);
+    const openCard = useCallback((e: MouseEvent, group: GroupModel) => {
+        e.stopPropagation();
+        PopupOpener.createModal({
+            templateOptions: {
+                headerTitle: 'Карточка группы',
+                width: 600,
+                bodyContent: (
+                    <Card group={group} afterUpdate={listRef.current.reload} />
+                ),
             },
-        },
-        {
-            id: 'delete',
-            title: 'Удалить',
-            handler: (item) => {
-                return deleteGroup({
-                    id: item['id'],
-                }).then(() => {
-                    return listRef.current.reload();
-                });
-            },
-        },
-        {
-            id: 'print',
-            title: 'Распечатать документ',
-            children: [
-                {
-                    id: 'print-1',
-                    title: 'Заявление на регистрацию в ГИБДД',
-                    handler: (item) => {
-                        downloadFile('registration-order', {
-                            group_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-2',
-                    title: 'Справка о результатах экзамена ГИБДД',
-                    handler: (item) => {
-                        downloadFile('exam-results', {
-                            group_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-              {
-                id: 'print-3',
-                title: 'Расписание',
-                handler: (item) => {
-                  downloadFile('schedule', {
-                    group_id: item.id,
-                  });
-                  return Promise.resolve();
-                },
-              },
-            ],
-        },
-    ];
+        });
+    }, []);
 
     return (
         <RichView
@@ -86,24 +42,20 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
                 className: 'widget-group__List_list',
                 minWidth: 300,
                 canSelected: true,
-                actions,
                 autoSelected: true,
                 style: 'master',
                 dataLoadCallback,
                 selectedChanged,
                 keyProperty: 'id',
-                templateItem: ({
-                    name,
-                    count,
-                }: {
-                    name: string;
-                    count: number;
-                }) => (
+                templateItem: (item: GroupModel) => (
                     <div className={'widget-group__List__item'}>
-                        <div>{name}</div>
-                        <div className={'widget-group__List__item_count'}>
-                            {count}
-                        </div>
+                        <div>{item.name}</div>
+                        <Button
+                            onClick={(e) => openCard(e, item)}
+                            viewMode={'icon'}
+                            icon={'info'}
+                            iconSize={'m'}
+                        />
                     </div>
                 ),
             }}
