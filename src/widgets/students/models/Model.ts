@@ -35,7 +35,10 @@ export class StudentModel extends Model {
         return `${this.instructor_surname} ${this.instructor_name} ${this.instructor_patronymic}`;
     }
 
-    public get NeedPayment(): string | null {
+    public get NeedPayment(): number | null {
+        if (this.updatePayment) {
+            return null;
+        }
         const payment: number = this.payments.length
             ? this.payments
                   .map((value: AnyObject) => value.value)
@@ -44,7 +47,7 @@ export class StudentModel extends Model {
         if (payment == this.course_price) {
             return null;
         } else {
-            return this.course_price - payment + '';
+            return Number(this.course_price) - Number(payment);
         }
     }
 }

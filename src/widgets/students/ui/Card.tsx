@@ -8,6 +8,7 @@ import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
 import { deleteStudent } from './helper/delete';
 import { editStudent } from './helper/edit';
+import { Server } from 'shared/lib/source';
 
 interface CardOptions extends ComponentOptions {
     student: StudentModel;
@@ -39,6 +40,26 @@ export const Card: FC<CardOptions> = (options) => {
             });
         });
     }, [studentModel]);
+
+    const onPaymentAll = () => {
+        new Server({
+            endpoint: 'payments',
+        })
+            .create({
+                student_id: studentModel.id,
+                date: new Date(),
+                value: studentModel.NeedPayment,
+            })
+            .then(() => {
+                afterUpdate();
+                setStudentModel(
+                    new StudentModel({
+                        ...studentModel,
+                        updatePayment: true,
+                    })
+                );
+            });
+    };
 
     return (
         <div className={classNames(['widget-module__Card', className])}>
@@ -80,6 +101,13 @@ export const Card: FC<CardOptions> = (options) => {
                     title={'Редактировать'}
                     onClick={onEditHandler}
                 />
+                {studentModel.NeedPayment && (
+                    <Button
+                        style={'primary'}
+                        title={'Оплачено'}
+                        onClick={onPaymentAll}
+                    />
+                )}
                 <Button
                     style={'danger'}
                     title={'Удалить'}
