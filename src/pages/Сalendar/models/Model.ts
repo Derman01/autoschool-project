@@ -5,6 +5,14 @@ export class LessonModel extends Model {
         return new Date(this.date);
     }
 
+    public get DateString(): string {
+        return this.DateDay.toLocaleDateString('ru-Ru', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
+    }
+
     public get Title(): string {
         return this.title;
     }

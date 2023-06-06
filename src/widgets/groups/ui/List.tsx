@@ -7,6 +7,8 @@ import { Button } from 'shared/ui/buttons';
 import { GroupModel } from '../models/Model';
 import { PopupOpener } from 'shared/ui/popup';
 import { Card } from './Card';
+import { Server } from 'shared/lib/source';
+import { LessonModel } from 'pages/Сalendar/models/Model';
 
 interface IListGroupProps {
     dataLoadCallback?: (items: any[]) => void;
@@ -19,15 +21,31 @@ export const ListGroup: FC<IListGroupProps> = (props) => {
 
     const openCard = useCallback((e: MouseEvent, group: GroupModel) => {
         e.stopPropagation();
-        PopupOpener.createModal({
-            templateOptions: {
-                headerTitle: 'Карточка группы',
-                width: 600,
-                bodyContent: (
-                    <Card group={group} afterUpdate={listRef.current.reload} />
-                ),
-            },
-        });
+        new Server({
+            endpoint: 'lessons',
+            model: LessonModel,
+        })
+            .query({
+                filter: {
+                    exam: true,
+                    group: group.id,
+                },
+            })
+            .then((lessons: LessonModel[]) => {
+                PopupOpener.createModal({
+                    templateOptions: {
+                        headerTitle: 'Карточка группы',
+                        width: 600,
+                        bodyContent: (
+                            <Card
+                                group={group}
+                                lessons={lessons}
+                                afterUpdate={listRef.current.reload}
+                            />
+                        ),
+                    },
+                });
+            });
     }, []);
 
     return (

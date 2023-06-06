@@ -8,16 +8,25 @@ import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
 import { deleteGroup } from './helper/deleteGroup';
 import { editGroup } from './helper/editGroup';
+import { LessonModel } from 'pages/Сalendar/models/Model';
 
 interface CardOptions extends ComponentOptions {
     group: GroupModel;
     afterUpdate: () => Promise<void>;
+    lessons: LessonModel[];
 }
 
 export const Card: FC<CardOptions> = (options) => {
-    const { className, afterUpdate } = options;
+    const { className, afterUpdate, lessons } = options;
     const [groupModel, setGroupModel] = useState(options.group);
     const { closePopup } = usePopupContext();
+
+    const practicExam = lessons.find(
+        (lesson) => lesson.module_name === 'Практический экзамен'
+    );
+    const teoreticExam = lessons.find(
+        (lesson) => lesson.module_name === 'Теоретический экзамен'
+    );
 
     const onEditHandler = useCallback(() => {
         editGroup(groupModel, (item: GroupModel) => {
@@ -53,12 +62,33 @@ export const Card: FC<CardOptions> = (options) => {
                         value: groupModel.category_name,
                     },
                     {
-                        title: 'Дата начала обучения',
-                        value: groupModel.StartDate,
+                        title: 'Курс обучения',
+                        value: groupModel.course_name,
                     },
                     {
-                        title: 'Дата окончания обучения',
-                        value: groupModel.EndDate,
+                        title: 'Период обучения',
+                        value:
+                            groupModel.StartDate + ' - ' + groupModel.EndDate,
+                    },
+                    {
+                        title: 'Тип группы',
+                        value: groupModel.Type,
+                    },
+                    {
+                        title: 'Время занятий',
+                        value: groupModel.timing_time_interval,
+                    },
+                    {
+                        title: 'Ак. часов практики',
+                        value: groupModel.course_driving_hours,
+                    },
+                    {
+                        title: 'Дата практического экзамена',
+                        value: practicExam.DateString,
+                    },
+                    {
+                        title: 'Дата теоретического экзамена',
+                        value: teoreticExam.DateString,
                     },
                 ]}
             />
