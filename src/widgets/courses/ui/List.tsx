@@ -49,7 +49,6 @@ export const List: FC<ListOptions> = (options) => {
     const openCard = (course: CoursesModel) => {
         PopupOpener.createModal({
             templateOptions: {
-                width: 600,
                 headerTitle: 'Карточка курса',
                 bodyContent: (
                     <Card course={course} afterUpdate={ref.current.reload} />

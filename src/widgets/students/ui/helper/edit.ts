@@ -1,9 +1,10 @@
 import { editData } from 'shared/lib/action';
 import { STUDENTS_DATA_FORM, STUDENT_SOURCE } from '../Constants';
+import { StudentModel } from '../../models/Model';
 
 export const editStudent = (
     data: object,
-    afterCreate?: () => Promise<void>
+    afterCreate?: (item: StudentModel) => Promise<void>
 ) => {
     return editData(
         {

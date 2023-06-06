@@ -117,7 +117,7 @@ export const View = forwardRef<IViewRef, ViewOptions>((options, ref) => {
                     ))}
                 </div>
             ) : (
-                <div>Пусто</div>
+                <></>
             )}
         </div>
     );

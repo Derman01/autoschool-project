@@ -1,17 +1,17 @@
 import { FC, ReactElement, useRef } from 'react';
 import './styles/List.scss';
 import { ComponentOptions } from 'shared/types';
-import { IViewRef, RichGrid, RichView } from 'shared/ui/list';
+import { IViewRef, RichGrid } from 'shared/ui/list';
 import { STUDENT_SOURCE } from './Constants';
 import { createStudent, deleteStudent, editStudent } from './helper';
 import { StudentModel } from '../models/Model';
-import { Label } from 'shared/ui/input';
 import { Actions } from 'widgets/action';
 import { downloadFile } from 'shared/lib/source';
 import { PopupOpener } from 'shared/ui/popup';
 import { PaymentList } from 'widgets/payments';
 import { ListExam } from 'widgets/exams';
 import { classNames } from 'shared/lib/helpers';
+import { Card } from './Card';
 
 export interface IFilter {
     group?: string;
@@ -190,6 +190,17 @@ export const List: FC<ListOptions> = (options) => {
         },
     ];
 
+    const openCard = (item: StudentModel) => {
+        PopupOpener.createModal({
+            templateOptions: {
+                headerTitle: 'Карточка студента',
+                bodyContent: (
+                    <Card student={item} afterUpdate={ref.current.reload} />
+                ),
+            },
+        });
+    };
+
     return (
         <RichGrid
             ref={ref}
@@ -199,6 +210,7 @@ export const List: FC<ListOptions> = (options) => {
             gridOptions={{
                 actions,
                 filter,
+                selectedChanged: openCard,
                 source: STUDENT_SOURCE,
                 captions: CAPTION,
                 columns: COLUMNS,

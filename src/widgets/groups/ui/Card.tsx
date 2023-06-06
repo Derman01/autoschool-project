@@ -28,19 +28,6 @@ export const Card: FC<CardOptions> = (options) => {
         (lesson) => lesson.module_name === 'Теоретический экзамен'
     );
 
-    const onEditHandler = useCallback(() => {
-        editGroup(groupModel, (item: GroupModel) => {
-            setGroupModel(
-                (module) =>
-                    new GroupModel({
-                        ...module,
-                        ...item,
-                    })
-            );
-            return afterUpdate();
-        });
-    }, [groupModel]);
-
     const onDeleteHandler = useCallback(() => {
         deleteGroup(groupModel).then(() => {
             afterUpdate().then(() => {
@@ -93,11 +80,6 @@ export const Card: FC<CardOptions> = (options) => {
                 ]}
             />
             <div className="widget-module__Card_actions">
-                <Button
-                    style={'primary'}
-                    title={'Редактировать'}
-                    onClick={onEditHandler}
-                />
                 <Button
                     style={'danger'}
                     title={'Удалить'}

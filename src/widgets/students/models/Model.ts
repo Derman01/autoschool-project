@@ -26,4 +26,25 @@ export class StudentModel extends Model {
     public get getFullName() {
         return `${this.surname} ${this.name} ${this.patronymic}`;
     }
+
+    public get Birthday(): string {
+        return getDateString(new Date(this.birthday));
+    }
+
+    public get Instructor(): string {
+        return `${this.instructor_surname} ${this.instructor_name} ${this.instructor_patronymic}`;
+    }
+
+    public get NeedPayment(): string | null {
+        const payment: number = this.payments.length
+            ? this.payments
+                  .map((value: AnyObject) => value.value)
+                  .reduce((a: string, b: string) => Number(a) + Number(b), 0)
+            : 0;
+        if (payment == this.course_price) {
+            return null;
+        } else {
+            return this.course_price - payment + '';
+        }
+    }
 }

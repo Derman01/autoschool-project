@@ -35,7 +35,6 @@ export const ListModules: FC<IListModulesProps> = () => {
         PopupOpener.createModal({
             templateOptions: {
                 headerTitle: 'Карточка модуля',
-                width: 600,
                 bodyContent: (
                     <Card
                         module={module}

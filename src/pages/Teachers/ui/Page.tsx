@@ -24,7 +24,6 @@ const Page: FC<PageOptions> = (options) => {
         PopupOpener.createModal({
             templateOptions: {
                 headerTitle: 'Карточка преподавателя',
-                width: 700,
                 bodyContent: (
                     <Card
                         teacher={teacher}

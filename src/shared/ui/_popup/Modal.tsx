@@ -13,7 +13,7 @@ export const Modal: FC<ModalOptions> = (options) => {
         <Container>
             <div
                 className={classNames(['Modal', className])}
-                style={{ width: width + 'px' }}
+                style={{ minWidth: width + 'px' }}
             >
                 <div className="Modal__content">
                     <div className="Modal__header">

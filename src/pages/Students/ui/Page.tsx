@@ -41,21 +41,6 @@ export const Page: FC<PageOptions> = (options) => {
                         <span className="page__students_detail_container_title-name">
                             {selectedGroup?.title}
                         </span>
-                        {'; '}
-                        Категория прав{': '}
-                        <span className="page__students_detail_container_title-name">
-                            {selectedGroup?.category_name}
-                        </span>
-                        {'; '}
-                        Старт обучения{': '}
-                        <span className="page__students_detail_container_title-name">
-                            {selectedGroup?.StartDate}
-                        </span>
-                        {'; '}
-                        Тип группы{': '}
-                        <span className="page__students_detail_container_title-name">
-                            {selectedGroup?.timing_type}
-                        </span>
                     </>
                 }
             />
