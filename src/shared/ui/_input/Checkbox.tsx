@@ -29,17 +29,16 @@ export const Checkbox: FC<MenuOptions> = (options) => {
         : 'undefind';
 
     const [selectedItems, setSelectedItems] = useState<string[]>(
-        (() => {
-            const selected = value.map((item: number) => item + '');
-            if (needLock) {
-                selected.push(lockValue + '');
-            }
-            return selected;
-        })()
+        value.map((item: number) => item + '')
     );
 
     useEffect(() => {
         source.query({ filter }).then((items: IItemData[]) => {
+            if (needLock) {
+                if (items.find((item) => item.id == lockValue)) {
+                    setSelectedItems([lockValue + '']);
+                }
+            }
             setItems(items);
             fieldRef.current?.setVisibleLabel(true);
         });
@@ -61,7 +60,7 @@ export const Checkbox: FC<MenuOptions> = (options) => {
         [selectedItems]
     );
 
-    return items?.length ? (
+    return (
         <Field
             visibleLabel={true}
             ref={fieldRef}
@@ -69,30 +68,37 @@ export const Checkbox: FC<MenuOptions> = (options) => {
             {...options}
             fieldTemplate={
                 <div className={'Field__input Field__checkbox'}>
-                    {items.map((item) => (
-                        <div key={item.id} className={'Field__checkbox__item'}>
-                            <input
-                                onChange={onChangeHandler}
-                                checked={selectedItems.includes(item.id + '')}
-                                disabled={needLock && item.id === lockValue}
-                                type="checkbox"
-                                id={item.id}
-                                name={item.id}
-                            />
-                            <label
-                                style={{
-                                    width: '100%',
-                                }}
-                                htmlFor={item.id}
+                    {items.length ? (
+                        items.map((item) => (
+                            <div
+                                key={item.id}
+                                className={'Field__checkbox__item'}
                             >
-                                {item.title}
-                            </label>
-                        </div>
-                    ))}
+                                <input
+                                    onChange={onChangeHandler}
+                                    checked={selectedItems.includes(
+                                        item.id + ''
+                                    )}
+                                    disabled={needLock && item.id === lockValue}
+                                    type="checkbox"
+                                    id={item.id}
+                                    name={item.id}
+                                />
+                                <label
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    htmlFor={item.id}
+                                >
+                                    {item.title}
+                                </label>
+                            </div>
+                        ))
+                    ) : (
+                        <></>
+                    )}
                 </div>
             }
         />
-    ) : (
-        <div></div>
     );
 };
