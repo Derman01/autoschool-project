@@ -7,8 +7,10 @@ import { Button } from 'shared/ui/buttons';
 import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
 import { deleteGroup } from './helper/deleteGroup';
-import { editGroup } from './helper/editGroup';
 import { LessonModel } from 'pages/Сalendar/models/Model';
+import { downloadFile, IItemData, Memory } from 'shared/lib/source';
+import { PopupOpener } from 'shared/ui/_popup/PopupOpener';
+import { View } from 'shared/ui/_list/View';
 
 interface CardOptions extends ComponentOptions {
     group: GroupModel;
@@ -18,7 +20,7 @@ interface CardOptions extends ComponentOptions {
 
 export const Card: FC<CardOptions> = (options) => {
     const { className, afterUpdate, lessons } = options;
-    const [groupModel, setGroupModel] = useState(options.group);
+    const [groupModel] = useState(options.group);
     const { closePopup } = usePopupContext();
 
     const practicExam = lessons.find(
@@ -35,6 +37,54 @@ export const Card: FC<CardOptions> = (options) => {
             });
         });
     }, [groupModel]);
+
+    const printDocument = (item: IItemData) => {
+        downloadFile(item.id, {
+            group_id: groupModel.id,
+        });
+    };
+
+    const sourcePrint = new Memory({
+        data: [
+            {
+                id: 'exam-protocol',
+                name: 'Экзаменационный протокол',
+            },
+            {
+                id: 'registration-order',
+                name: 'Заявление на регистрацию в ГИБДД',
+            },
+            {
+                id: 'exam-results',
+                name: 'Справка о результатах экзамена ГИБДД',
+            },
+            {
+                id: 'group-debt',
+                name: 'Список должников',
+            },
+            {
+                id: 'schedule',
+                name: 'Расписание',
+            },
+        ],
+    });
+
+    const openPanelDoc = () => {
+        PopupOpener.createModal({
+            templateOptions: {
+                width: 500,
+                headerTitle: 'Печать документов',
+                bodyContent: (
+                    <View
+                        source={sourcePrint}
+                        selectedChanged={printDocument}
+                        canHover={true}
+                        canSelected={false}
+                    />
+                ),
+            },
+        });
+    };
 
     return (
         <div className={classNames(['widget-module__Card', className])}>
@@ -80,6 +130,11 @@ export const Card: FC<CardOptions> = (options) => {
                 ]}
             />
             <div className="widget-module__Card_actions">
+                <Button
+                    style={'unaccented'}
+                    title={'Печать документов'}
+                    onClick={openPanelDoc}
+                />
                 <Button
                     style={'danger'}
                     title={'Удалить'}
