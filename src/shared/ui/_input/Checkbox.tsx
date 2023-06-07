@@ -23,8 +23,19 @@ export const Checkbox: FC<MenuOptions> = (options) => {
     const [items, setItems] = useState([]);
     const fieldRef = useRef<FieldRef>(null);
 
+    const needLock = filter.studying_start_date;
+    let lockValue = needLock
+        ? new Date(filter.studying_start_date).getDay()
+        : 'undefind';
+
     const [selectedItems, setSelectedItems] = useState<string[]>(
-        value.map((item: number) => item + '')
+        (() => {
+            const selected = value.map((item: number) => item + '');
+            if (needLock) {
+                selected.push(lockValue + '');
+            }
+            return selected;
+        })()
     );
 
     useEffect(() => {
@@ -63,6 +74,7 @@ export const Checkbox: FC<MenuOptions> = (options) => {
                             <input
                                 onChange={onChangeHandler}
                                 checked={selectedItems.includes(item.id + '')}
+                                disabled={needLock && item.id === lockValue}
                                 type="checkbox"
                                 id={item.id}
                                 name={item.id}
