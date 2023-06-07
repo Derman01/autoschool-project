@@ -7,13 +7,13 @@ import { ModalOptions } from './Interface';
 import { closePopup } from './Controller';
 
 export const Modal: FC<ModalOptions> = (options) => {
-    const { className, width = 300, headerTitle, bodyContent, id } = options;
+    const { className, width = 600, headerTitle, bodyContent, id } = options;
 
     return (
         <Container>
             <div
                 className={classNames(['Modal', className])}
-                style={{ minWidth: width + 'px' }}
+                style={{ maxWidth: width + 'px' }}
             >
                 <div className="Modal__content">
                     <div className="Modal__header">
