@@ -60,141 +60,10 @@ export const List: FC<ListOptions> = (options) => {
 
     const ref = useRef<IViewRef>();
 
-    const actions: Actions = [
-        {
-            id: 'edit',
-            title: 'Редактировать',
-            handler: (item) => {
-                return editStudent(item, ref.current.reload);
-            },
-        },
-        {
-            id: 'delete',
-            title: 'Удалить',
-            handler: (item) => {
-                return deleteStudent({
-                    studentId: item['id'],
-                    groupId: item['group_id'],
-                }).then(() => {
-                    return ref.current.reload();
-                });
-            },
-        },
-        {
-            id: 'payments',
-            title: 'Открыть платежи',
-            handler: (item: StudentModel) => {
-                PopupOpener.createModal({
-                    templateOptions: {
-                        width: 1000,
-                        headerTitle: 'Платежи студента ' + item.ShortName,
-                        bodyContent: (
-                            <PaymentList
-                                filter={{
-                                    student_id: item.id,
-                                }}
-                            />
-                        ),
-                    },
-                });
-                return Promise.resolve();
-            },
-        },
-        {
-            id: 'exams',
-            title: 'Открыть список экзаменов',
-            handler: (item: StudentModel) => {
-                PopupOpener.createModal({
-                    templateOptions: {
-                        width: 1000,
-                        headerTitle: 'Экзамены студента ' + item.ShortName,
-                        bodyContent: <ListExam studentId={item.id} />,
-                    },
-                });
-                return Promise.resolve();
-            },
-        },
-        {
-            id: 'print',
-            title: 'Распечатать документ',
-            children: [
-                {
-                    id: 'print-0',
-                    title: 'Карточка учета вождения автомобиля',
-                    handler: (item) => {
-                        downloadFile('car-driving-registration-card', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-1',
-                    title: 'Экзаменационная карточка водителя',
-                    handler: (item) => {
-                        downloadFile('driver-exam-card', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-2',
-                    title: 'Акт на оказание услуг',
-                    handler: (item) => {
-                        downloadFile('service-delivery-act', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-3',
-                    title: 'Акт о выполнении услуги',
-                    handler: (item) => {
-                        downloadFile('service-performance-act', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-4',
-                    title: 'Путевой лист',
-                    handler: (item) => {
-                        downloadFile('waybill', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-5',
-                    title: 'Заявление в ГИБДД на получение прав',
-                    handler: (item) => {
-                        downloadFile('driver-license-application', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-                {
-                    id: 'print-6',
-                    title: 'Экзаменационный протокол',
-                    handler: (item) => {
-                        downloadFile('exam-protocol', {
-                            student_id: item.id,
-                        });
-                        return Promise.resolve();
-                    },
-                },
-            ],
-        },
-    ];
-
     const openCard = (item: StudentModel) => {
         PopupOpener.createModal({
             templateOptions: {
+                width: 1000,
                 headerTitle: 'Карточка студента',
                 bodyContent: (
                     <Card student={item} afterUpdate={ref.current.reload} />
@@ -210,7 +79,6 @@ export const List: FC<ListOptions> = (options) => {
             headerTitle={headerTitle}
             addingCallback={() => createStudent(group, ref.current.reload)}
             gridOptions={{
-                actions,
                 filter,
                 selectedChanged: openCard,
                 source: STUDENT_SOURCE,

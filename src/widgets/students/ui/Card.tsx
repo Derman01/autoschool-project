@@ -8,7 +8,9 @@ import { Info } from 'shared/ui/form';
 import { usePopupContext } from 'shared/hooks/usePopupContext';
 import { deleteStudent } from './helper/delete';
 import { editStudent } from './helper/edit';
-import { Server } from 'shared/lib/source';
+import { downloadFile, IItemData, Memory, Server } from 'shared/lib/source';
+import { View } from 'shared/ui/list';
+import { PopupOpener } from 'shared/ui/popup';
 
 interface CardOptions extends ComponentOptions {
     student: StudentModel;
@@ -61,6 +63,58 @@ export const Card: FC<CardOptions> = (options) => {
             });
     };
 
+    const sourcePrint = new Memory({
+        data: [
+            {
+                id: 'car-driving-registration-card',
+                name: 'Карточка учета вождения автомобиля',
+            },
+            {
+                id: 'driver-exam-card',
+                name: 'Экзаменационная карточка водителя',
+            },
+            {
+                id: 'service-delivery-act',
+                name: 'Акт на оказание услуг',
+            },
+            {
+                id: 'service-performance-act',
+                name: 'Акт о выполнении услуги',
+            },
+            {
+                id: 'waybill',
+                name: 'Путевой лист',
+            },
+            {
+                id: 'driver-license-application',
+                name: 'Заявление в ГИБДД на получение прав',
+            },
+        ],
+    });
+
+    const printDocument = (item: IItemData) => {
+        downloadFile(item.id, {
+            student_id: studentModel.id,
+        });
+    };
+
+    const openPanelDoc = () => {
+        PopupOpener.createModal({
+            templateOptions: {
+                width: 500,
+                headerTitle: 'Печать документов',
+                bodyContent: (
+                    <View
+                        source={sourcePrint}
+                        selectedChanged={printDocument}
+                        canHover={true}
+                        canSelected={false}
+                    />
+                ),
+            },
+        });
+    };
+
     return (
         <div className={classNames(['widget-module__Card', className])}>
             <Info
@@ -108,6 +162,11 @@ export const Card: FC<CardOptions> = (options) => {
                         onClick={onPaymentAll}
                     />
                 )}
+                <Button
+                    style={'unaccented'}
+                    title={'Печать документов'}
+                    onClick={openPanelDoc}
+                />
                 <Button
                     style={'danger'}
                     title={'Удалить'}
