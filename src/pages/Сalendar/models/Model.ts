@@ -48,4 +48,17 @@ export class LessonModel extends Model {
             minute: 'numeric',
         });
     }
+
+    public get MovedDateString(): string {
+        return new Date(this.moved_date).toLocaleDateString('ru-Ru', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
+    }
+}
+export class TimingModel extends Model {
+    public get title(): string {
+        return this.time_interval;
+    }
 }

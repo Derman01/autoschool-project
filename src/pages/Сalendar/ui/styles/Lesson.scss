@@ -22,7 +22,11 @@
             cursor: pointer;
 
             .Lesson__milk {
-                background: linear-gradient(transparent 0, var(--background-color-primary) 20px, var(--background-color-primary))
+                background: linear-gradient(
+                    transparent 0,
+                    var(--background-color-primary) 20px,
+                    var(--background-color-primary)
+                );
             }
         }
     }
@@ -44,6 +48,6 @@
         right: 0;
         bottom: 0;
         height: 30px;
-        background: linear-gradient(transparent 0, #edf6ff 20px, #edf6ff)
+        background: linear-gradient(transparent 0, #edf6ff 20px, #edf6ff);
     }
 }

@@ -26,7 +26,9 @@ export const Lesson: FC<LessonOptions> = (options) => {
     return (
         <div className={classNames(['Lesson', className])}>
             <div
-                className="Lesson__wrapper"
+                className={classNames('Lesson__wrapper', {
+                    changed: !!lesson.moved_date,
+                })}
                 title={lesson.Title}
                 onClick={openCard}
             >
